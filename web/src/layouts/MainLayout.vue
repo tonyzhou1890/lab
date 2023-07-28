@@ -4,7 +4,7 @@
       <q-toolbar>
         <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
         <q-toolbar-title>
-
+          <span>{{ $t('global.title') }}</span>
         </q-toolbar-title>
         <q-btn flat dense round icon="language" aria-label="language" @click="toggleLanguage" />
       </q-toolbar>

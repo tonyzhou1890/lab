@@ -6,8 +6,8 @@
           width: item.width + 'px',
           height: item.width + 'px',
           left: item.postion[0] + '%',
-          top: item.postion[1] + '%'
-        }" name="snow" color="white" />
+          top: item.postion[1] + '%',
+        }" name="snow" />
       </div>
       <div class="content poa full col items-center">
 
@@ -54,10 +54,10 @@ useMeta({
 })
 
 // background
-const backgroundIconList = ref(allbox.graphic.randomScatter([[0, 0], [100, 100]], 100).map((item: [number, number]) => {
+const backgroundIconList = ref(allbox.graphic.randomScatter([[0, 0], [100, 100]], 200).map((item: [number, number]) => {
   return {
-    postion: item,
-    width: allbox.number.randomRange(10, 20)
+    postion: [item[0] >> 0, item[1] >> 0],
+    width: allbox.number.randomRange(16, 30) >> 0
   }
 }))
 
@@ -93,6 +93,10 @@ let filterFn: QSelectProps['onFilter'] = (val, update) => {
   overflow: auto;
   box-sizing: border-box;
 
+  .background {
+    color: white;
+  }
+
   .content {
     text-align: center;
     padding-top: 20vh;
@@ -105,6 +109,7 @@ let filterFn: QSelectProps['onFilter'] = (val, update) => {
     font-family: kai;
     line-height: 1;
     color: white;
+    text-shadow: 2px 2px 2px #333;
   }
 
   .tool-search {
@@ -116,6 +121,10 @@ let filterFn: QSelectProps['onFilter'] = (val, update) => {
         display: none;
       }
     }
+  }
+
+  .tool-section {
+    height: 200vh;
   }
 }
 
