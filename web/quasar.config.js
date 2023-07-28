@@ -7,7 +7,8 @@
 
 // Configuration for your app
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
-
+const { createSvgIconsPlugin } = require('vite-plugin-svg-icons');
+const svgLoader = require('vite-svg-loader');
 const { configure } = require('quasar/wrappers');
 const path = require('path');
 
@@ -28,7 +29,7 @@ module.exports = configure(function (/* ctx */) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
-    boot: ['i18n', 'axios', 'quasar-lang-pack'],
+    boot: ['i18n', 'axios', 'quasar-lang-pack', 'svg'],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
     css: ['app.scss'],
@@ -52,6 +53,10 @@ module.exports = configure(function (/* ctx */) {
       target: {
         browser: ['es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1'],
         node: 'node16',
+      },
+
+      alias: {
+        '@': path.join(__dirname, './src'),
       },
 
       vueRouterMode: 'history', // available values: 'hash', 'history'
@@ -88,6 +93,13 @@ module.exports = configure(function (/* ctx */) {
             include: path.resolve(__dirname, './src/i18n/**'),
           },
         ],
+        /** 将 SVG 静态图转化为 Vue 组件 */
+        svgLoader({ defaultImport: 'url' }),
+        /** SVG */
+        createSvgIconsPlugin({
+          iconDirs: [path.resolve(process.cwd(), 'src/icons/svg')],
+          symbolId: 'icon-[dir]-[name]',
+        }),
       ],
     },
 
@@ -112,7 +124,7 @@ module.exports = configure(function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: ['Cookies', 'Loading', 'Notify'],
+      plugins: ['Cookies', 'Loading', 'Notify', 'Meta'],
     },
 
     // animations: 'all', // --- includes all animations
