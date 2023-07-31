@@ -1,14 +1,7 @@
 <template>
   <q-page class="col items-center">
     <div class="home-screen bg-primary por">
-      <div class="background poa full ovh">
-        <svg-icon v-for="(item, index) in backgroundIconList" :key="index" class="poa" :style="{
-          width: item.width + 'px',
-          height: item.width + 'px',
-          left: item.postion[0] + '%',
-          top: item.postion[1] + '%',
-        }" name="snow" />
-      </div>
+      <ScatterIconsBackground :icons="backgroundIcons" />
       <div class="content poa full col items-center">
 
         <h1 class="title">{{ $t('global.title') }}</h1>
@@ -45,7 +38,7 @@ import { ref } from 'vue'
 import { useMeta } from 'quasar';
 import { useI18n } from 'vue-i18n';
 import { type QSelectProps } from 'quasar'
-import allbox from 'allbox'
+import ScatterIconsBackground from '@/components/ScatterIconsBackground.vue';
 
 const { t } = useI18n()
 
@@ -54,12 +47,12 @@ useMeta({
 })
 
 // background
-const backgroundIconList = ref(allbox.graphic.randomScatter([[0, 0], [100, 100]], 200).map((item: [number, number]) => {
-  return {
-    postion: [item[0] >> 0, item[1] >> 0],
-    width: allbox.number.randomRange(16, 30) >> 0
-  }
-}))
+const backgroundIcons = [{
+  name: 'snow',
+  count: 200,
+  minWidth: 16,
+  maxWidth: 30
+}]
 
 // search tools
 const toolModel = ref('')
