@@ -1,5 +1,5 @@
 <template>
-  <div class="poa full ovh" :style="{
+  <div class="poa fit ovh" :style="{
     color: color || 'white'
   }">
     <svg-icon v-for="(item, index) in backgroundIconList" :key="index" class="poa" :style="{

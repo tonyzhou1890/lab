@@ -15,6 +15,10 @@ const routes: RouteRecordRaw[] = [
     children: [
       { path: '', component: () => import('pages/home/IndexPage.vue') },
       {
+        path: 'apps/font',
+        component: () => import('pages/font/IndexPage.vue'),
+      },
+      {
         path: ':catchAll(.*)*',
         component: () => import('pages/404/IndexPage.vue'),
       },

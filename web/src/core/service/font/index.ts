@@ -32,7 +32,7 @@ async function parse(
   buffer: ArrayBuffer,
   force = false
 ): Promise<OpenType.Font | undefined> {
-  checkScript();
+  await checkScript();
   // 这里加 if 是为了解决 ts config.openType 类型可能为 null 的问题。虽然实际上走到这一步已经不会是 null 了。
   if (config.openType) {
     if (!force && buffer === config.fontBuffer && config.fontParsed) {
@@ -49,7 +49,7 @@ async function render(
   text: string,
   ctx: CanvasRenderingContext2D
 ) {
-  checkScript();
+  await checkScript();
   // 这里加 if 是为了解决 ts config.openType 类型可能为 null 的问题。虽然实际上走到这一步已经不会是 null 了。
   if (config.openType) {
     const font =

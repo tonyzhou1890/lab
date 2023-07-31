@@ -7,5 +7,5 @@ export function changePathLangIso(path: string, langIso: string): string {
   } else {
     pathArr[0] = langIso;
   }
-  return pathArr.join('/');
+  return '/' + pathArr.join('/');
 }

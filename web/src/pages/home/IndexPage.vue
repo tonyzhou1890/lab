@@ -2,7 +2,7 @@
   <q-page class="col items-center">
     <div class="home-screen bg-primary por">
       <ScatterIconsBackground :icons="backgroundIcons" />
-      <div class="content poa full col items-center">
+      <div class="content poa fit col items-center">
 
         <h1 class="title">{{ $t('global.title') }}</h1>
 
@@ -38,7 +38,6 @@ import { ref } from 'vue'
 import { useMeta } from 'quasar';
 import { useI18n } from 'vue-i18n';
 import { type QSelectProps } from 'quasar'
-import ScatterIconsBackground from '@/components/ScatterIconsBackground.vue';
 
 const { t } = useI18n()
 
