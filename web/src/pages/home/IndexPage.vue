@@ -122,6 +122,10 @@ let filterFn: QSelectProps['onFilter'] = (val, update) => {
 
 @media screen and (max-width: 800px) {
   .home-screen {
+    .title {
+      font-size: 12vw;
+    }
+
     .tool-search {
       width: 80%;
     }

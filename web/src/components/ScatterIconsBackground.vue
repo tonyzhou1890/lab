@@ -14,7 +14,9 @@
 
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
-import allbox from 'allbox'
+import randomSwap from 'allbox/dist/array.random-swap'
+import randomScatter from 'allbox/dist/graphic.random-scatter'
+import randomRange from 'allbox/dist/number.random-range'
 
 export interface BackgroundIconConfig {
   name: string,
@@ -40,9 +42,9 @@ const props = defineProps<{
 const icons = toRef(props, 'icons')
 
 const backgroundIconList = computed<BackgroundIcon[]>(() => {
-  return allbox.array.randomSwap(icons.value.map(icon => {
-    return allbox.graphic.randomScatter([[0, 0], [100, 100]], icon.count).map((item) => {
-      const width = allbox.number.randomRange(icon.minWidth, icon.maxWidth) >> 0
+  return randomSwap(icons.value.map(icon => {
+    return randomScatter([[0, 0], [100, 100]], icon.count).map((item) => {
+      const width = randomRange(icon.minWidth, icon.maxWidth) >> 0
       return {
         name: icon.name,
         left: item[0] >> 0,

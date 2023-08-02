@@ -19,6 +19,10 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/font/IndexPage.vue'),
       },
       {
+        path: 'apps/word-count',
+        component: () => import('pages/word-count/IndexPage.vue'),
+      },
+      {
         path: ':catchAll(.*)*',
         component: () => import('pages/404/IndexPage.vue'),
       },

@@ -16,8 +16,9 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.16.4",
-    "allbox": "^0.1.0",
+    "allbox": "^0.2.0",
     "axios": "^1.2.1",
+    "localforage": "^1.10.0",
     "opentype.js": "^1.3.4",
     "pinia": "^2.0.11",
     "quasar": "^2.6.0",

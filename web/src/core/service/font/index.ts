@@ -1,7 +1,7 @@
 import type * as OpenType from 'opentype.js';
 
 // package font
-const config: {
+const local: {
   fontBuffer: null | ArrayBuffer;
   fontParsed: OpenType.Font | null;
   openType: typeof OpenType | null;
@@ -14,13 +14,13 @@ const config: {
 };
 
 async function checkScript() {
-  if (config.openType === null) {
+  if (local.openType === null) {
     try {
       const t = await import('opentype.js');
-      config.openType = t;
+      local.openType = t;
     } catch (e) {
-      if (typeof config.handleError === 'function') {
-        config.handleError(e);
+      if (typeof local.handleError === 'function') {
+        local.handleError(e);
       } else {
         throw new Error(((e as Error)?.message ?? '') as string);
       }
@@ -33,14 +33,14 @@ async function parse(
   force = false
 ): Promise<OpenType.Font | undefined> {
   await checkScript();
-  // 这里加 if 是为了解决 ts config.openType 类型可能为 null 的问题。虽然实际上走到这一步已经不会是 null 了。
-  if (config.openType) {
-    if (!force && buffer === config.fontBuffer && config.fontParsed) {
-      return config.fontParsed;
+  // 这里加 if 是为了解决 ts local.openType 类型可能为 null 的问题。虽然实际上走到这一步已经不会是 null 了。
+  if (local.openType) {
+    if (!force && buffer === local.fontBuffer && local.fontParsed) {
+      return local.fontParsed;
     }
-    config.fontParsed = config.openType.parse(buffer);
-    config.fontBuffer = buffer;
-    return config.fontParsed;
+    local.fontParsed = local.openType.parse(buffer);
+    local.fontBuffer = buffer;
+    return local.fontParsed;
   }
 }
 
@@ -50,13 +50,13 @@ async function render(
   ctx: CanvasRenderingContext2D
 ) {
   await checkScript();
-  // 这里加 if 是为了解决 ts config.openType 类型可能为 null 的问题。虽然实际上走到这一步已经不会是 null 了。
-  if (config.openType) {
+  // 这里加 if 是为了解决 ts local.openType 类型可能为 null 的问题。虽然实际上走到这一步已经不会是 null 了。
+  if (local.openType) {
     const font =
-      (buffer === config.fontBuffer ? config.fontParsed : null) ||
-      config.openType.parse(buffer);
-    config.fontBuffer = buffer;
-    config.fontParsed = font;
+      (buffer === local.fontBuffer ? local.fontParsed : null) ||
+      local.openType.parse(buffer);
+    local.fontBuffer = buffer;
+    local.fontParsed = font;
     font.draw(ctx, text);
   }
 }
