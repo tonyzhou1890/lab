@@ -73,7 +73,8 @@
                   </template>
                 </q-virtual-scroll> -->
                 <q-table virtual-scroll flat bordered :virtual-scroll-sticky-size-start="48" row-key="index"
-                  :rows="tab.list" :columns="columns" :rows-per-page-options="[10, 20, 30, 50, 100, 0]" />
+                  :rows="tab.list" :columns="columns" :rows-per-page-options="[10, 20, 30, 50, 100, 0]"
+                  class="word-list-table" />
               </q-tab-panel>
             </q-tab-panels>
           </section>
@@ -103,7 +104,7 @@ const backgroundIcons = [{
   count: 200,
   minWidth: 16,
   maxWidth: 30
-}].map
+}]
 
 const file = ref<null | File>(null)
 const fileText = ref('')
@@ -169,8 +170,10 @@ const tabList = computed<
         }
         return word.lang === item.value
       }).map((item, index) => {
-        item.index = index + 1
-        return item
+        return {
+          ...item,
+          index: index + 1
+        }
       })
     }
   })
@@ -202,11 +205,14 @@ const columns = computed<QTableProps['columns']>(() => [
 <style lang="scss">
 .page-main {
 
-  .file,
-  .glyph-select {
+  .file {
     width: 300px;
     max-width: 90%;
     margin: 0 auto;
+  }
+
+  .word-list-table {
+    max-height: 400px;
   }
 }
 </style>
