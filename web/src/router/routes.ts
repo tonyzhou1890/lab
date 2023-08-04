@@ -15,11 +15,11 @@ const routes: RouteRecordRaw[] = [
     children: [
       { path: '', component: () => import('pages/home/IndexPage.vue') },
       {
-        path: 'apps/font',
+        path: 'service/font',
         component: () => import('pages/font/IndexPage.vue'),
       },
       {
-        path: 'apps/word-count',
+        path: 'service/word-count',
         component: () => import('pages/word-count/IndexPage.vue'),
       },
       {

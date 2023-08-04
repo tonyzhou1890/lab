@@ -103,7 +103,7 @@ const backgroundIcons = [{
   count: 200,
   minWidth: 16,
   maxWidth: 30
-}]
+}].map
 
 const file = ref<null | File>(null)
 const fileText = ref('')
