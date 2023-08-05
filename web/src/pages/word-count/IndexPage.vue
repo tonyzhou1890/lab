@@ -77,6 +77,48 @@
               </q-tab-panel>
             </q-tab-panels>
           </section>
+          <!-- export buttons -->
+          <div class="q-pa-md text-center">
+            <q-btn-dropdown
+              color="primary"
+              :label="$t('wordCount.exportExcel')"
+              :loading="exportExcelLoading"
+              class="q-ma-md"
+            >
+              <q-list>
+                <q-item
+                  v-for="item in tabList"
+                  :key="item.value"
+                  clickable
+                  v-close-popup
+                  @click="() => onExportExcelItemClick(item)"
+                >
+                  <q-item-section>
+                    <q-item-label>{{ item.name }}</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-btn-dropdown>
+            <q-btn-dropdown
+              color="primary"
+              :label="$t('wordCount.exportTxt')"
+              :loading="exportTxtLoading"
+            >
+              <q-list>
+                <q-item
+                  v-for="item in tabList"
+                  :key="item.value"
+                  clickable
+                  v-close-popup
+                  @click="() => onExportTxtItemClick(item)"
+                >
+                  <q-item-section>
+                    <q-item-label>{{ item.name }}</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-btn-dropdown>
+          </div>
         </div>
       </div>
     </div>
@@ -87,6 +129,7 @@
 import { computed, ref, shallowRef, watch } from 'vue'
 import wordCountService from '@/core/service/word-count'
 import type { WordCountItem, GroupedWordData } from '@/core/service/word-count'
+import { getFileName } from '@/core/utils'
 import { type QTableProps } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
@@ -152,6 +195,7 @@ const tabList = computed<GroupedWordData>(() => {
   })
 })
 
+// 表格的表头
 const columns = computed<QTableProps['columns']>(() => [
   {
     name: 'index',
@@ -172,6 +216,36 @@ const columns = computed<QTableProps['columns']>(() => [
     align: 'center',
   },
 ])
+
+// 导出 excel
+const exportExcelLoading = ref(false)
+
+async function onExportExcelItemClick(tab: GroupedWordData[number]) {
+  console.log(file.value)
+  if (exportExcelLoading.value) return
+  exportExcelLoading.value = true
+  await wordCountService.downloadExcel(
+    tabList.value,
+    (getFileName(file.value as File) ?? 'New File') + '.xlsx',
+    t,
+    tab.value
+  )
+  exportExcelLoading.value = false
+}
+
+// 导出生词本
+const exportTxtLoading = ref(false)
+
+async function onExportTxtItemClick(tab: GroupedWordData[number]) {
+  if (exportTxtLoading.value) return
+  exportTxtLoading.value = true
+  await wordCountService.downloadTxt(
+    tabList.value,
+    (getFileName(file.value as File) ?? 'New File') + '.txt',
+    tab.value
+  )
+  exportTxtLoading.value = false
+}
 </script>
 
 <style lang="scss">

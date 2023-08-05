@@ -1,5 +1,5 @@
 import { RouteRecordRaw } from 'vue-router'
-import serviceSchema from '@/core/service'
+import serviceSchema from '@/core/service/schema'
 
 const routes: RouteRecordRaw[] = [
   {

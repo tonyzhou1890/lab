@@ -4,7 +4,7 @@ export default {
     success: '操作成功',
     title: '飞雪工具箱',
     keywords: '在线工具箱',
-    desc: '飞雪工具箱，一个在线工具箱，包含字体工具、文本工具、图片工具、音频、视频工具、小游戏等',
+    desc: '飞雪工具箱，一个在线工具箱，包含字体工具、文本工具、图片工具、音视频工具、小游戏等',
     noOption: '无选项',
     // 应用类别
     category: {
@@ -46,11 +46,13 @@ export default {
     fileSize: '文件大小',
     textLength: '字符数量',
     freSection: '频率统计',
-    freListIndex: '排序',
+    freListIndex: '序号',
     freListWord: '单词/字',
     freListCount: '次数',
     all: '全部',
     en: '英文',
     zh: '中文',
+    exportExcel: '导出Excel',
+    exportTxt: '导出生词本',
   },
 }

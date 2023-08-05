@@ -4,7 +4,7 @@ export default {
     success: 'Action was successful',
     title: 'snow lab',
     keywords: 'online toolbox, contains many useful tools',
-    desc: 'snow lab, an online toolbox with font tools, text tools, picture tools, audio, video tools, mini games, etc',
+    desc: 'snow lab, an online toolbox with font tools, text tools, picture tools, audio tools, video tools, mini games, etc',
     noOption: 'No options',
     category: {
       default: 'Uncategorized',
@@ -51,5 +51,7 @@ export default {
     all: 'all',
     en: 'en',
     zh: 'zh',
+    exportExcel: 'Export Excel',
+    exportTxt: 'Export Word Book',
   },
 }
