@@ -3,14 +3,27 @@
     <div class="home-screen bg-primary por">
       <ScatterIconsBackground :icons="backgroundIcons" />
       <div class="content poa fit col items-center">
-
         <h1 class="title">{{ $t('global.title') }}</h1>
 
         <!-- search tools -->
-        <q-select class="tool-search" rounded outlined v-model="toolModel" :options="tools" use-input hide-selected
-          @filter="filterFn" hide-dropdown-icon :placeholder="$t('home.searchPlaceholder')" bg-color="white">
+        <q-select
+          class="tool-search"
+          rounded
+          outlined
+          v-model="toolModel"
+          :options="tools"
+          use-input
+          hide-selected
+          @filter="filterFn"
+          hide-dropdown-icon
+          :placeholder="$t('home.searchPlaceholder')"
+          bg-color="white"
+        >
           <template v-slot:append>
-            <q-icon name="search" class="cursor-pointer" />
+            <q-icon
+              name="search"
+              class="cursor-pointer"
+            />
           </template>
           <!-- <template v-slot:label>
           <p class="placeholder">{{ $t('home.searchPlaceholder') }}</p>
@@ -35,23 +48,17 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useMeta } from 'quasar';
-import { useI18n } from 'vue-i18n';
 import { type QSelectProps } from 'quasar'
 
-const { t } = useI18n()
-
-useMeta({
-  title: `${t('home.title')} | ${t('global.title')}`
-})
-
 // background
-const backgroundIcons = [{
-  name: 'snow',
-  count: 200,
-  minWidth: 16,
-  maxWidth: 30
-}]
+const backgroundIcons = [
+  {
+    name: 'snow',
+    count: 200,
+    minWidth: 16,
+    maxWidth: 30,
+  },
+]
 
 // search tools
 const toolModel = ref('')
@@ -61,16 +68,15 @@ let filterFn: QSelectProps['onFilter'] = (val, update) => {
     () => {
       if (val === '') {
         tools.value = []
-      }
-      else {
+      } else {
         // const needle = val.toLowerCase()
         tools.value = []
       }
     },
 
     // "ref" is the Vue reference to the QSelect
-    ref => {
-      if (val !== '' && ref?.options?.length as number > 0) {
+    (ref) => {
+      if (val !== '' && (ref?.options?.length as number) > 0) {
         ref.setOptionIndex(-1) // reset optionIndex in case there is something selected
         ref.moveOptionSelection(1, true) // focus the first selectable option and do not update the input-value
       }

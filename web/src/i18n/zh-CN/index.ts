@@ -1,12 +1,16 @@
-// This is just an example,
-// so you can safely delete all default props below
-
 export default {
   global: {
     failed: '操作失败',
     success: '操作成功',
     title: '飞雪工具箱',
+    keywords: '在线工具箱',
+    desc: '飞雪工具箱，一个在线工具箱，包含字体工具、文本工具、图片工具、音频、视频工具、小游戏等',
     noOption: '无选项',
+    // 应用类别
+    category: {
+      default: '未分类',
+      text: '文本',
+    },
   },
   layout: {
     home: '首页',
@@ -21,7 +25,8 @@ export default {
   },
   font: {
     title: '字体查看器',
-    desc: '可查看 ttf、otf、woff 格式字体信息，浏览字体内部字形',
+    keywords: '字体查看器',
+    desc: '可查看 ttf、otf、woff 格式字体信息，浏览字体内部字形。',
     fileLabel: '选择字体文件',
     fontInfo: '字体信息',
     fontFamily: '字族',
@@ -33,7 +38,8 @@ export default {
   },
   wordCount: {
     title: '词频统计',
-    desc: '统计文本(UTF-8)里各单词出现的频率，结果仅供参考',
+    keywords: '词频统计，导出生词本',
+    desc: '统计文本(UTF-8)里各单词出现的频率，统计结果可以导出为生词本。结果仅供参考。',
     fileLabel: '选择 txt 文本',
     fileInfo: '文本基本信息',
     fileName: '文件名',
@@ -47,4 +53,4 @@ export default {
     en: '英文',
     zh: '中文',
   },
-};
+}

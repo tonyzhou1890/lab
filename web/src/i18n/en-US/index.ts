@@ -1,12 +1,15 @@
-// This is just an example,
-// so you can safely delete all default props below
-
 export default {
   global: {
     failed: 'Action failed',
     success: 'Action was successful',
     title: 'snow lab',
+    keywords: 'online toolbox, contains many useful tools',
+    desc: 'snow lab, an online toolbox with font tools, text tools, picture tools, audio, video tools, mini games, etc',
     noOption: 'No options',
+    category: {
+      default: 'Uncategorized',
+      text: 'text',
+    },
   },
   layout: {
     home: 'home',
@@ -21,6 +24,7 @@ export default {
   },
   font: {
     title: 'font viewer',
+    keywords: 'font viewer',
     desc: '可查看 ttf、otf、woff 格式字体信息，浏览字体内部字形',
     fileLabel: 'select font file',
     fontInfo: 'Font Info',
@@ -33,6 +37,7 @@ export default {
   },
   wordCount: {
     title: 'word frequency',
+    keywords: 'word frequency, word count, word book',
     desc: 'count word frequency in text file',
     fileLabel: '选择 txt 文本',
     fileInfo: '文本基本信息',
@@ -47,4 +52,4 @@ export default {
     en: 'en',
     zh: 'zh',
   },
-};
+}

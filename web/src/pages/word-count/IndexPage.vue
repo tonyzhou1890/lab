@@ -8,10 +8,10 @@
     </div>
     <div class="page-main app">
       <div class="page-title tac">
-        <h1 class="title">{{ $t('wordCount.title') }}</h1>
+        <h1 class="title">{{ $t(meta.title as string) }}</h1>
       </div>
       <div class="content">
-        <p class="desc">{{ $t('wordCount.desc') }}</p>
+        <p class="desc">{{ $t(meta.desc as string) }}</p>
         <div class="file">
           <q-file
             v-model="file"
@@ -84,13 +84,16 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, shallowRef, watch } from 'vue';
-import wordCountService from '@/core/service/word-count';
-import type { WordCountItem, GroupedWordData } from '@/core/service/word-count';
-import type { QTableProps } from 'quasar';
-import { useI18n } from 'vue-i18n';
+import { computed, ref, shallowRef, watch } from 'vue'
+import wordCountService from '@/core/service/word-count'
+import type { WordCountItem, GroupedWordData } from '@/core/service/word-count'
+import { type QTableProps } from 'quasar'
+import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
 
-const { t } = useI18n();
+const { t } = useI18n()
+const route = useRoute()
+const meta = ref(route.meta)
 
 // background
 const backgroundIcons = [
@@ -100,19 +103,19 @@ const backgroundIcons = [
     minWidth: 16,
     maxWidth: 30,
   },
-];
+]
 
-const file = ref<null | File>(null);
-const fileText = ref('');
-let wordCountList = shallowRef<WordCountItem[]>([]);
+const file = ref<null | File>(null)
+const fileText = ref('')
+let wordCountList = shallowRef<WordCountItem[]>([])
 
 watch(file, async (newValue: File | null) => {
   if (newValue) {
-    fileText.value = await newValue.text();
-    await wordCountService.init();
-    wordCountList.value = wordCountService.count(fileText.value);
+    fileText.value = await newValue.text()
+    await wordCountService.init()
+    wordCountList.value = wordCountService.count(fileText.value)
   }
-});
+})
 
 // 文本信息
 const fileInfo = computed(() => {
@@ -131,23 +134,23 @@ const fileInfo = computed(() => {
       value: fileText.value.length,
     },
   ].map((item) => {
-    item._id = Math.random();
-    return item;
-  });
-});
+    item._id = Math.random()
+    return item
+  })
+})
 
 // 当前 tab
-const currTab = ref('all');
+const currTab = ref('all')
 // tab 列表
 const tabList = computed<GroupedWordData>(() => {
-  const groupedData = wordCountService.listGrouping(wordCountList.value);
+  const groupedData = wordCountService.listGrouping(wordCountList.value)
   return groupedData.map((item) => {
     return {
       ...item,
       name: t(item.name),
-    };
-  });
-});
+    }
+  })
+})
 
 const columns = computed<QTableProps['columns']>(() => [
   {
@@ -168,7 +171,7 @@ const columns = computed<QTableProps['columns']>(() => [
     field: 'count',
     align: 'center',
   },
-]);
+])
 </script>
 
 <style lang="scss">

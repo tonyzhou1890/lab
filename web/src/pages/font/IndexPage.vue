@@ -1,25 +1,39 @@
 <template>
   <q-page>
     <div class="page-bg">
-      <ScatterIconsBackground :icons="backgroundIcons" color="gray" />
+      <ScatterIconsBackground
+        :icons="backgroundIcons"
+        color="gray"
+      />
     </div>
     <div class="page-main app">
-
       <div class="page-title tac">
-        <h1 class="title">{{ $t('font.title') }}</h1>
+        <h1 class="title">{{ $t(meta.title as string) }}</h1>
       </div>
       <div class="content">
-        <p class="desc">{{ $t('font.desc') }}</p>
+        <p class="desc">{{ $t(meta.desc as string) }}</p>
         <div class="file">
-          <q-file v-model="file" :label="$t('font.fileLabel')" accept=".ttf, .woff, .otf" />
+          <q-file
+            v-model="file"
+            :label="$t('font.fileLabel')"
+            accept=".ttf, .woff, .otf"
+          />
         </div>
-        <div class="full-width" v-show="parsedFlag">
+        <div
+          class="full-width"
+          v-show="parsedFlag"
+        >
           <!-- font info -->
           <section class="info-section">
             <h2 class="section-title">{{ $t('font.fontInfo') }}</h2>
             <q-list>
-              <q-item v-for="item in fontInfo" :key="item._id">
-                <q-item-section class="text-bold">{{ item.name }}</q-item-section>
+              <q-item
+                v-for="item in fontInfo"
+                :key="item._id"
+              >
+                <q-item-section class="text-bold">{{
+                  item.name
+                }}</q-item-section>
                 <q-item-section>{{ item.value }}</q-item-section>
               </q-item>
             </q-list>
@@ -27,9 +41,20 @@
           <!-- font glyph list -->
           <section class="glyph-section">
             <h2 class="section-title">{{ $t('font.glyphs') }}</h2>
-            <q-select class="glyph-select" :options="glyphsOptions" option-value="id" option-label="label"
-              v-model="selectedGlyphGroup" emit-value map-options @update:model-value="drawGlyph"></q-select>
-            <div class="glyph-draw-list q-pt-md" ref="glyphContainer"></div>
+            <q-select
+              class="glyph-select"
+              :options="glyphsOptions"
+              option-value="id"
+              option-label="label"
+              v-model="selectedGlyphGroup"
+              emit-value
+              map-options
+              @update:model-value="drawGlyph"
+            ></q-select>
+            <div
+              class="glyph-draw-list q-pt-md"
+              ref="glyphContainer"
+            ></div>
           </section>
         </div>
       </div>
@@ -41,8 +66,8 @@
 import { computed, ref, watch } from 'vue'
 import fontService from '@/core/service/font'
 import type * as OpenType from 'opentype.js'
-import { useMeta } from 'quasar';
-import { useI18n } from 'vue-i18n';
+import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
 
 interface FontInfoItem {
   _id?: number
@@ -51,23 +76,23 @@ interface FontInfoItem {
 }
 
 interface GlyphOption {
-  id: number,
+  id: number
   label: string
 }
 
 const { t } = useI18n()
-
-useMeta({
-  title: `${t('font.title')} | ${t('global.title')}`
-})
+const route = useRoute()
+const meta = ref(route.meta)
 
 // background
-const backgroundIcons = [{
-  name: 'snow',
-  count: 200,
-  minWidth: 16,
-  maxWidth: 30
-}]
+const backgroundIcons = [
+  {
+    name: 'snow',
+    count: 200,
+    minWidth: 16,
+    maxWidth: 30,
+  },
+]
 
 const file = ref(null)
 
@@ -96,24 +121,24 @@ const fontInfo = computed<FontInfoItem[]>(() => {
   return [
     {
       name: t('font.fontFamily'),
-      value: names?.fontFamily?.zh ?? ''
+      value: names?.fontFamily?.zh ?? '',
     },
     {
       name: t('font.copyright'),
-      value: names?.copyright?.zh ?? ''
+      value: names?.copyright?.zh ?? '',
     },
     {
       name: t('font.license'),
-      value: names?.license?.zh ?? ''
+      value: names?.license?.zh ?? '',
     },
     {
       name: t('font.version'),
-      value: names?.version?.zh ?? ''
+      value: names?.version?.zh ?? '',
     },
     {
       name: t('font.charNum'),
-      value: parsedFont?.numGlyphs ?? 0
-    }
+      value: parsedFont?.numGlyphs ?? 0,
+    },
   ].map((item: FontInfoItem) => {
     item._id = Math.random()
     return item
@@ -125,12 +150,17 @@ const glyphsOptions = computed<GlyphOption[]>(() => {
   if (!parsedFlag.value) {
     return []
   }
-  return new Array(Math.ceil((parsedFont?.numGlyphs ?? 0) / 100)).fill(0).map((_, index: number) => {
-    return {
-      id: index,
-      label: `${100 * index + 1}~${Math.min(100 * (index + 1), (parsedFont?.numGlyphs ?? 0))}`
-    }
-  })
+  return new Array(Math.ceil((parsedFont?.numGlyphs ?? 0) / 100))
+    .fill(0)
+    .map((_, index: number) => {
+      return {
+        id: index,
+        label: `${100 * index + 1}~${Math.min(
+          100 * (index + 1),
+          parsedFont?.numGlyphs ?? 0
+        )}`,
+      }
+    })
 })
 
 const selectedGlyphGroup = ref<null | number>(null)
@@ -139,9 +169,16 @@ const glyphContainer = ref<HTMLDivElement | null>(null)
 
 const drawGlyph = () => {
   setTimeout(() => {
-    if (parsedFont && glyphContainer.value && selectedGlyphGroup.value !== null) {
+    if (
+      parsedFont &&
+      glyphContainer.value &&
+      selectedGlyphGroup.value !== null
+    ) {
       const start = selectedGlyphGroup.value * 100
-      const end = Math.min((selectedGlyphGroup.value + 1) * 100, parsedFont?.numGlyphs ?? 0)
+      const end = Math.min(
+        (selectedGlyphGroup.value + 1) * 100,
+        parsedFont?.numGlyphs ?? 0
+      )
       const fragment = document.createDocumentFragment()
       const DPR = window.devicePixelRatio
       for (let i = start; i < end; i++) {
@@ -166,12 +203,10 @@ const drawGlyph = () => {
     }
   })
 }
-
 </script>
 
 <style lang="scss">
 .page-main {
-
   .file,
   .glyph-select {
     width: 300px;
