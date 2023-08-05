@@ -6,7 +6,7 @@
         <q-toolbar-title>
           <span>{{ $t('global.title') }}</span>
         </q-toolbar-title>
-        <q-btn v-show="false" flat dense round icon="language" aria-label="language" @click="toggleLanguage" />
+        <q-btn v-show="true" flat dense round icon="language" aria-label="language" @click="toggleLanguage" />
       </q-toolbar>
     </q-header>
 
