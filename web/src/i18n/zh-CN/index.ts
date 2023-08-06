@@ -1,4 +1,5 @@
 import wordCount from './module/word-count'
+import nav from './module/nav'
 
 export default {
   global: {
@@ -32,7 +33,10 @@ export default {
   home: {
     title: '一个在线工具箱',
     searchPlaceholder: '搜索工具',
+    desc: '集成众多在线工具，文本处理、图片修改、小游戏……让工作省心省力。',
+    start: '开始使用',
   },
+  nav,
   font: {
     title: '字体查看器',
     keywords: '字体查看器',
@@ -54,7 +58,17 @@ export default {
   },
   minesweeper: {
     title: '扫雷',
-    keywords: '扫雷游戏',
+    keywords: '扫雷游戏，小游戏',
     desc: '包含初级、中级、高级的扫雷游戏。',
+  },
+  svgEditor: {
+    title: 'SVG编辑器',
+    keywords: 'SVG编辑器，图片处理',
+    desc: '在线编辑SVG图片，满足轻量需求。',
+  },
+  snowmanAttack: {
+    title: '雪人攻击',
+    keywords: '雪人攻击, 小游戏',
+    desc: '保护后代，击退雪人吧。',
   },
 }

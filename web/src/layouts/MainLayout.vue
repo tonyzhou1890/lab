@@ -15,9 +15,10 @@
           icon="menu"
           aria-label="Menu"
           @click="toggleLeftDrawer"
+          v-show="!hideMeneEtc"
         />
         <q-toolbar-title>
-          <span>{{ $t('global.title') }}</span>
+          <span v-show="!hideMeneEtc">{{ $t('global.title') }}</span>
         </q-toolbar-title>
         <q-btn
           v-show="true"
@@ -41,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { changePathLangIso } from '../core/utils'
@@ -56,11 +57,15 @@ const router = useRouter()
 const backgroundIcons = [
   {
     name: 'snow',
-    count: 200,
+    count: 100,
     minWidth: 16,
     maxWidth: 30,
   },
 ]
+
+const hideMeneEtc = computed(() => {
+  return ['Home', 'LangHome', 'Nav'].includes(route.name as string)
+})
 
 locale.value = route.params.lang ?? 'zh-CN'
 

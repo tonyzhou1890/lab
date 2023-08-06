@@ -1,4 +1,5 @@
 import wordCount from './module/word-count'
+import nav from './module/nav'
 
 export default {
   global: {
@@ -31,7 +32,10 @@ export default {
   home: {
     title: 'an online toolbox',
     searchPlaceholder: 'search tools',
+    desc: 'Integrate many online tools, text processing, image modification, mini games etc. so that the work is worry-free and labor-saving.',
+    start: 'Start',
   },
+  nav,
   font: {
     title: 'Font Viewer',
     keywords: 'font viewer',
@@ -53,7 +57,17 @@ export default {
   },
   minesweeper: {
     title: 'Minesweeper',
-    keywords: 'minesweeper',
+    keywords: 'minesweeper, mini game',
     desc: 'Contains beginner, intermediate, and advanced minesweeper games.',
+  },
+  svgEditor: {
+    title: 'SVG Editor',
+    keywords: 'SVG editor, image processing',
+    desc: 'Edit SVG images online to meet lightweight requirements.',
+  },
+  snowmanAttack: {
+    title: 'Snowman Attack',
+    keywords: 'Snowman Attack, mimi game',
+    desc: 'Protect future generations and fight off the snowman.',
   },
 }

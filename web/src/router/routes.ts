@@ -1,20 +1,39 @@
 import { RouteRecordRaw } from 'vue-router'
 import serviceSchema from '@/core/service/schema'
+import config from '@/core/config'
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/home/IndexPage.vue') },
+      {
+        path: '',
+        name: 'Home',
+        component: () => import('pages/home/IndexPage.vue'),
+      },
     ],
   },
 
   {
-    path: '/:lang/',
+    path: `/:lang(${config.langIsoList.join('|')})/`,
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/home/IndexPage.vue') },
+      {
+        path: '',
+        name: 'LangHome',
+        component: () => import('pages/home/IndexPage.vue'),
+      },
+      {
+        path: 'nav',
+        name: 'Nav',
+        component: () => import('pages/nav/IndexPage.vue'),
+        meta: {
+          title: 'nav.title',
+          keywords: 'nav.keywords',
+          desc: 'nav.desc',
+        },
+      },
       {
         path: 'service/font',
         name: 'Font',

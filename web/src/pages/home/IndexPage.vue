@@ -1,72 +1,48 @@
 <template>
   <q-page class="col items-center">
-    <div class="home-screen bg-primary por">
-      <div class="content poa fit col items-center">
-        <h1 class="title">{{ $t('global.title') }}</h1>
-
-        <!-- search tools -->
-        <q-select
-          class="tool-search"
-          rounded
-          outlined
-          v-model="toolModel"
-          :options="tools"
-          use-input
-          hide-selected
-          @filter="filterFn"
-          hide-dropdown-icon
-          :placeholder="$t('home.searchPlaceholder')"
-          bg-color="white"
+    <div class="home-screen row">
+      <div class="content row fix">
+        <div class="left column inline items-center">
+          <h1 class="title text-bold">{{ $t('global.title') }}</h1>
+          <p class="desc">{{ $t('home.desc') }}</p>
+          <div>
+            <q-btn
+              :to="startTo"
+              color="secondary"
+              class="start-btn"
+              size="lg"
+              >{{ $t('home.start') }}</q-btn
+            >
+          </div>
+        </div>
+        <div
+          class="right column inline items-center"
+          color="primary"
         >
-          <template v-slot:append>
-            <q-icon
-              name="search"
-              class="cursor-pointer"
-            />
-          </template>
-          <!-- <template v-slot:label>
-          <p class="placeholder">{{ $t('home.searchPlaceholder') }}</p>
-        </template> -->
-          <template v-slot:no-option>
-            <q-item>
-              <q-item-section class="text-italic text-grey">
-                {{ $t('global.noOption') }}
-              </q-item-section>
-            </q-item>
-          </template>
-        </q-select>
+          <div class="icons-wrapper">
+            <svg-icon
+              v-for="item in icons"
+              :key="item"
+              :name="item"
+            ></svg-icon>
+          </div>
+        </div>
       </div>
     </div>
   </q-page>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { type QSelectProps } from 'quasar'
+import { changePathLangIso } from '@/core/utils'
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+const { locale } = useI18n()
 
-// search tools
-const toolModel = ref('')
-const tools = ref([])
-let filterFn: QSelectProps['onFilter'] = (val, update) => {
-  update(
-    () => {
-      if (val === '') {
-        tools.value = []
-      } else {
-        // const needle = val.toLowerCase()
-        tools.value = []
-      }
-    },
+const startTo = computed(() => {
+  return changePathLangIso('/nav', locale.value)
+})
 
-    // "ref" is the Vue reference to the QSelect
-    (ref) => {
-      if (val !== '' && (ref?.options?.length as number) > 0) {
-        ref.setOptionIndex(-1) // reset optionIndex in case there is something selected
-        ref.moveOptionSelection(1, true) // focus the first selectable option and do not update the input-value
-      }
-    }
-  )
-}
+const icons = ['text', 'image', 'dict', 'font', 'game', 'ellipsis']
 </script>
 
 <style lang="scss" scoped>
@@ -74,50 +50,65 @@ let filterFn: QSelectProps['onFilter'] = (val, update) => {
   height: calc(100vh - 50px);
   overflow: auto;
   box-sizing: border-box;
-
-  .background {
-    color: white;
-  }
+  color: white;
+  background-image: linear-gradient(
+    to bottom,
+    var(--q-primary),
+    rgba($primary, 0.5) 50%,
+    var(--q-primary)
+  );
 
   .content {
-    text-align: center;
-    padding-top: 20vh;
+    max-width: 1500px;
+    margin: 0 auto;
+  }
+
+  .left,
+  .right {
+    flex: 1;
+    height: 100%;
+    padding: 30px;
   }
 
   .title {
-    margin: 0;
-    font-size: 8vw;
-    font-style: italic;
-    font-family: kai;
+    margin: 15vh 0 0;
+    font-size: 45px;
     line-height: 1;
     color: white;
     text-shadow: 2px 2px 2px #333;
   }
 
-  .tool-search {
-    width: 70%;
-    margin: 13vh auto 0;
-
-    &.q-field--focused {
-      .placeholder {
-        display: none;
-      }
-    }
+  .desc {
+    margin: 30px 0;
+    font-size: 18px;
   }
 
-  .tool-section {
-    height: 200vh;
+  .start-btn {
+    width: auto;
+  }
+
+  .icons-wrapper {
+    margin-top: 15vh;
+    font-size: 90px;
+    letter-spacing: 1em;
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 650px) {
   .home-screen {
+    .content {
+      flex-direction: column;
+    }
+    .left,
+    .right {
+      width: 100%;
+    }
     .title {
-      font-size: 12vw;
+      margin-top: 5vh;
     }
 
-    .tool-search {
-      width: 80%;
+    .icons-wrapper {
+      margin-top: 5vh;
     }
   }
 }
