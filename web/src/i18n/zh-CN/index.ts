@@ -69,6 +69,6 @@ export default {
   snowmanAttack: {
     title: '雪人攻击',
     keywords: '雪人攻击, 小游戏',
-    desc: '保护后代，击退雪人吧。',
+    desc: '保护企鹅蛋，击退雪人吧。',
   },
 }

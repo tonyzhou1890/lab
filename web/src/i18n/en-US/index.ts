@@ -5,7 +5,7 @@ export default {
   global: {
     failed: 'Action failed',
     success: 'Action was successful',
-    title: 'snow lab',
+    title: 'Snow Lab',
     keywords: 'online toolbox, contains many useful tools',
     desc: 'snow lab, an online toolbox with font, text, development, picture, audio, video, mini games, etc',
     noOption: 'No options',
@@ -68,6 +68,6 @@ export default {
   snowmanAttack: {
     title: 'Snowman Attack',
     keywords: 'Snowman Attack, mimi game',
-    desc: 'Protect future generations and fight off the snowman.',
+    desc: 'Protect penguin eggs and fight off the snowman.',
   },
 }
