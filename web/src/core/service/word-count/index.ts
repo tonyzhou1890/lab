@@ -25,6 +25,7 @@ export interface WordCountItem {
   index?: number
   word: string
   count: number
+  percent?: number
   lang: string
 }
 
@@ -119,6 +120,8 @@ function listGrouping(list: WordCountItem[], lang?: string): GroupedWordData {
     tabs = JSON.parse(JSON.stringify(defaultAllTabs))
   }
   return tabs.map((item) => {
+    // 频率计算
+    let totalCount = 0
     return {
       ...item,
       list: list
@@ -129,8 +132,15 @@ function listGrouping(list: WordCountItem[], lang?: string): GroupedWordData {
           return word.lang === item.value
         })
         .map((item, index) => {
+          totalCount += item.count
           item.index = index + 1
           return item
+        })
+        .map((item) => {
+          return {
+            ...item,
+            percent: Number(((item.count / totalCount) * 100).toFixed(4)),
+          }
         }),
     }
   })
@@ -156,6 +166,7 @@ async function downloadExcel(
           index: item.index,
           word: item.word,
           count: item.count,
+          percent: item.percent,
         }
       })
     )
@@ -167,6 +178,7 @@ async function downloadExcel(
           t('wordCount.freListIndex'),
           t('wordCount.freListWord'),
           t('wordCount.freListCount'),
+          t('wordCount.freListPercent'),
         ],
       ],
       { origin: 'A1' }

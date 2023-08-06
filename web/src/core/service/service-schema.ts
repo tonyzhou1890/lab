@@ -38,13 +38,19 @@ export interface ServiceParamConfig {
   rules?: QFieldProps['rules']
 }
 
-export interface ServiceSchemaConfig {
+/**
+ * 服务功能模板
+ */
+export class ServiceSchema {
+  constructor(config: ServiceSchema) {
+    Object.assign(this, config)
+  }
   /**
    * @name 功能标识
    * @description 功能唯一性标识。首字母大写。
    * 用途：路由识别匹配、权限控制、功能编排匹配
    */
-  code: string
+  code = ''
   /**
    * @name 功能名称
    * @description 这里的值只是对于 i18n 的 key，实际的描述在 i18n 中。这主要是为了国际化。
@@ -55,7 +61,7 @@ export interface ServiceSchemaConfig {
    * }
    * ```
    */
-  name: string
+  name = ''
   /**
    * @name 功能图标（可选）
    * @description 可以是任何 img 元素可以显示的字符串，或者返回该字符串的函数（可以是异步函数）。如果没有提供，则程序会根据功能的第一个字（母）生成图片。
@@ -77,12 +83,12 @@ export interface ServiceSchemaConfig {
    * }
    * ```
    */
-  desc: string
+  desc = ''
   /**
    * @name 应用关键字
    * @description 应用的关键字，用于 seo 等。这里的值只是对于 i18n 的 key。
    */
-  keywords: string
+  keywords = ''
   /**
    * @name 功能分类
    * @description 对该功能的分类，这里的值只是对于 i18n 的 key，实际的描述在 i18n 中。这主要是为了国际化。
@@ -90,6 +96,16 @@ export interface ServiceSchemaConfig {
    * 一个服务可以属于多个分类。
    */
   categories?: string[]
+  /**
+   * @name 外链标识
+   * @description true 表示是外链打开，可以不填，实例化的时候传入 link 会自动判断
+   */
+  extra?: boolean
+  /**
+   * @name 跳转地址
+   * @description 服务对应的页面地址。站内服务可以不填。
+   */
+  link?: string
   /**
    * @name 功能初始化（可选）
    * @description 功能执行之前需要进行的准备活动。可以是异步函数。
@@ -113,21 +129,55 @@ export interface ServiceSchemaConfig {
   /**
    * @name 子功能
    */
-  children?: ServiceSchemaConfig[]
+  children?: ServiceSchema[]
 }
 
+// class ServiceSchema implements ServiceSchemaConfig {
+//   constructor(config: ServiceSchemaConfig) {
+//     Object.assign(this, config)
+//   }
+//   code = ''
+//   name = ''
+//   keywords = ''
+//   desc = ''
+//   categories = ['global.category.default']
+// }
+
 /**
- * 服务功能模板
+ * 服务分类
  */
-class ServiceSchema implements ServiceSchemaConfig {
-  constructor(config: ServiceSchemaConfig) {
-    Object.assign(this, config)
+export interface GroupedService {
+  key: string
+  value: ServiceSchema[]
+}
+export function groupService(list: ServiceSchema[]): GroupedService[] {
+  const res: GroupedService[] = []
+  const ungrouped: GroupedService = {
+    key: 'global.category.default',
+    value: [],
   }
-  code = ''
-  name = ''
-  keywords = ''
-  desc = ''
-  categories = ['global.category.default']
+  for (let i = 0, len = list.length; i < len; i++) {
+    const item = list[i]
+    if (!item.categories || !item.categories.length) {
+      ungrouped.value.push(item)
+    } else {
+      item.categories.forEach((category) => {
+        const temp = res.find((v) => v.key === category)
+        if (temp) {
+          temp.value.push(item)
+        } else {
+          res.push({
+            key: category,
+            value: [item],
+          })
+        }
+      })
+    }
+  }
+  if (ungrouped.value.length) {
+    res.push(ungrouped)
+  }
+  return res
 }
 
 export default ServiceSchema

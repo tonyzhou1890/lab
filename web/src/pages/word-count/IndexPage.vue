@@ -1,11 +1,5 @@
 <template>
   <q-page>
-    <div class="page-bg">
-      <ScatterIconsBackground
-        :icons="backgroundIcons"
-        color="gray"
-      />
-    </div>
     <div class="page-main app">
       <div class="page-title tac">
         <h1 class="title">{{ $t(meta.title as string) }}</h1>
@@ -73,6 +67,7 @@
                   :rows="tab.list"
                   :columns="columns"
                   :rows-per-page-options="[10, 20, 30, 50, 100, 0]"
+                  style="max-height: 400px"
                 />
               </q-tab-panel>
             </q-tab-panels>
@@ -137,16 +132,6 @@ import { useRoute } from 'vue-router'
 const { t } = useI18n()
 const route = useRoute()
 const meta = ref(route.meta)
-
-// background
-const backgroundIcons = [
-  {
-    name: 'snow',
-    count: 200,
-    minWidth: 16,
-    maxWidth: 30,
-  },
-]
 
 const file = ref<null | File>(null)
 const fileText = ref('')
@@ -213,6 +198,12 @@ const columns = computed<QTableProps['columns']>(() => [
     name: 'count',
     label: t('wordCount.freListCount'),
     field: 'count',
+    align: 'center',
+  },
+  {
+    name: 'percent',
+    label: t('wordCount.freListPercent'),
+    field: 'percent',
     align: 'center',
   },
 ])

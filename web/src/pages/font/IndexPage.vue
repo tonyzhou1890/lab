@@ -1,11 +1,5 @@
 <template>
   <q-page>
-    <div class="page-bg">
-      <ScatterIconsBackground
-        :icons="backgroundIcons"
-        color="gray"
-      />
-    </div>
     <div class="page-main app">
       <div class="page-title tac">
         <h1 class="title">{{ $t(meta.title as string) }}</h1>
@@ -83,16 +77,6 @@ interface GlyphOption {
 const { t } = useI18n()
 const route = useRoute()
 const meta = ref(route.meta)
-
-// background
-const backgroundIcons = [
-  {
-    name: 'snow',
-    count: 200,
-    minWidth: 16,
-    maxWidth: 30,
-  },
-]
 
 const file = ref(null)
 

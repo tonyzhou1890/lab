@@ -5,6 +5,7 @@ const schema = new Schema({
   name: 'font.title',
   desc: 'font.desc',
   keywords: 'font.keywords',
+  categories: ['global.category.font'],
 })
 
 export default schema

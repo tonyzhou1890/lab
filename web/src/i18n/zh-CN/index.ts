@@ -1,18 +1,28 @@
+import wordCount from './module/word-count'
+
 export default {
   global: {
     failed: '操作失败',
     success: '操作成功',
     title: '飞雪工具箱',
     keywords: '在线工具箱',
-    desc: '飞雪工具箱，一个在线工具箱，包含字体工具、文本工具、图片工具、音视频工具、小游戏等',
+    desc: '飞雪工具箱，一个在线工具箱，包含字体、文本、开发、图片、音视频等相关工具以及小游戏',
     noOption: '无选项',
     // 应用类别
     category: {
       default: '未分类',
       text: '文本',
+      dev: '开发',
+      font: '字体',
+      image: '图片',
+      audio: '音频',
+      video: '视频',
+      game: '小游戏',
     },
   },
   layout: {
+    pageNav: '页面导航',
+    serviceNav: '应用导航',
     home: '首页',
   },
   404: {
@@ -36,23 +46,15 @@ export default {
     charNum: '字符数',
     glyphs: '字形信息',
   },
-  wordCount: {
-    title: '词频统计',
-    keywords: '词频统计，导出生词本',
-    desc: '统计文本(UTF-8)里各单词出现的频率，统计结果可以导出为生词本。结果仅供参考。',
-    fileLabel: '选择 txt 文本',
-    fileInfo: '文本基本信息',
-    fileName: '文件名',
-    fileSize: '文件大小',
-    textLength: '字符数量',
-    freSection: '频率统计',
-    freListIndex: '序号',
-    freListWord: '单词/字',
-    freListCount: '次数',
-    all: '全部',
-    en: '英文',
-    zh: '中文',
-    exportExcel: '导出Excel',
-    exportTxt: '导出生词本',
+  wordCount,
+  dict: {
+    title: '云词典',
+    keywords: '在线词典，中英文词典',
+    desc: '在线查词，包含中文、英文、日文，自带 coca 单词表。还可以导出 epub 词书。',
+  },
+  minesweeper: {
+    title: '扫雷',
+    keywords: '扫雷游戏',
+    desc: '包含初级、中级、高级的扫雷游戏。',
   },
 }

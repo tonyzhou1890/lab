@@ -1,5 +1,11 @@
 <template>
   <q-layout view="hHh Lpr lff">
+    <div class="page-bg">
+      <ScatterIconsBackground
+        :icons="backgroundIcons"
+        color="gray"
+      />
+    </div>
     <q-header class="header">
       <q-toolbar>
         <q-btn
@@ -25,34 +31,7 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      overlay
-      :width="200"
-      bordered
-    >
-      <q-list>
-        <q-item
-          v-for="item in drawerList"
-          :key="item.title"
-          clickable
-          tag="a"
-          :target="item.extra ? '_blank' : '_self'"
-          :href="item.link"
-        >
-          <q-item-section
-            v-if="item.icon"
-            avatar
-          >
-            <q-icon :name="item.icon" />
-          </q-item-section>
-
-          <q-item-section>
-            <q-item-label>{{ $t(item.title) }}</q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
-    </q-drawer>
+    <LeftDrawer ref="leftDrawerRef" />
 
     <q-page-container>
       <router-view />
@@ -67,26 +46,30 @@ import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { changePathLangIso } from '../core/utils'
 import VueMeta from '@/components/VueMeta.vue'
+import LeftDrawer from '@/components/LeftDrawer.vue'
 const { locale } = useI18n({ useScope: 'global' })
 
 const route = useRoute()
 const router = useRouter()
 
+// background
+const backgroundIcons = [
+  {
+    name: 'snow',
+    count: 200,
+    minWidth: 16,
+    maxWidth: 30,
+  },
+]
+
 locale.value = route.params.lang ?? 'zh-CN'
 
-const drawerList = ref([
-  {
-    icon: 'home',
-    title: 'layout.home',
-    link: `/${locale.value}`,
-    extra: false,
-  },
-])
-
-const leftDrawerOpen = ref(false)
+const leftDrawerRef = ref<typeof LeftDrawer | null>(null)
 
 function toggleLeftDrawer() {
-  leftDrawerOpen.value = !leftDrawerOpen.value
+  if (leftDrawerRef.value) {
+    leftDrawerRef.value.toggle(true)
+  }
 }
 
 function toggleLanguage() {

@@ -5,6 +5,7 @@ const schema = new Schema({
   name: 'wordCount.title',
   desc: 'wordCount.desc',
   keywords: 'wordCount.keywords',
+  categories: ['global.category.text'],
 })
 
 export default schema
