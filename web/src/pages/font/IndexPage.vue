@@ -1,56 +1,52 @@
 <template>
-  <q-page>
-    <div class="page-main app">
-      <div class="page-title tac">
-        <h1 class="title">{{ $t(meta.title as string) }}</h1>
+  <q-page class="page-main app">
+    <div class="page-title tac">
+      <h1 class="title">{{ $t(meta.title as string) }}</h1>
+    </div>
+    <div class="content">
+      <p class="desc">{{ $t(meta.desc as string) }}</p>
+      <div class="file">
+        <q-file
+          v-model="file"
+          :label="$t('font.fileLabel')"
+          accept=".ttf, .woff, .otf"
+        />
       </div>
-      <div class="content">
-        <p class="desc">{{ $t(meta.desc as string) }}</p>
-        <div class="file">
-          <q-file
-            v-model="file"
-            :label="$t('font.fileLabel')"
-            accept=".ttf, .woff, .otf"
-          />
-        </div>
-        <div
-          class="full-width"
-          v-show="parsedFlag"
-        >
-          <!-- font info -->
-          <section class="info-section">
-            <h2 class="section-title">{{ $t('font.fontInfo') }}</h2>
-            <q-list>
-              <q-item
-                v-for="item in fontInfo"
-                :key="item._id"
-              >
-                <q-item-section class="text-bold">{{
-                  item.name
-                }}</q-item-section>
-                <q-item-section>{{ item.value }}</q-item-section>
-              </q-item>
-            </q-list>
-          </section>
-          <!-- font glyph list -->
-          <section class="glyph-section">
-            <h2 class="section-title">{{ $t('font.glyphs') }}</h2>
-            <q-select
-              class="glyph-select"
-              :options="glyphsOptions"
-              option-value="id"
-              option-label="label"
-              v-model="selectedGlyphGroup"
-              emit-value
-              map-options
-              @update:model-value="drawGlyph"
-            ></q-select>
-            <div
-              class="glyph-draw-list q-pt-md"
-              ref="glyphContainer"
-            ></div>
-          </section>
-        </div>
+      <div
+        class="full-width"
+        v-show="parsedFlag"
+      >
+        <!-- font info -->
+        <section class="info-section">
+          <h2 class="section-title">{{ $t('font.fontInfo') }}</h2>
+          <q-list>
+            <q-item
+              v-for="item in fontInfo"
+              :key="item._id"
+            >
+              <q-item-section class="text-bold">{{ item.name }}</q-item-section>
+              <q-item-section>{{ item.value }}</q-item-section>
+            </q-item>
+          </q-list>
+        </section>
+        <!-- font glyph list -->
+        <section class="glyph-section">
+          <h2 class="section-title">{{ $t('font.glyphs') }}</h2>
+          <q-select
+            class="glyph-select"
+            :options="glyphsOptions"
+            option-value="id"
+            option-label="label"
+            v-model="selectedGlyphGroup"
+            emit-value
+            map-options
+            @update:model-value="drawGlyph"
+          ></q-select>
+          <div
+            class="glyph-draw-list q-pt-md"
+            ref="glyphContainer"
+          ></div>
+        </section>
       </div>
     </div>
   </q-page>

@@ -18,8 +18,8 @@
 // page
 .page-main {
   max-width: 1200px;
-  min-height: calc(100vh - 50px);
-  margin: 0 auto;
+  min-height: calc(100vh - 150px);
+  margin: 50px auto 50px;
   background-color: rgba($color: #ffffff, $alpha: 0.8);
   overflow: auto;
   padding: 20px;
@@ -37,6 +37,10 @@
     font-size: 1.6vw;
     font-weight: bold;
     line-height: 1.4;
+  }
+  @media screen and(max-width: 1200px) {
+    min-height: calc(100vh - 50px);
+    margin: 0 auto;
   }
   @media screen and(max-width: 650px) {
     h1 {
@@ -63,4 +67,9 @@
 // text
 .tac {
   text-align: center;
+}
+
+// background
+.bg-transparent {
+  background-color: transparent;
 }

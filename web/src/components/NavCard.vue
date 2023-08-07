@@ -1,6 +1,9 @@
 <template>
-  <q-card class="bg-primary text-white nav-com">
-    <q-bar v-if="!isPage">
+  <q-card class="text-dark page-main nav-com">
+    <q-bar
+      v-if="!isPage"
+      class="bar"
+    >
       <q-space />
 
       <q-btn
@@ -9,7 +12,7 @@
         icon="close"
         v-close-popup
       >
-        <q-tooltip class="bg-white text-primary">Close</q-tooltip>
+        <q-tooltip class="bg-white text-dark">Close</q-tooltip>
       </q-btn>
     </q-bar>
 
@@ -25,7 +28,7 @@
           :href="item.link"
           :to="item.route"
           active-class="text-white"
-          class="page-nav-item q-ma-md bg-secondary rounded-borders"
+          class="page-nav-item q-ma-md bg-secondary rounded-borders text-white"
         >
           <q-item-section
             v-if="item.icon"
@@ -58,7 +61,7 @@
             :href="item.link"
             :to="item.route"
             active-class="text-white"
-            class="page-nav-item service-list-item column q-ma-md bg-secondary rounded-borders relative-position"
+            class="page-nav-item service-list-item column q-ma-md bg-secondary rounded-borders relative-position text-white"
             :data-first-char="item.firstChar"
           >
             <q-item-section>
@@ -185,6 +188,9 @@ const groupedServiceList = computed(() => {
 
 <style lang="scss" scoped>
 .nav-com {
+  .bar {
+    background-color: transparent;
+  }
   .page-nav-item {
     display: inline-flex;
     width: 200px;

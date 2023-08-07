@@ -1,13 +1,18 @@
 <template>
   <q-layout view="hHh Lpr lff">
     <div class="page-bg">
-      <ScatterIconsBackground
-        :icons="backgroundIcons"
-        color="gray"
+      <q-img
+        class="bg"
+        src="@/assets/images/global/winter.svg"
+        alt=""
+        fit="cover"
       />
     </div>
-    <q-header class="header">
-      <q-toolbar>
+    <q-header
+      class="header"
+      :class="{ 'bg-transparent': headerTrans }"
+    >
+      <q-toolbar class="toolbar">
         <q-btn
           flat
           dense
@@ -15,10 +20,10 @@
           icon="menu"
           aria-label="Menu"
           @click="toggleLeftDrawer"
-          v-show="!hideMeneEtc"
+          v-show="!hideMenuEtc"
         />
         <q-toolbar-title>
-          <span v-show="!hideMeneEtc">{{ $t('global.title') }}</span>
+          <span v-show="!hideMenuEtc">{{ $t('global.title') }}</span>
         </q-toolbar-title>
         <q-btn
           v-show="true"
@@ -54,17 +59,21 @@ const route = useRoute()
 const router = useRouter()
 
 // background
-const backgroundIcons = [
-  {
-    name: 'snow',
-    count: 100,
-    minWidth: 16,
-    maxWidth: 30,
-  },
-]
+// const backgroundIcons = [
+//   {
+//     name: 'snow',
+//     count: 100,
+//     minWidth: 16,
+//     maxWidth: 30,
+//   },
+// ]
 
-const hideMeneEtc = computed(() => {
+const hideMenuEtc = computed(() => {
   return ['Home', 'LangHome', 'Nav'].includes(route.name as string)
+})
+
+const headerTrans = computed(() => {
+  return ['Home', 'LangHome'].includes(route.name as string)
 })
 
 locale.value = route.params.lang ?? 'zh-CN'
@@ -86,3 +95,12 @@ function toggleLanguage() {
   })
 }
 </script>
+
+<style lang="scss" scoped>
+.page-bg {
+  .bg {
+    width: 100%;
+    height: 100%;
+  }
+}
+</style>
