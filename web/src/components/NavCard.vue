@@ -1,17 +1,9 @@
 <template>
   <q-card class="text-dark page-main nav-com">
-    <q-bar
-      v-if="!isPage"
-      class="bar"
-    >
+    <q-bar v-if="!isPage" class="bar">
       <q-space />
 
-      <q-btn
-        dense
-        flat
-        icon="close"
-        v-close-popup
-      >
+      <q-btn dense flat icon="close" v-close-popup>
         <q-tooltip class="bg-white text-dark">Close</q-tooltip>
       </q-btn>
     </q-bar>
@@ -19,21 +11,10 @@
     <q-card-section>
       <p class="text-h5 nav-title">{{ $t('layout.pageNav') }}</p>
       <q-list class="page-list">
-        <q-item
-          v-for="item in pageList"
-          :key="item.title"
-          clickable
-          :tag="item.htmlTag"
-          :target="item.target"
-          :href="item.link"
-          :to="item.route"
-          active-class="text-white"
-          class="page-nav-item q-ma-md bg-secondary rounded-borders text-white"
-        >
-          <q-item-section
-            v-if="item.icon"
-            avatar
-          >
+        <q-item v-for="item in pageList" :key="item.title" clickable :tag="item.htmlTag" :target="item.target"
+          :href="item.link" :to="item.route" active-class="text-white"
+          class="page-nav-item q-ma-md bg-secondary rounded-borders text-white">
+          <q-item-section v-if="item.icon" avatar>
             <q-icon :name="item.icon" />
           </q-item-section>
 
@@ -46,31 +27,16 @@
 
     <q-card-section>
       <p class="text-h5 nav-title">{{ $t('layout.serviceNav') }}</p>
-      <q-list
-        v-for="group in groupedServiceList"
-        :key="group.key"
-      >
+      <q-list v-for="group in groupedServiceList" :key="group.key">
         <p class="text-h6 nav-title">{{ $t(group.key) }}</p>
         <q-list class="page-list service-list">
-          <q-item
-            v-for="item in group.value"
-            :key="item.code"
-            clickable
-            :tag="item.htmlTag"
-            :target="item.target"
-            :href="item.link"
-            :to="item.route"
-            active-class="text-white"
+          <q-item v-for="item in group.value" :key="item.code" clickable :tag="item.htmlTag" :target="item.target"
+            :href="item.link" :to="item.route" active-class="text-white"
             class="page-nav-item service-list-item column q-ma-md bg-secondary rounded-borders relative-position text-white"
-            :data-first-char="item.firstChar"
-          >
+            :data-first-char="item.firstChar">
             <q-item-section>
               <q-item-label class="text-bold">{{ item.name }}</q-item-label>
-              <q-item-label
-                :title="item.desc"
-                class="ellipsis-2-lines"
-                >{{ item.desc }}</q-item-label
-              >
+              <q-item-label :title="item.desc" class="ellipsis-2-lines">{{ item.desc }}</q-item-label>
             </q-item-section>
           </q-item>
         </q-list>
@@ -150,8 +116,8 @@ const groupedServiceList = computed(() => {
       const htmlTag = item.extra
         ? 'a'
         : item.link && item.link.startsWith('http')
-        ? 'a'
-        : 'router-link'
+          ? 'a'
+          : 'router-link'
       let path = ''
       if (htmlTag !== 'a') {
         for (let i = 0; i < routes.length; i++) {
@@ -173,9 +139,9 @@ const groupedServiceList = computed(() => {
           htmlTag === 'a'
             ? ''
             : {
-                path,
-                query: route.query,
-              },
+              path,
+              query: route.query,
+            },
       }
     })
     return {
@@ -188,16 +154,21 @@ const groupedServiceList = computed(() => {
 
 <style lang="scss" scoped>
 .nav-com {
+  font-size: 16px;
+
   .bar {
     background-color: transparent;
   }
+
   .page-nav-item {
     display: inline-flex;
     width: 200px;
   }
+
   .service-list-item {
-    height: 74px;
+    height: 78px;
     vertical-align: middle;
+
     &::before {
       content: attr(data-first-char);
       position: absolute;
@@ -209,6 +180,7 @@ const groupedServiceList = computed(() => {
       color: rgba($color: #000000, $alpha: 0.1);
     }
   }
+
   // 都不生效
   // &:deep(.q-item.q-router-link--active) {
   //   .q-item.q-router-link--active,
@@ -220,6 +192,7 @@ const groupedServiceList = computed(() => {
   //   display: none;
   // }
 }
+
 @media screen and (max-width: 750px) {
   .nav-com {
     .page-nav-item {

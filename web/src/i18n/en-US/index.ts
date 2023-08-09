@@ -9,6 +9,7 @@ export default {
     keywords: 'online toolbox, contains many useful tools',
     desc: 'snow lab, an online toolbox with font, text, development, picture, audio, video, mini games, etc',
     noOption: 'No options',
+    doc: 'doc',
     category: {
       default: 'Uncategorized',
       text: 'Text',

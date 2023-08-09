@@ -1,29 +1,16 @@
 <template>
-  <q-page class="page-main app">
-    <div class="page-title tac">
-      <h1 class="title">{{ $t(meta.title as string) }}</h1>
-    </div>
+  <div class="page-main app">
+    <ServiceBaseInfo service-name="font" />
     <div class="content">
-      <p class="desc">{{ $t(meta.desc as string) }}</p>
       <div class="file">
-        <q-file
-          v-model="file"
-          :label="$t('font.fileLabel')"
-          accept=".ttf, .woff, .otf"
-        />
+        <q-file v-model="file" :label="$t('font.fileLabel')" accept=".ttf, .woff, .otf" />
       </div>
-      <div
-        class="full-width"
-        v-show="parsedFlag"
-      >
+      <div class="full-width" v-show="parsedFlag">
         <!-- font info -->
         <section class="info-section">
           <h2 class="section-title">{{ $t('font.fontInfo') }}</h2>
           <q-list>
-            <q-item
-              v-for="item in fontInfo"
-              :key="item._id"
-            >
+            <q-item v-for="item in fontInfo" :key="item._id">
               <q-item-section class="text-bold">{{ item.name }}</q-item-section>
               <q-item-section>{{ item.value }}</q-item-section>
             </q-item>
@@ -32,24 +19,13 @@
         <!-- font glyph list -->
         <section class="glyph-section">
           <h2 class="section-title">{{ $t('font.glyphs') }}</h2>
-          <q-select
-            class="glyph-select"
-            :options="glyphsOptions"
-            option-value="id"
-            option-label="label"
-            v-model="selectedGlyphGroup"
-            emit-value
-            map-options
-            @update:model-value="drawGlyph"
-          ></q-select>
-          <div
-            class="glyph-draw-list q-pt-md"
-            ref="glyphContainer"
-          ></div>
+          <q-select class="glyph-select" :options="glyphsOptions" option-value="id" option-label="label"
+            v-model="selectedGlyphGroup" emit-value map-options @update:model-value="drawGlyph"></q-select>
+          <div class="glyph-draw-list q-pt-md" ref="glyphContainer"></div>
         </section>
       </div>
     </div>
-  </q-page>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -57,7 +33,7 @@ import { computed, ref, watch } from 'vue'
 import fontService from '@/core/service/font'
 import type * as OpenType from 'opentype.js'
 import { useI18n } from 'vue-i18n'
-import { useRoute } from 'vue-router'
+import ServiceBaseInfo from '@/components/ServiceBaseInfo.vue'
 
 interface FontInfoItem {
   _id?: number
@@ -71,8 +47,6 @@ interface GlyphOption {
 }
 
 const { t } = useI18n()
-const route = useRoute()
-const meta = ref(route.meta)
 
 const file = ref(null)
 
@@ -187,6 +161,7 @@ const drawGlyph = () => {
 
 <style lang="scss">
 .page-main {
+
   .file,
   .glyph-select {
     width: 300px;

@@ -1,12 +1,7 @@
 <template>
-  <q-dialog
-    v-model="open"
-    :maximized="true"
-    transition-show="slide-right"
-    transition-hide="slide-left"
-    class="left-drawer"
-  >
-    <NavCard />
+  <q-dialog v-model="open" :maximized="true" transition-show="slide-right" transition-hide="slide-left"
+    class="left-drawer">
+    <NavCard class="dialog-nav" />
   </q-dialog>
 </template>
 
@@ -26,3 +21,11 @@ function toggle(value?: boolean) {
 
 defineExpose({ toggle })
 </script>
+
+<style lang="scss" scoped>
+.left-drawer {
+  .dialog-nav {
+    margin: 0;
+  }
+}
+</style>
