@@ -2,12 +2,12 @@
  * 数据类型基类
  */
 export default class DataType {
-  value?: any;
+  value?: any
   print?() {
-    undefined;
+    undefined
   }
   download?() {
-    undefined;
+    undefined
   }
 }
 
@@ -15,20 +15,20 @@ export default class DataType {
  * 文件类
  */
 export interface FileDataConfig {
-  value?: File;
-  accept?: string;
-  multiple?: boolean;
-  maxFileSize?: number; // bytes
-  maxTotalSize?: number;
-  maxFiles?: number;
+  value?: File
+  accept?: string
+  multiple?: boolean
+  maxFileSize?: number // bytes
+  maxTotalSize?: number
+  maxFiles?: number
 }
 export class FileData extends DataType implements FileDataConfig {
   constructor(config: FileDataConfig) {
-    super();
-    Object.assign(this, config);
+    super()
+    Object.assign(this, config)
   }
 
-  value = undefined;
-  accept = '';
-  multiple = false;
+  value = undefined
+  accept = ''
+  multiple = false
 }

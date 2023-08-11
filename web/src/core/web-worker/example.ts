@@ -21,7 +21,7 @@ async function init() {
   }
 
   try {
-    const instance = create<Utils>(worker, 1)
+    const instance = await create<Utils>(worker, 1)
     local.workerInstance = instance
   } catch (e) {
     throw new Error((e as Error).message)

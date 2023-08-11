@@ -2,44 +2,59 @@
  * worker job type
  */
 export interface WorkerJobType {
-  action: string;
-  param?: Array<unknown>;
+  action: string
+  param?: Array<unknown>
 }
 
 /**
  * worker job wrap type
  */
 export interface WorkerJobWrapType<T> {
-  _sign: number;
-  job: WorkerJobType;
+  _sign: number
+  job: WorkerJobType
   p: {
-    resolve: (value: T) => void;
-    reject: (value: unknown) => void;
-  };
+    resolve: (value: T) => void
+    reject: (value: unknown) => void
+  }
 }
 
+/**
+ * worker call promisify
+ */
+export type WorkerCallPromisify<T extends (...args: any) => any> = (
+  ...rest: Parameters<T>
+) => Promise<ReturnType<T>>
+
+/**
+ * worker instance
+ */
+export interface WorkerInner {
+  _terminate: () => void
+}
+export type WorkerInstance<T> = T & WorkerInner
+
 export const WorkerErrorMap: {
-  [x: number]: string;
+  [x: number]: string
 } = {
   1: '指定操作不存在',
-};
+}
 
-function create<T extends { [x: string]: any }>(
+async function create<T extends { [x: string]: any }>(
   w: string | (new () => Worker),
   threadNum?: number
-): T {
-  const type = typeof w;
+) {
+  const type = typeof w
   if (type !== 'string' && type !== 'function') {
-    throw new Error('worker 参数类型错误');
+    throw new Error('worker 参数类型错误')
   }
 
   // 函数返回值类型
-  type R = Promise<ReturnType<T[string]>>;
+  type R = Promise<ReturnType<T[string]>>
 
   const workerNum =
-    threadNum ?? Math.max(window.navigator.hardwareConcurrency - 1, 1); // 线程数量
-  const quene = new Map();
-  const waiting: Array<WorkerJobWrapType<R>> = [];
+    threadNum ?? Math.max(window.navigator.hardwareConcurrency - 1, 1) // 线程数量
+  const quene = new Map()
+  const waiting: Array<WorkerJobWrapType<R>> = []
   const workers = new Array(workerNum).fill(null).map((_, index) => {
     return {
       index,
@@ -48,61 +63,79 @@ function create<T extends { [x: string]: any }>(
           ? new Worker(w as string)
           : new (w as new () => Worker)(),
       idle: true, // 是否空闲
-    };
-  });
+    }
+  })
 
   workers.map((item) => {
     item.worker.addEventListener('message', (e) => {
       if (e.data?._sign) {
-        const { errorCode, _sign, result } = e.data;
-        const queneItem = quene.get(_sign);
+        const { errorCode, _sign, result } = e.data
+        const queneItem = quene.get(_sign)
         // 发生错误
         if (errorCode !== undefined) {
           if (WorkerErrorMap[errorCode]) {
             queneItem.p.reject(
               `${queneItem.job.action} ${WorkerErrorMap[errorCode]}`
-            );
+            )
           } else {
-            queneItem.p.reject(`${queneItem.job.action} 未知错误`);
+            queneItem.p.reject(`${queneItem.job.action} 未知错误`)
           }
         } else {
           // 返回结果
-          queneItem.p.resolve(result);
+          queneItem.p.resolve(result)
         }
-        quene.delete(e.data._sign);
-        item.idle = true;
+        quene.delete(e.data._sign)
+        item.idle = true
         // 尝试接受新任务
-        assignJob();
+        assignJob()
       }
-    });
-  });
+    })
+  })
 
   /**
    * 将等待队列中的任务加入空闲线程
    */
   function assignJob() {
-    let idleWorker = null;
-    let waitingJob = null;
+    let idleWorker = null
+    let waitingJob = null
     if (waiting.length) {
-      idleWorker = workers.find((item) => item.idle);
+      idleWorker = workers.find((item) => item.idle)
       if (idleWorker) {
-        idleWorker.idle = false;
-        waitingJob = waiting.shift() as WorkerJobWrapType<R>;
-        quene.set(waitingJob._sign, waitingJob);
-
+        idleWorker.idle = false
+        waitingJob = waiting.shift() as WorkerJobWrapType<R>
+        quene.set(waitingJob._sign, waitingJob)
+        console.log(waitingJob)
         idleWorker.worker.postMessage({
           ...waitingJob.job,
           _sign: waitingJob._sign,
-        });
+        })
       }
     }
   }
 
+  /**
+   * 结束多线程
+   */
+  function _terminate() {
+    workers.map((item) => {
+      item.worker.terminate()
+    })
+  }
+
   const fns = new Proxy({} as T, {
     get(target, prop) {
+      /**
+       * https://juejin.cn/post/6847902216028848141
+       * 因为 promise 的 then 会链式调用，所以，为了中断调用，这里返回一个永远 pending 的 promise。
+       */
+      if (prop === 'then') {
+        return new Promise(() => {
+          /** */
+        })
+      }
       return function (...rest: Parameters<T[string]>): R {
         return new Promise((resolve, reject) => {
-          const _sign = Date.now() * Math.random();
+          const _sign = Date.now() * Math.random()
           waiting.push({
             _sign,
             job: {
@@ -110,15 +143,20 @@ function create<T extends { [x: string]: any }>(
               param: rest,
             },
             p: { resolve, reject },
-          } as WorkerJobWrapType<R>);
+          } as WorkerJobWrapType<R>)
           // 分配线程
-          assignJob();
-        });
-      };
+          assignJob()
+        })
+      }
     },
-  });
+  })
 
-  return fns;
+  const res = Object.assign(fns, {
+    _terminate,
+    _workerNum: workerNum,
+  })
+
+  return Promise.resolve(res)
 }
 
-export default create;
+export default create
