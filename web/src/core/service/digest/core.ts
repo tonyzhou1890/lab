@@ -1,4 +1,5 @@
 import Crypto from 'crypto-js'
+import jsmd5 from 'js-md5'
 import { getPermutationStringByIndex } from '@/core/utils'
 import CoreError, { CoreErrorEnum } from '@/core/error'
 import { DigestError, DigestErrorEnum } from './error'
@@ -34,7 +35,9 @@ function deMd5(
 ): string {
   for (let i = start; i < end; i++) {
     const str = getPermutationStringByIndex(chars, i)
-    let res = md5(str)
+    // let res = md5(str)
+    // improve performance
+    let res = jsmd5(str)
     // 16 位密文
     if (isSixteen) {
       res = res.substring(8, 24)
