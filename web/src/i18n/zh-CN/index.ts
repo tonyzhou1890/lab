@@ -55,5 +55,15 @@ export default {
     keywords: '雪人攻击, 小游戏',
     desc: '保护企鹅蛋，击退雪人吧。',
   },
+  reader: {
+    title: '享阅·阅读器',
+    keywords: 'TXT 阅读器',
+    desc: '一个简单的阅读器，支持 UTF8 编码的 TXT 文本。阅读进度保存在浏览器本地。',
+  },
+  gif: {
+    title: 'Spark GIF',
+    keywords: 'GIF 编辑器，精灵图转 GIF',
+    desc: '支持图片合成 GIF、精灵图和 GIF 互转。',
+  },
   digest,
 }

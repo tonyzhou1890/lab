@@ -9,6 +9,8 @@ import DictSchema from './dict/schema'
 import MinesweeperSchema from './minesweeper/schema'
 import SvgEditorSchema from './svg-editor/schema'
 import SnowmanAttackSchema from './snowman-attack/schema'
+import ReaderSchama from './reader/schema'
+import GifSchema from './gif/schema'
 
 export default {
   FontSchema,
@@ -18,6 +20,8 @@ export default {
   MinesweeperSchema,
   SvgEditorSchema,
   SnowmanAttackSchema,
+  ReaderSchama,
+  GifSchema,
 } as {
   [x: string]: ServiceSchema
 }
