@@ -39,7 +39,47 @@ function deMd5(
     if (isSixteen) {
       res = res.substring(8, 24)
     }
-    if (md5(str) === cipher) {
+    if (res === cipher) {
+      return str
+    }
+  }
+  return ''
+}
+
+/**
+ * @name sha 哈希编码
+ * @param message
+ * @param fn sha function
+ * @returns
+ */
+function sha(message: string | ArrayBuffer, fn: typeof Crypto.SHA1): string {
+  let res: Crypto.lib.WordArray | null = null
+  if (typeof message === 'string') {
+    res = fn(message)
+  }
+  if (message instanceof ArrayBuffer) {
+    const inputWordArray = Crypto.lib.WordArray.create(
+      message as unknown as number[]
+    )
+    res = fn(inputWordArray)
+  }
+  return res ? res.toString() : ''
+}
+
+/**
+ * @name sha 哈希解码
+ */
+function deSha(
+  chars: string[],
+  start: bigint,
+  end: bigint,
+  cipher: string,
+  fn: typeof Crypto.SHA1
+): string {
+  for (let i = start; i < end; i++) {
+    const str = getPermutationStringByIndex(chars, i)
+
+    if (sha(str, fn) === cipher) {
       return str
     }
   }
@@ -62,6 +102,9 @@ function encrypt(
   }
 
   if (temp.name === 'md5') return md5(message)
+  else if (temp.name === 'sha1') return sha(message, Crypto.SHA1)
+  else if (temp.name === 'sha256') return sha(message, Crypto.SHA256)
+  else if (temp.name === 'sha512') return sha(message, Crypto.SHA512)
   return ''
 }
 
@@ -98,6 +141,12 @@ function decrypt(
       return new DigestError(DigestErrorEnum['Cipher Length Error'])
     }
     return deMd5(chars, start, end, cipher, cipher.length === 16)
+  } else if (temp.name === 'sha1') {
+    return deSha(chars, start, end, cipher, Crypto.SHA1)
+  } else if (temp.name === 'sha256') {
+    return deSha(chars, start, end, cipher, Crypto.SHA256)
+  } else if (temp.name === 'sha512') {
+    return deSha(chars, start, end, cipher, Crypto.SHA512)
   }
 
   return ''
@@ -151,6 +200,15 @@ export const encryptTypes = [
   {
     name: 'md5',
   },
+  {
+    name: 'sha1',
+  },
+  {
+    name: 'sha256',
+  },
+  {
+    name: 'sha512',
+  },
 ]
 
 /**
@@ -159,5 +217,14 @@ export const encryptTypes = [
 export const decryptTypes = [
   {
     name: 'md5',
+  },
+  {
+    name: 'sha1',
+  },
+  {
+    name: 'sha256',
+  },
+  {
+    name: 'sha512',
   },
 ]

@@ -2,11 +2,31 @@
   <div class="page-main app">
     <ServiceBaseInfo service-name="digest" />
     <div class="content">
-      <q-tabs v-model="currTab" class="text-teal">
-        <q-tab v-for="tab in tabList" :key="tab.value" :name="tab.value" :label="tab.name" />
+      <q-tabs
+        v-model="currTab"
+        class="text-teal"
+      >
+        <q-tab
+          v-for="tab in tabList"
+          :key="tab.value"
+          :name="tab.value"
+          :label="tab.name"
+        />
       </q-tabs>
-      <q-tab-panels keep-alive v-model="currTab" animated swipeable transition-prev="jump-up" transition-next="jump-up">
-        <q-tab-panel v-for="tab in tabList" :key="tab.value" :name="tab.value">
+      <q-tab-panels
+        class="bg-transparent"
+        keep-alive
+        v-model="currTab"
+        animated
+        swipeable
+        transition-prev="jump-up"
+        transition-next="jump-up"
+      >
+        <q-tab-panel
+          v-for="tab in tabList"
+          :key="tab.value"
+          :name="tab.value"
+        >
           <component :is="tab.component" />
         </q-tab-panel>
       </q-tab-panels>
@@ -37,20 +57,19 @@ const tabList = computed<TabItem[]>(() => {
     {
       name: t('digest.encrypt'),
       value: 'encrypt',
-      component: DigestEncrypt
+      component: DigestEncrypt,
     },
     {
       name: t('digest.decrypt'),
       value: 'decrypt',
-      component: DigestDecrypt
-    }
+      component: DigestDecrypt,
+    },
   ]
 })
 </script>
 
 <style lang="scss">
 .page-main {
-
   .file,
   .glyph-select {
     width: 300px;

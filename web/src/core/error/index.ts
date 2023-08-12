@@ -1,7 +1,7 @@
 export enum CoreErrorEnum {
-  'Not Found' = 100,
-  'Resource Not Found' = 101,
-  'Inner Error' = 200,
+  'Execute Error' = 100,
+  'Not Found' = 200,
+  'Resource Not Found' = 201,
   'Custom' = 900,
 }
 

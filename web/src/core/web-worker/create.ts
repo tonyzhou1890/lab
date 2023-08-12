@@ -30,6 +30,7 @@ export type WorkerCallPromisify<T extends (...args: any) => any> = (
  */
 export interface WorkerInner {
   _terminate: () => void
+  _workerNum: number
 }
 export type WorkerInstance<T> = T & WorkerInner
 
@@ -104,7 +105,7 @@ async function create<T extends { [x: string]: any }>(
         idleWorker.idle = false
         waitingJob = waiting.shift() as WorkerJobWrapType<R>
         quene.set(waitingJob._sign, waitingJob)
-        console.log(waitingJob)
+
         idleWorker.worker.postMessage({
           ...waitingJob.job,
           _sign: waitingJob._sign,
@@ -122,41 +123,45 @@ async function create<T extends { [x: string]: any }>(
     })
   }
 
-  const fns = new Proxy({} as T, {
-    get(target, prop) {
-      /**
-       * https://juejin.cn/post/6847902216028848141
-       * 因为 promise 的 then 会链式调用，所以，为了中断调用，这里返回一个永远 pending 的 promise。
-       */
-      if (prop === 'then') {
-        return new Promise(() => {
-          /** */
-        })
-      }
-      return function (...rest: Parameters<T[string]>): R {
-        return new Promise((resolve, reject) => {
-          const _sign = Date.now() * Math.random()
-          waiting.push({
-            _sign,
-            job: {
-              action: prop as string,
-              param: rest,
-            },
-            p: { resolve, reject },
-          } as WorkerJobWrapType<R>)
-          // 分配线程
-          assignJob()
-        })
-      }
-    },
-  })
+  const fns = new Proxy(
+    {
+      _terminate,
+      _workerNum: workerNum,
+    } as T & WorkerInner,
+    {
+      get(target, prop) {
+        /**
+         * https://juejin.cn/post/6847902216028848141
+         * 因为 promise 的 then 会链式调用，所以，为了中断调用，这里返回一个永远 pending 的 promise。
+         */
+        if (prop === 'then') {
+          return new Promise(() => {
+            /** */
+          })
+        }
+        if (['_terminate', '_workerNum'].includes(prop as string)) {
+          return target[prop as string]
+        }
+        return function (...rest: Parameters<T[string]>): R {
+          return new Promise((resolve, reject) => {
+            const _sign = Date.now() * Math.random()
+            waiting.push({
+              _sign,
+              job: {
+                action: prop as string,
+                param: rest,
+              },
+              p: { resolve, reject },
+            } as WorkerJobWrapType<R>)
+            // 分配线程
+            assignJob()
+          })
+        }
+      },
+    }
+  )
 
-  const res = Object.assign(fns, {
-    _terminate,
-    _workerNum: workerNum,
-  })
-
-  return Promise.resolve(res)
+  return Promise.resolve(fns)
 }
 
 export default create

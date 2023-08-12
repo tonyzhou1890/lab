@@ -26,7 +26,7 @@
           <span v-show="!hideMenuEtc">{{ $t('global.title') }}</span>
         </q-toolbar-title>
         <q-btn
-          v-show="true"
+          v-show="false"
           flat
           dense
           round
