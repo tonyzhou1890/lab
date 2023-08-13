@@ -11,6 +11,7 @@ const { createSvgIconsPlugin } = require('vite-plugin-svg-icons')
 const svgLoader = require('vite-svg-loader')
 const { configure } = require('quasar/wrappers')
 const path = require('path')
+const fs = require('fs')
 
 module.exports = configure(function (/* ctx */) {
   return {
@@ -101,6 +102,16 @@ module.exports = configure(function (/* ctx */) {
           symbolId: 'icon-[dir]-[name]',
         }),
       ],
+
+      /**
+       * 打包后拷贝 PM2 启动文件
+       */
+      afterBuild: async () => {
+        fs.copyFileSync(
+          './ecosystem.config.js',
+          './dist/ssr/ecosystem.config.js'
+        )
+      },
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer

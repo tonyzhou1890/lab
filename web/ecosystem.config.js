@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: 'snowlab-web',
-      script: './bin/www',
+      script: './index.js',
       watch: '.',
       ignore_watch: ['node_modules', 'build', 'logs', 'test'],
       out_file: './logs/out.log', // 日志输出
