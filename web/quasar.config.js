@@ -7,10 +7,10 @@
 
 // Configuration for your app
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
-const { createSvgIconsPlugin } = require('vite-plugin-svg-icons');
-const svgLoader = require('vite-svg-loader');
-const { configure } = require('quasar/wrappers');
-const path = require('path');
+const { createSvgIconsPlugin } = require('vite-plugin-svg-icons')
+const svgLoader = require('vite-svg-loader')
+const { configure } = require('quasar/wrappers')
+const path = require('path')
 
 module.exports = configure(function (/* ctx */) {
   return {
@@ -51,7 +51,7 @@ module.exports = configure(function (/* ctx */) {
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#build
     build: {
       target: {
-        browser: ['es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1'],
+        browser: ['es2020'],
         node: 'node16',
       },
 
@@ -222,5 +222,5 @@ module.exports = configure(function (/* ctx */) {
       // extendBexScriptsConf (esbuildConf) {}
       // extendBexManifestJson (json) {}
     },
-  };
-});
+  }
+})
