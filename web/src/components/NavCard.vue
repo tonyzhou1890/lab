@@ -1,9 +1,17 @@
 <template>
   <q-card class="text-dark page-main nav-com">
-    <q-bar v-if="!isPage" class="bar">
+    <q-bar
+      v-if="!isPage"
+      class="bar"
+    >
       <q-space />
 
-      <q-btn dense flat icon="close" v-close-popup>
+      <q-btn
+        dense
+        flat
+        icon="close"
+        v-close-popup
+      >
         <q-tooltip class="bg-white text-dark">Close</q-tooltip>
       </q-btn>
     </q-bar>
@@ -11,10 +19,23 @@
     <q-card-section>
       <p class="text-h5 nav-title">{{ $t('layout.pageNav') }}</p>
       <q-list class="page-list">
-        <q-item v-for="item in pageList" :key="item.title" clickable :tag="item.htmlTag" :target="item.target"
-          :href="item.link" :to="item.route" active-class="text-white"
-          class="page-nav-item q-ma-md bg-secondary rounded-borders text-white">
-          <q-item-section v-if="item.icon" avatar>
+        <q-item
+          v-for="item in pageList"
+          :key="item.title"
+          clickable
+          :tag="item.htmlTag"
+          :target="item.target"
+          :href="item.link"
+          :to="item.route"
+          active-class="text-white"
+          class="page-nav-item q-ma-md bg-primary relative-position text-white"
+        >
+          <div class="poa border border-left"></div>
+          <div class="poa border border-right"></div>
+          <q-item-section
+            v-if="item.icon"
+            avatar
+          >
             <q-icon :name="item.icon" />
           </q-item-section>
 
@@ -27,16 +48,33 @@
 
     <q-card-section>
       <p class="text-h5 nav-title">{{ $t('layout.serviceNav') }}</p>
-      <q-list v-for="group in groupedServiceList" :key="group.key">
+      <q-list
+        v-for="group in groupedServiceList"
+        :key="group.key"
+      >
         <p class="text-h6 nav-title">{{ $t(group.key) }}</p>
         <q-list class="page-list service-list">
-          <q-item v-for="item in group.value" :key="item.code" clickable :tag="item.htmlTag" :target="item.target"
-            :href="item.link" :to="item.route" active-class="text-white"
-            class="page-nav-item service-list-item column q-ma-md bg-secondary rounded-borders relative-position text-white"
-            :data-first-char="item.firstChar">
+          <q-item
+            v-for="item in group.value"
+            :key="item.code"
+            clickable
+            :tag="item.htmlTag"
+            :target="item.target"
+            :href="item.link"
+            :to="item.route"
+            active-class="text-white"
+            class="page-nav-item service-list-item column q-ma-md bg-primary relative-position text-white"
+            :data-first-char="item.firstChar"
+          >
+            <div class="poa border border-left"></div>
+            <div class="poa border border-right"></div>
             <q-item-section>
               <q-item-label class="text-bold">{{ item.name }}</q-item-label>
-              <q-item-label :title="item.desc" class="ellipsis-2-lines">{{ item.desc }}</q-item-label>
+              <q-item-label
+                :title="item.desc"
+                class="ellipsis-2-lines"
+                >{{ item.desc }}</q-item-label
+              >
             </q-item-section>
           </q-item>
         </q-list>
@@ -116,8 +154,8 @@ const groupedServiceList = computed(() => {
       const htmlTag = item.extra
         ? 'a'
         : item.link && item.link.startsWith('http')
-          ? 'a'
-          : 'router-link'
+        ? 'a'
+        : 'router-link'
       let path = ''
       if (htmlTag !== 'a') {
         for (let i = 0; i < routes.length; i++) {
@@ -139,9 +177,9 @@ const groupedServiceList = computed(() => {
           htmlTag === 'a'
             ? ''
             : {
-              path,
-              query: route.query,
-            },
+                path,
+                query: route.query,
+              },
       }
     })
     return {
@@ -163,6 +201,54 @@ const groupedServiceList = computed(() => {
   .page-nav-item {
     display: inline-flex;
     width: 200px;
+    .border {
+      width: 50%;
+      height: calc(100% - 4px);
+      top: 2px;
+      &::before,
+      &::after {
+        position: absolute;
+        content: '';
+        width: 6px;
+        height: 2px;
+        background-color: white;
+        transition-property: width;
+        transition-duration: 0.3s;
+      }
+      &::before {
+        top: 0px;
+      }
+      &::after {
+        bottom: 0px;
+      }
+    }
+    .border-left {
+      left: 2px;
+      border-left: 2px solid white;
+      &::before,
+      &::after {
+        left: 0px;
+      }
+    }
+    .border-right {
+      right: 2px;
+      border-right: 2px solid white;
+      &::before,
+      &::after {
+        right: 0px;
+      }
+    }
+    &:hover {
+      .border {
+        &::before,
+        &::after {
+          width: 100%;
+        }
+      }
+    }
+    :deep(.q-item__section) {
+      z-index: 1;
+    }
   }
 
   .service-list-item {
