@@ -23,7 +23,7 @@
           v-show="!hideMenuEtc"
         />
         <q-toolbar-title>
-          <span v-show="!hideMenuEtc">{{ $t('global.title') }}</span>
+          <span v-show="!hideMenuEtc">{{ title }}</span>
         </q-toolbar-title>
         <q-btn
           v-show="false"
@@ -53,7 +53,7 @@ import { useI18n } from 'vue-i18n'
 import { changePathLangIso } from '../core/utils'
 import VueMeta from '@/components/VueMeta.vue'
 import LeftDrawer from '@/components/LeftDrawer.vue'
-const { locale } = useI18n({ useScope: 'global' })
+const { locale, t } = useI18n({ useScope: 'global' })
 
 const route = useRoute()
 const router = useRouter()
@@ -74,6 +74,16 @@ const hideMenuEtc = computed(() => {
 
 const headerTrans = computed(() => {
   return ['Home', 'LangHome'].includes(route.name as string)
+})
+
+const title = computed(() => {
+  const meta = route.meta
+  let title = t('global.title')
+  if (meta && meta.title) {
+    title = `${t('global.title')}-${t(meta.title as string)}`
+  }
+
+  return title
 })
 
 locale.value = route.params.lang ?? 'zh-CN'
@@ -101,6 +111,11 @@ function toggleLanguage() {
   .bg {
     width: 100%;
     height: 100%;
+  }
+}
+.header {
+  :deep(.q-toolbar__title) {
+    font-size: 16px;
   }
 }
 </style>
