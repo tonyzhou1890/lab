@@ -21,6 +21,8 @@ export default {
   form: {
     required: '必填',
     inputError: '输入有误',
+    ok: '确定',
+    cancel: '取消',
   },
   // 错误提示
   error: {

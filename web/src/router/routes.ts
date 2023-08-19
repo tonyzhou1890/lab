@@ -50,6 +50,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/digest/IndexPage.vue'),
       },
       {
+        path: 'service/counter',
+        name: 'Counter',
+        component: () => import('pages/counter/IndexPage.vue'),
+      },
+      {
         path: ':catchAll(.*)*',
         component: () => import('pages/404/IndexPage.vue'),
       },

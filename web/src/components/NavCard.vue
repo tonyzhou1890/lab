@@ -72,7 +72,7 @@
               <q-item-label class="text-bold">{{ item.name }}</q-item-label>
               <q-item-label
                 :title="item.desc"
-                class="ellipsis-2-lines"
+                class="service-desc ellipsis-2-lines"
                 >{{ item.desc }}</q-item-label
               >
             </q-item-section>
@@ -198,6 +198,10 @@ const groupedServiceList = computed(() => {
     background-color: transparent;
   }
 
+  .nav-title {
+    margin-bottom: 0;
+  }
+
   .page-nav-item {
     display: inline-flex;
     width: 200px;
@@ -255,6 +259,12 @@ const groupedServiceList = computed(() => {
     height: 78px;
     vertical-align: middle;
 
+    .service-desc {
+      color: $grey-5;
+      font-size: 14px;
+      min-height: 2.4em;
+    }
+
     &::before {
       content: attr(data-first-char);
       position: absolute;
@@ -280,6 +290,9 @@ const groupedServiceList = computed(() => {
 }
 
 @media screen and (max-width: 750px) {
+  .page-main {
+    padding: 10px 0;
+  }
   .nav-com {
     .page-nav-item {
       width: calc(50% - 32px);

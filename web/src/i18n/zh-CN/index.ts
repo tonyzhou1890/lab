@@ -2,6 +2,7 @@ import global from './module/global'
 import wordCount from './module/word-count'
 import nav from './module/nav'
 import digest from './module/digest'
+import counter from './module/counter'
 
 export default {
   global,
@@ -66,4 +67,5 @@ export default {
     desc: '支持图片合成 GIF、精灵图和 GIF 互转。',
   },
   digest,
+  counter,
 }
