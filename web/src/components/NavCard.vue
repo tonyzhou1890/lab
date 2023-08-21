@@ -27,11 +27,8 @@
           :target="item.target"
           :href="item.link"
           :to="item.route"
-          active-class="text-white"
-          class="page-nav-item q-ma-md bg-primary relative-position text-white"
+          class="page-nav-item bg-white q-ma-md relative-position text-dark"
         >
-          <div class="poa border border-left"></div>
-          <div class="poa border border-right"></div>
           <q-item-section
             v-if="item.icon"
             avatar
@@ -62,12 +59,9 @@
             :target="item.target"
             :href="item.link"
             :to="item.route"
-            active-class="text-white"
-            class="page-nav-item service-list-item column q-ma-md bg-primary relative-position text-white"
+            class="page-nav-item bg-white service-list-item column q-ma-md relative-position text-dark"
             :data-first-char="item.firstChar"
           >
-            <div class="poa border border-left"></div>
-            <div class="poa border border-right"></div>
             <q-item-section>
               <q-item-label class="text-bold">{{ item.name }}</q-item-label>
               <q-item-label
@@ -205,54 +199,7 @@ const groupedServiceList = computed(() => {
   .page-nav-item {
     display: inline-flex;
     width: 200px;
-    .border {
-      width: 50%;
-      height: calc(100% - 4px);
-      top: 2px;
-      &::before,
-      &::after {
-        position: absolute;
-        content: '';
-        width: 6px;
-        height: 2px;
-        background-color: white;
-        transition-property: width;
-        transition-duration: 0.3s;
-      }
-      &::before {
-        top: 0px;
-      }
-      &::after {
-        bottom: 0px;
-      }
-    }
-    .border-left {
-      left: 2px;
-      border-left: 2px solid white;
-      &::before,
-      &::after {
-        left: 0px;
-      }
-    }
-    .border-right {
-      right: 2px;
-      border-right: 2px solid white;
-      &::before,
-      &::after {
-        right: 0px;
-      }
-    }
-    &:hover {
-      .border {
-        &::before,
-        &::after {
-          width: 100%;
-        }
-      }
-    }
-    :deep(.q-item__section) {
-      z-index: 1;
-    }
+    border: 1px solid $dark;
   }
 
   .service-list-item {
@@ -260,7 +207,7 @@ const groupedServiceList = computed(() => {
     vertical-align: middle;
 
     .service-desc {
-      color: $grey-5;
+      color: $grey-7;
       font-size: 14px;
       min-height: 2.4em;
     }
