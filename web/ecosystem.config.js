@@ -12,7 +12,7 @@ module.exports = {
       instances: 1, // 启用多少个实例，可用于负载均衡
       autorestart: true, // 程序崩溃后自动重启
       env: {
-        PORT: 8650,
+        PORT: 9100,
       },
     },
   ],

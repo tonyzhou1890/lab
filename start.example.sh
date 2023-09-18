@@ -1,0 +1,1 @@
+pwd && ls && git pull && npm install pm2 @quasar/cli yarn -g --force && cd ./server && yarn && pm2 start && cd ../web && yarn --production=false && pwd && ls && yarn build:ssr && cd ./dist/ssr && yarn --production=false && pm2 start && pm2 log

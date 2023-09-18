@@ -1,0 +1,14 @@
+version: "2.1"
+services:
+  node:
+    image: "node:18"
+    user: "root"
+    ports:
+      - 9100:9100
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./:/home/node/app
+    privileged: true
+    command: sh ./start.sh
