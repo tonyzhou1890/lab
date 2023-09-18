@@ -128,6 +128,9 @@ module.exports = configure(function (/* ctx */) {
           size: '5px',
           color: 'blue',
         },
+        notify: {
+          position: 'top',
+        },
       },
 
       // iconSet: 'material-icons', // Quasar icon set

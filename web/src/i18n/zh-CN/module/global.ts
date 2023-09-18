@@ -23,6 +23,8 @@ export default {
     inputError: '输入有误',
     ok: '确定',
     cancel: '取消',
+    submit: '提交',
+    reset: '重置',
   },
   // 错误提示
   error: {

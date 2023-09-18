@@ -5,6 +5,7 @@ import FontSchema from './font/schema'
 import WordCountSchema from './word-count/schema'
 import DigestSchema from './digest/schema'
 import CounterSchema from './counter/schema'
+import QRCodeSchema from './qrcode/schema'
 // 外链服务
 import DictSchema from './dict/schema'
 import MinesweeperSchema from './minesweeper/schema'
@@ -19,6 +20,7 @@ export default {
   WordCountSchema,
   DigestSchema,
   CounterSchema,
+  QRCodeSchema,
   // 外链服务
   DictSchema,
   MinesweeperSchema,

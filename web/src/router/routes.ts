@@ -55,6 +55,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/counter/IndexPage.vue'),
       },
       {
+        path: 'service/qrcode',
+        name: 'QRCode',
+        component: () => import('pages/qrcode/IndexPage.vue'),
+      },
+      {
         path: ':catchAll(.*)*',
         component: () => import('pages/404/IndexPage.vue'),
       },

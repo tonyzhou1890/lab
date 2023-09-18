@@ -3,6 +3,7 @@ import wordCount from './module/word-count'
 import nav from './module/nav'
 import digest from './module/digest'
 import counter from './module/counter'
+import qrcode from './module/qrcode'
 
 export default {
   global,
@@ -68,4 +69,5 @@ export default {
   },
   digest,
   counter,
+  qrcode,
 }
