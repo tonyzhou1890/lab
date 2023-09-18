@@ -4,7 +4,7 @@
       <div class="content column fix items-center">
         <h1 class="title text-bold">{{ $t('global.title') }}</h1>
         <p class="desc">{{ $t('home.desc') }}</p>
-        <div>
+        <!-- <div>
           <q-btn
             :to="startTo"
             color="primary"
@@ -20,23 +20,25 @@
             :name="item"
             class="svg-icon"
           ></svg-icon>
-        </div>
+        </div> -->
+        <nav-card type="page" />
       </div>
     </div>
   </q-page>
 </template>
 
 <script setup lang="ts">
-import { changePathLangIso } from '@/core/utils'
-import { computed } from 'vue'
-import { useI18n } from 'vue-i18n'
-const { locale } = useI18n()
+// import { changePathLangIso } from '@/core/utils'
+// import { computed } from 'vue'
+// import { useI18n } from 'vue-i18n'
+import NavCard from '@/components/NavCard.vue'
+// const { locale } = useI18n()
 
-const startTo = computed(() => {
-  return changePathLangIso('/nav', locale.value)
-})
+// const startTo = computed(() => {
+//   return changePathLangIso('/nav', locale.value)
+// })
 
-const icons = ['text', 'image', 'dict', 'font', 'game', 'ellipsis']
+// const icons = ['text', 'image', 'dict', 'font', 'game', 'ellipsis']
 </script>
 
 <style lang="scss" scoped>
@@ -58,7 +60,7 @@ const icons = ['text', 'image', 'dict', 'font', 'game', 'ellipsis']
   }
 
   .title {
-    margin: 15vh 0 0;
+    margin: 5vh 0 0;
     font-size: 45px;
     line-height: 1;
     // text-shadow: 2px 2px 2px #333;

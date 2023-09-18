@@ -19,7 +19,7 @@ export default {
   home: {
     title: '一个在线工具箱',
     searchPlaceholder: '搜索工具',
-    desc: '集成众多在线工具，文本处理、图片修改、小游戏……让工作省心省力。',
+    desc: '包含字体、文本、开发、图片、音视频等相关工具以及小游戏',
     start: '开始使用',
   },
   nav,

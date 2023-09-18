@@ -16,7 +16,7 @@
       </q-btn>
     </q-bar>
 
-    <q-card-section>
+    <q-card-section v-if="!isHome">
       <p class="text-h5 nav-title">{{ $t('layout.pageNav') }}</p>
       <q-list class="page-list">
         <q-item
@@ -44,7 +44,12 @@
     </q-card-section>
 
     <q-card-section>
-      <p class="text-h5 nav-title">{{ $t('layout.serviceNav') }}</p>
+      <p
+        v-if="!isHome"
+        class="text-h5 nav-title"
+      >
+        {{ $t('layout.serviceNav') }}
+      </p>
       <q-list
         v-for="group in groupedServiceList"
         :key="group.key"
@@ -100,6 +105,10 @@ const isPage = computed(() => {
 
 const route = useRoute()
 const router = useRouter()
+
+const isHome = computed(() => {
+  return route.name === 'Home' || route.name === 'LangHome'
+})
 
 const { locale, t } = useI18n({ useScope: 'global' })
 
