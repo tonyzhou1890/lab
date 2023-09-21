@@ -15,14 +15,17 @@
     "build:ssr": "quasar build -m ssr"
   },
   "dependencies": {
+    "@imagemagick/magick-wasm": "^0.0.23",
     "@quasar/extras": "^1.16.4",
     "@types/crypto-js": "^4.1.1",
+    "@types/fabric": "^5.3.4",
     "@types/file-saver": "^2.0.5",
     "@types/js-md5": "^0.7.0",
     "@types/qrcode": "^1.5.2",
     "allbox": "^0.2.0",
     "axios": "^1.2.1",
     "crypto-js": "^4.1.1",
+    "fabric": "^5.3.0",
     "file-saver": "^2.0.5",
     "js-md5": "^0.7.3",
     "localforage": "^1.10.0",

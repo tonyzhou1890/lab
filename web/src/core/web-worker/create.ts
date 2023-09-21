@@ -1,3 +1,4 @@
+import CoreError from '../error'
 /**
  * worker job type
  */
@@ -34,12 +35,6 @@ export interface WorkerInner {
 }
 export type WorkerInstance<T> = T & WorkerInner
 
-export const WorkerErrorMap: {
-  [x: number]: string
-} = {
-  1: '指定操作不存在',
-}
-
 async function create<T extends { [x: string]: any }>(
   w: string | (new () => Worker),
   threadNum?: number
@@ -70,17 +65,16 @@ async function create<T extends { [x: string]: any }>(
   workers.map((item) => {
     item.worker.addEventListener('message', (e) => {
       if (e.data?._sign) {
-        const { errorCode, _sign, result } = e.data
+        const { errorCode, errorMsg, _sign, result, action } = e.data
         const queneItem = quene.get(_sign)
         // 发生错误
         if (errorCode !== undefined) {
-          if (WorkerErrorMap[errorCode]) {
-            queneItem.p.reject(
-              `${queneItem.job.action} ${WorkerErrorMap[errorCode]}`
-            )
-          } else {
-            queneItem.p.reject(`${queneItem.job.action} 未知错误`)
-          }
+          const error = new CoreError(errorCode)
+          error.coreErrorFullMsg = errorMsg || ''
+          queneItem.p.reject({
+            action,
+            error,
+          })
         } else {
           // 返回结果
           queneItem.p.resolve(result)

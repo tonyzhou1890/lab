@@ -60,6 +60,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/qrcode/IndexPage.vue'),
       },
       {
+        path: 'service/image-editor',
+        name: 'ImageEditor',
+        component: () => import('pages/image-editor/IndexPage.vue'),
+      },
+      {
         path: ':catchAll(.*)*',
         component: () => import('pages/404/IndexPage.vue'),
       },

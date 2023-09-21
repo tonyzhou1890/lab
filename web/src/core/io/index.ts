@@ -1,6 +1,8 @@
 import localforage from 'localforage'
 import type { AxiosResponse } from 'axios'
-import { api } from '@/boot/axios'
+import { apiBundle } from '@/boot/axios'
+import { DepLoadCallbackParams } from '@/core/types/general-types'
+import { noop } from '../utils'
 
 const forageInstances = {
   deafult: localforage.createInstance({
@@ -29,6 +31,7 @@ export interface ScriptConfig {
   path: string
   version?: string
   cache?: boolean
+  loadCallback?: (params: DepLoadCallbackParams) => void
 }
 
 const baseIO = {
@@ -96,7 +99,7 @@ const defaultIO = {
         }
       }
       const src = config.path + (config.version ? `?${config.version}` : '')
-      const res = await api.get<string, string>(src, {
+      const res = await apiBundle.IOAPI!.get<string, string>(src, {
         withCredentials: false,
       })
       script.innerHTML = res
@@ -110,6 +113,56 @@ const defaultIO = {
         })
       }
       resolve(true)
+    })
+  },
+  /**
+   * @name 加载依赖文件
+   */
+  async loadDepFile<T>(config: ScriptConfig): Promise<T> {
+    return new Promise(async (resolve, reject) => {
+      const cb =
+        typeof config.loadCallback === 'function' ? config.loadCallback : noop
+      // 如果使用缓存，尝试从缓存读取
+      if (config.cache !== false) {
+        const res = await this.read<T>(config)
+        if (res) {
+          cb({
+            depName: config.path,
+            percent: 1,
+            status: 3,
+          })
+          return resolve(res)
+        }
+      }
+      const src = config.path + (config.version ? `?${config.version}` : '')
+      const res = await apiBundle
+        .IOAPI!.get<any, T>(src, {
+          responseType: 'blob',
+          withCredentials: false,
+          onDownloadProgress: (progressEvent) => {
+            let percent = 0
+            if (progressEvent.total) {
+              percent = progressEvent.loaded / progressEvent.total
+            }
+            cb({
+              depName: config.path,
+              percent,
+              status: percent === 1 ? 3 : 2,
+            })
+          },
+        })
+        .catch((e) => reject(e))
+      console.log(res)
+      if (res) {
+        // 缓存
+        if (config.cache !== false) {
+          this.write({
+            ...config,
+            data: res,
+          })
+        }
+        resolve(res)
+      }
     })
   },
 }

@@ -1,6 +1,13 @@
 import config from '../config'
 
 /**
+ * 空函数
+ */
+export function noop() {
+  /**  */
+}
+
+/**
  * 修改路由中的语言部分
  * @param path
  * @param langIso

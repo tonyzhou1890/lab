@@ -1,6 +1,6 @@
 import { boot } from 'quasar/wrappers'
 import axios, { AxiosInstance } from 'axios'
-import getTypeName from 'allbox/dist/common.get-type-name'
+import { Notify } from 'quasar'
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
@@ -15,89 +15,36 @@ declare module '@vue/runtime-core' {
 // good idea to move this instance creation inside of the
 // "export default () => {}" function below (which runs individually
 // for each client)
-const api = axios.create({ baseURL: '/' })
+// 这个 api 用来加载脚本、依赖文件等，以后请求后台的 axios 实例不是这个。请求后台接口的实例为了避免状态交叉污染，需要在 boot 函数里创建。
+
+const apiBundle: {
+  IOAPI?: AxiosInstance
+} = {}
 
 export default boot(({ app }) => {
-  // for use inside Vue files (Options API) through this.$axios and this.$api
-
   app.config.globalProperties.$axios = axios
-  // ^ ^ ^ this will allow you to use this.$axios (for Vue Options API form)
-  //       so you won't necessarily have to import axios in each vue file
-
-  app.config.globalProperties.$api = api
-  // ^ ^ ^ this will allow you to use this.$api (for Vue Options API form)
+  // 无鉴权文件读取 api
+  const IOAPI = axios.create({ baseURL: '/' })
+  apiBundle.IOAPI = IOAPI
   //       so you can easily perform requests against your app's API
   // 请求拦截
-  api.interceptors.request.use(
+  IOAPI.interceptors.request.use(
     (config) => config,
     // 发送失败
     (error) => Promise.reject(error)
   )
   // 响应拦截（可根据具体业务作出相应的调整）
-  api.interceptors.response.use(
+  IOAPI.interceptors.response.use(
     (response) => {
       // apiData 是 API 返回的数据
       const apiData = response.data as any
-      const type = getTypeName(apiData)
-      if (type === 'String') {
-        return apiData
-      }
-      // 这个 Code 是和后端约定的业务 Code
-      const { error, code } = apiData
-
-      if (code !== 0) {
-        // 添加 message 是为了业务页面可以直接调用 Toast 提示
-        return Promise.reject({
-          ...(apiData || {}),
-          message: error,
-        })
-      } else {
-        return apiData
-      }
+      return apiData
     },
     (error) => {
-      // Status 是 HTTP 状态码
-      const status = error?.response?.status
-      console.log(error)
-      switch (status) {
-        case 400:
-          error.message = '请求错误'
-          break
-        case 401:
-          break
-        case 403:
-          error.message = '拒绝访问'
-          break
-        case 404:
-          error.message = '请求地址出错'
-          break
-        case 408:
-          error.message = '请求超时'
-          break
-        case 500:
-          error.message = '服务器内部错误'
-          break
-        case 501:
-          error.message = '服务未实现'
-          break
-        case 502:
-          error.message = '网关错误'
-          break
-        case 503:
-          error.message = '服务不可用'
-          break
-        case 504:
-          error.message = '网关超时'
-          break
-        case 505:
-          error.message = 'HTTP 版本不受支持'
-          break
-        default:
-          break
-      }
+      Notify.create(error)
       return Promise.reject(error)
     }
   )
 })
 
-export { api }
+export { apiBundle }

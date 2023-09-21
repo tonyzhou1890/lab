@@ -4,6 +4,7 @@ import nav from './module/nav'
 import digest from './module/digest'
 import counter from './module/counter'
 import qrcode from './module/qrcode'
+import imageEditor from './module/image-editor'
 
 export default {
   global,
@@ -70,4 +71,5 @@ export default {
   digest,
   counter,
   qrcode,
+  imageEditor,
 }

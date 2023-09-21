@@ -28,6 +28,8 @@ export default {
   },
   // 错误提示
   error: {
+    'Execute Error': '执行错误',
+    'Not Initialized': '未初始化',
     'Not Found': '未找到',
   },
 }
