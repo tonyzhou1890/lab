@@ -10,7 +10,7 @@
         v-model="formData.fileInput"
         :label="$t('qrcode.recognizeForm.file') + '*'"
         lazy-rules
-        accept=".png, .jp(e)g"
+        accept="image/png, image/jpeg, image/webp"
         :rules="[
           (val) => (val !== null && val !== '') || $t('global.form.required'),
         ]"

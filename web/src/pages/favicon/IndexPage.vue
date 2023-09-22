@@ -9,7 +9,7 @@
       <q-file
         v-model="file"
         :label="$t('favicon.file') + '*'"
-        accept=".jp(e)g, .png, .ico, .webp, .svg"
+        accept="image/jpeg, image/png, image/x-ico, image/webp, image/svg+xml"
         lazy-rules
         :rules="[
           (val) => (val !== null && val !== '') || $t('global.form.required'),
