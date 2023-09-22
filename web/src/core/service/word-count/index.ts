@@ -6,19 +6,26 @@ let lemmatizer: any = null
 // 下载脚本，初始化实例
 async function init() {
   // 加载 underscore。因为 underscore 以 _ 作为命名空间，其他库也可能用这个符号，所以直接加载覆盖。
-  const underscoreSrc = '/libs/underscore/underscore-min.js'
-  await io.loadScript({
-    path: underscoreSrc,
-    version: '1.7.0',
-  })
-  if (!lemmatizer) {
-    const src = '/libs/lemmatizer/lemmatizer.js'
-    await io.loadScript({
-      path: src,
-      version: '0.0.2',
+  try {
+    const underscoreSrc = '/libs/underscore/underscore-min.js'
+    await io.loadDepFile<string>({
+      path: underscoreSrc,
+      version: '1.7.0',
+      script: true,
     })
+
+    if (!lemmatizer) {
+      const src = '/libs/lemmatizer/lemmatizer.js'
+      await io.loadDepFile<string>({
+        path: src,
+        version: '0.0.2',
+        script: true,
+      })
+    }
+    lemmatizer = new Lemmatizer('/libs/lemmatizer/')
+  } catch (e) {
+    throw e
   }
-  lemmatizer = new Lemmatizer('/libs/lemmatizer/')
 }
 
 export interface WordCountItem {

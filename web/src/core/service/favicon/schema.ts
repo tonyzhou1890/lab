@@ -1,8 +1,8 @@
 import Schema from '../service-schema'
 
 const schema = new Schema({
-  code: 'QRCode',
-  i18nKey: 'qrcode',
+  code: 'Favicon',
+  i18nKey: 'favicon',
   categories: ['image'],
 })
 

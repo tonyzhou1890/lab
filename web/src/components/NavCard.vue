@@ -54,7 +54,9 @@
         v-for="group in groupedServiceList"
         :key="group.key"
       >
-        <p class="text-h6 nav-title">{{ $t(group.key) }}</p>
+        <p class="text-h6 nav-title">
+          {{ $t(`global.category.${group.key}`) }}
+        </p>
         <q-list class="page-list service-list">
           <q-item
             v-for="item in group.value"
@@ -170,9 +172,9 @@ const groupedServiceList = computed(() => {
       }
       return {
         code: item.code,
-        firstChar: t(item.name)[0],
-        desc: t(item.desc),
-        name: t(item.name),
+        firstChar: t(item.i18nKey + '.title')[0],
+        desc: t(item.i18nKey + '.desc'),
+        name: t(item.i18nKey + '.title'),
         htmlTag,
         target: htmlTag === 'a' ? '_blank' : '_self',
         link: item.link,

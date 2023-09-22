@@ -2,10 +2,8 @@ import Schema from '../service-schema'
 
 const schema = new Schema({
   code: 'Digest',
-  name: 'digest.title',
-  desc: 'digest.desc',
-  keywords: 'digest.keywords',
-  categories: ['global.category.dev'],
+  i18nKey: 'digest',
+  categories: ['dev'],
 })
 
 export default schema

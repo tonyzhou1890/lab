@@ -2,11 +2,9 @@ import Schema from '../service-schema'
 
 const schema = new Schema({
   code: 'Gif',
-  name: 'gif.title',
-  desc: 'gif.desc',
-  keywords: 'gif.keywords',
+  i18nKey: 'gif',
   link: 'https://spark-gif.eachthought.com/',
-  categories: ['global.category.image'],
+  categories: ['image'],
 })
 
 export default schema

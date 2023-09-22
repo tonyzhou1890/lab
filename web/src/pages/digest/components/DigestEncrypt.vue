@@ -79,9 +79,9 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import type { QForm } from 'quasar'
-import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import digestService, { encryptTypes } from '@/core/service/digest'
+import { errorNotify } from '@/core/error/utils'
 
 interface FormData {
   type: string
@@ -91,8 +91,6 @@ interface FormData {
 }
 
 const { t } = useI18n()
-
-const $q = useQuasar()
 
 // 表单实例引用
 const formRef = ref<QForm | null>(null)
@@ -135,15 +133,9 @@ async function onSubmit() {
     source = (await formData.value.fileInput?.arrayBuffer()) ?? ''
   }
 
-  if (!source) {
-    $q.notify({
-      message: t('global.form.inputError'),
-      position: 'top',
-    })
-    return
-  }
-
   oldFormData.value = copyForm()
+
+  console.log('submit')
 
   calculating.value = true
   const res = await digestService.worker.encrypt(
@@ -153,9 +145,9 @@ async function onSubmit() {
   if (typeof res === 'string') {
     result.value = res
   } else {
-    res.coreErrorMsg
-    $q.notify({
-      message: t('global.error'),
+    errorNotify(res, {
+      t,
+      i18nKey: 'digest',
     })
   }
 
@@ -190,7 +182,17 @@ const resultList = computed(() => {
         _id: Math.random(),
       },
     ]
-  } else if (['sha1', 'sha256', 'sha512'].includes(algorithm)) {
+  } else if (
+    [
+      'sha1',
+      'sha256',
+      'sha512',
+      'sha3-224',
+      'sha3-256',
+      'sha3-384',
+      'sha3-512',
+    ].includes(algorithm)
+  ) {
     // sha 算法
     return [
       {

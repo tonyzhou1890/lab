@@ -60,9 +60,9 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/qrcode/IndexPage.vue'),
       },
       {
-        path: 'service/image-editor',
-        name: 'ImageEditor',
-        component: () => import('pages/image-editor/IndexPage.vue'),
+        path: 'service/favicon',
+        name: 'Favicon',
+        component: () => import('pages/favicon/IndexPage.vue'),
       },
       {
         path: ':catchAll(.*)*',
@@ -77,9 +77,9 @@ const routes: RouteRecordRaw[] = [
           const newRoute = {
             ...item,
             meta: {
-              title: service.name,
-              keywords: service.keywords,
-              desc: service.desc,
+              title: `${service.i18nKey}.title`,
+              keywords: `${service.i18nKey}.keywords`,
+              desc: `${service.i18nKey}.desc`,
             },
           }
           return newRoute

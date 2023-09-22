@@ -26,6 +26,11 @@ export default {
     submit: '提交',
     reset: '重置',
   },
+  // 下载
+  download: {
+    title: '下载',
+    msg: '是否下载文件？',
+  },
   // 错误提示
   error: {
     'Execute Error': '执行错误',

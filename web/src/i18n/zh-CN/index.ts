@@ -1,42 +1,24 @@
 import global from './module/global'
-import wordCount from './module/word-count'
+import layout from './module/layout'
+import home from './module/home'
 import nav from './module/nav'
+import wordCount from './module/word-count'
+import font from './module/font'
 import digest from './module/digest'
 import counter from './module/counter'
 import qrcode from './module/qrcode'
-import imageEditor from './module/image-editor'
+import favicon from './module/favicon'
 
 export default {
   global,
-  layout: {
-    pageNav: '页面导航',
-    serviceNav: '应用导航',
-    home: '首页',
-  },
+  layout,
   404: {
     notFound: '页面不存在……',
     home: '回首页',
   },
-  home: {
-    title: '一个在线工具箱',
-    searchPlaceholder: '搜索工具',
-    desc: '包含字体、文本、开发、图片、音视频等相关工具以及小游戏',
-    start: '开始使用',
-  },
+  home,
   nav,
-  font: {
-    title: '字体查看器',
-    keywords: '字体查看器',
-    desc: '可查看 ttf、otf、woff 格式字体信息，浏览字体内部字形。',
-    fileLabel: '选择字体文件',
-    fontInfo: '字体信息',
-    fontFamily: '字族',
-    copyright: '版权所有',
-    license: '许可证',
-    version: '版本',
-    charNum: '字符数',
-    glyphs: '字形信息',
-  },
+  font,
   wordCount,
   dict: {
     title: '云词典',
@@ -71,5 +53,5 @@ export default {
   digest,
   counter,
   qrcode,
-  imageEditor,
+  favicon,
 }

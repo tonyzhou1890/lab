@@ -12,6 +12,7 @@ export default class CoreError {
   constructor(code: number) {
     this.coreErrorCode = code
     this.coreErrorMsg = CoreErrorEnum[code] ?? 'Unknown Error'
+    // 该字段有值的时候，直接提示，否则根据 coreErrorMsg 翻译
     this.coreErrorFullMsg = ''
   }
   coreErrorCode

@@ -82,10 +82,11 @@
 import { computed, ref } from 'vue'
 import type { QForm } from 'quasar'
 import { useI18n } from 'vue-i18n'
-import { useQuasar } from 'quasar'
 import { charset, decryptTypes } from '@/core/service/digest'
 import digestService from '@/core/service/digest'
+import serviceSchema from '@/core/service/digest/schema'
 import type { DecryptCallbackParameter } from '@/core/service/digest'
+import { errorNotify } from '@/core/error/utils'
 
 interface FormData {
   stringInput: string
@@ -95,8 +96,6 @@ interface FormData {
 }
 
 const { t } = useI18n()
-
-const $q = useQuasar()
 
 // 表单实例引用
 const formRef = ref<QForm | null>(null)
@@ -140,28 +139,10 @@ let stop: null | (() => void) = null
 function decryptCallback(data: DecryptCallbackParameter): void {
   // 错误处理
   if (data.error) {
-    // 解码错误
-    if (data.error.coreErrorCode >= 900) {
-      $q.notify({
-        message: t(`digest.error['${data.error.coreErrorMsg}']`),
-        position: 'top',
-      })
-      // 执行错误
-    } else if (
-      data.error.coreErrorCode >= 100 &&
-      data.error.coreErrorCode < 200
-    ) {
-      $q.notify({
-        message: data.error.coreErrorFullMsg,
-        position: 'top',
-      })
-    } else {
-      // 通用核心错误
-      $q.notify({
-        message: t(`global.error['${data.error.coreErrorMsg}']`),
-        position: 'top',
-      })
-    }
+    errorNotify(data.error, {
+      i18nKey: serviceSchema.i18nKey,
+      t,
+    })
     decrypting.value = false
   } else {
     // 结果显示

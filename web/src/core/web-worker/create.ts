@@ -70,11 +70,8 @@ async function create<T extends { [x: string]: any }>(
         // 发生错误
         if (errorCode !== undefined) {
           const error = new CoreError(errorCode)
-          error.coreErrorFullMsg = errorMsg || ''
-          queneItem.p.reject({
-            action,
-            error,
-          })
+          error.coreErrorFullMsg = action + (errorMsg || '')
+          queneItem.p.reject(error)
         } else {
           // 返回结果
           queneItem.p.resolve(result)

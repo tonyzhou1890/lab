@@ -5,6 +5,7 @@ import {
   MagickFormat,
   Quantum,
   ByteArray,
+  MagickGeometry,
 } from '@imagemagick/magick-wasm' // Change to '@imagemagick/magick-wasm' when using this in your project.
 
 /**
@@ -35,12 +36,18 @@ function initializeWasm(wasmData: ByteArray) {
 function transformFormat(
   data: ByteArray,
   type: MagickFormat,
+  size: number,
   blobConfig?: BlobPropertyBag
 ): Promise<Blob> {
   return new Promise((resolve) => {
     ImageMagick.read(data, (img) => {
-      // img.resize(64, 64)
+      // img.resize(size, size)
+      const geo = new MagickGeometry(size, size)
+      geo.ignoreAspectRatio = true
+      img.resize(geo)
+      console.log('resize done')
       img.write(type, (resData) => {
+        console.log('write done')
         resolve(new Blob([resData], blobConfig))
       })
     })
@@ -54,4 +61,4 @@ const coreMagick = {
 
 export default coreMagick
 
-export type CoreMagick = typeof coreMagick
+export type Core = typeof coreMagick

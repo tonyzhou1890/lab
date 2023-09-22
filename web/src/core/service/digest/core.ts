@@ -2,7 +2,7 @@ import Crypto from 'crypto-js'
 import jsmd5 from 'js-md5'
 import { getPermutationStringByIndex } from '@/core/utils'
 import CoreError, { CoreErrorEnum } from '@/core/error'
-import { DigestError, DigestErrorEnum } from './error'
+import { DigestErrorEnum } from './error'
 
 // https://cloud.tencent.com/developer/ask/sof/1400715
 
@@ -55,7 +55,11 @@ function deMd5(
  * @param fn sha function
  * @returns
  */
-function sha(message: string | ArrayBuffer, fn: typeof Crypto.SHA1): string {
+function sha(
+  message: string | ArrayBuffer,
+  fn: typeof Crypto.SHA1,
+  cfg?: object
+): string {
   let res: Crypto.lib.WordArray | null = null
   if (typeof message === 'string') {
     res = fn(message)
@@ -64,7 +68,7 @@ function sha(message: string | ArrayBuffer, fn: typeof Crypto.SHA1): string {
     const inputWordArray = Crypto.lib.WordArray.create(
       message as unknown as number[]
     )
-    res = fn(inputWordArray)
+    res = fn(inputWordArray, cfg)
   }
   return res ? res.toString() : ''
 }
@@ -77,12 +81,13 @@ function deSha(
   start: bigint,
   end: bigint,
   cipher: string,
-  fn: typeof Crypto.SHA1
+  fn: typeof Crypto.SHA1,
+  cfg?: object
 ): string {
   for (let i = start; i < end; i++) {
     const str = getPermutationStringByIndex(chars, i)
 
-    if (sha(str, fn) === cipher) {
+    if (sha(str, fn, cfg) === cipher) {
       return str
     }
   }
@@ -104,11 +109,23 @@ function encrypt(
     return e
   }
 
-  if (temp.name === 'md5') return md5(message)
-  else if (temp.name === 'sha1') return sha(message, Crypto.SHA1)
-  else if (temp.name === 'sha256') return sha(message, Crypto.SHA256)
-  else if (temp.name === 'sha512') return sha(message, Crypto.SHA512)
-  return ''
+  if (temp.name === 'md5') {
+    return md5(message)
+  } else if (temp.name === 'sha1') {
+    return sha(message, Crypto.SHA1)
+  } else if (temp.name === 'sha256') {
+    return sha(message, Crypto.SHA256)
+  } else if (temp.name === 'sha512') {
+    return sha(message, Crypto.SHA512)
+  } else if (temp.name === 'sha3-224') {
+    return sha(message, Crypto.SHA3, { outputLength: 224 })
+  } else if (temp.name === 'sha3-256') {
+    return sha(message, Crypto.SHA3, { outputLength: 256 })
+  } else if (temp.name === 'sha3-384') {
+    return sha(message, Crypto.SHA3, { outputLength: 384 })
+  } else if (temp.name === 'sha3-512') {
+    return sha(message, Crypto.SHA3, { outputLength: 512 })
+  } else return ''
 }
 
 /**
@@ -126,7 +143,7 @@ function decrypt(
   chars: string[],
   start: bigint,
   end: bigint
-): string | CoreError | DigestError {
+): string | CoreError {
   const temp = decryptTypes.find((item) => item.name === type)
 
   if (!temp) {
@@ -135,13 +152,13 @@ function decrypt(
 
   // 检查字符集
   if (!chars.length) {
-    return new DigestError(DigestErrorEnum['Charset Error'])
+    return new CoreError(DigestErrorEnum['Charset Error'])
   }
 
   if (temp.name === 'md5') {
     // 检查密文
     if (cipher.length !== 16 && cipher.length !== 32) {
-      return new DigestError(DigestErrorEnum['Cipher Length Error'])
+      return new CoreError(DigestErrorEnum['Cipher Length Error'])
     }
     return deMd5(chars, start, end, cipher, cipher.length === 16)
   } else if (temp.name === 'sha1') {
@@ -150,6 +167,14 @@ function decrypt(
     return deSha(chars, start, end, cipher, Crypto.SHA256)
   } else if (temp.name === 'sha512') {
     return deSha(chars, start, end, cipher, Crypto.SHA512)
+  } else if (temp.name === 'sha3-224') {
+    return deSha(chars, start, end, cipher, Crypto.SHA3, { outputLength: 224 })
+  } else if (temp.name === 'sha3-256') {
+    return deSha(chars, start, end, cipher, Crypto.SHA3, { outputLength: 256 })
+  } else if (temp.name === 'sha3-384') {
+    return deSha(chars, start, end, cipher, Crypto.SHA3, { outputLength: 384 })
+  } else if (temp.name === 'sha3-512') {
+    return deSha(chars, start, end, cipher, Crypto.SHA3, { outputLength: 512 })
   }
 
   return ''
@@ -212,6 +237,18 @@ export const encryptTypes = [
   {
     name: 'sha512',
   },
+  {
+    name: 'sha3-224',
+  },
+  {
+    name: 'sha3-256',
+  },
+  {
+    name: 'sha3-384',
+  },
+  {
+    name: 'sha3-512',
+  },
 ]
 
 /**
@@ -229,5 +266,17 @@ export const decryptTypes = [
   },
   {
     name: 'sha512',
+  },
+  {
+    name: 'sha3-224',
+  },
+  {
+    name: 'sha3-256',
+  },
+  {
+    name: 'sha3-384',
+  },
+  {
+    name: 'sha3-512',
   },
 ]

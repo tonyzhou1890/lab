@@ -52,16 +52,10 @@ export class ServiceSchema {
    */
   code = ''
   /**
-   * @name 功能名称
-   * @description 这里的值只是对于 i18n 的 key，实际的描述在 i18n 中。这主要是为了国际化。
-   * @example
-   * ```
-   * {
-   *   name: 'wordCount.name'
-   * }
-   * ```
+   * 国际化 key，用到翻译文本的地方，不需要再写完整字符串，错误提示处理函数据此拼接。
+   * title, desc, keywords 这些会自动翻译。
    */
-  name = ''
+  i18nKey = ''
   /**
    * @name 功能图标（可选）
    * @description 可以是任何 img 元素可以显示的字符串，或者返回该字符串的函数（可以是异步函数）。如果没有提供，则程序会根据功能的第一个字（母）生成图片。
@@ -73,22 +67,6 @@ export class ServiceSchema {
    * ```
    */
   icon?: string | ((...args: unknown[]) => string)
-  /**
-   * @name 功能描述
-   * @description 对于该功能的描述，这里的值只是对于 i18n 的 key，实际的描述在 i18n 中。这主要是为了国际化。
-   * @example
-   * ```
-   * {
-   *   desc: 'wordCount.desc'
-   * }
-   * ```
-   */
-  desc = ''
-  /**
-   * @name 应用关键字
-   * @description 应用的关键字，用于 seo 等。这里的值只是对于 i18n 的 key。
-   */
-  keywords = ''
   /**
    * @name 功能分类
    * @description 对该功能的分类，这里的值只是对于 i18n 的 key，实际的描述在 i18n 中。这主要是为了国际化。
@@ -132,17 +110,6 @@ export class ServiceSchema {
   children?: ServiceSchema[]
 }
 
-// class ServiceSchema implements ServiceSchemaConfig {
-//   constructor(config: ServiceSchemaConfig) {
-//     Object.assign(this, config)
-//   }
-//   code = ''
-//   name = ''
-//   keywords = ''
-//   desc = ''
-//   categories = ['global.category.default']
-// }
-
 /**
  * 服务分类
  */
@@ -153,7 +120,7 @@ export interface GroupedService {
 export function groupService(list: ServiceSchema[]): GroupedService[] {
   const res: GroupedService[] = []
   const ungrouped: GroupedService = {
-    key: 'global.category.default',
+    key: 'default',
     value: [],
   }
   for (let i = 0, len = list.length; i < len; i++) {

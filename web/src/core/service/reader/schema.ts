@@ -2,11 +2,9 @@ import Schema from '../service-schema'
 
 const schema = new Schema({
   code: 'Reader',
-  name: 'reader.title',
-  desc: 'reader.desc',
-  keywords: 'reader.keywords',
+  i18nKey: 'reader',
   link: 'https://reader.dowhat.top/',
-  categories: ['global.category.text'],
+  categories: ['text'],
 })
 
 export default schema

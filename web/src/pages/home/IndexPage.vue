@@ -43,7 +43,6 @@ import NavCard from '@/components/NavCard.vue'
 
 <style lang="scss" scoped>
 .home-screen {
-  height: calc(100vh - 50px);
   overflow: auto;
   box-sizing: border-box;
   // background-image: linear-gradient(

@@ -1,6 +1,6 @@
 export default {
   title: '摘要算法',
-  desc: '提供 md5、sha1、sha256、sha512 等摘要算法对字符串的加解密，以及对文件的加密。',
+  desc: '提供 md5、sha1、sha256、sha512、sha3 等摘要算法对字符串的加解密，以及对文件的加密。',
   keywords: '摘要算法，md5 加解密',
   encrypt: '加密',
   decrypt: '解密',

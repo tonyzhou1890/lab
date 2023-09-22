@@ -2,9 +2,7 @@ import Schema from '../service-schema'
 
 const schema = new Schema({
   code: 'Dict',
-  name: 'dict.title',
-  desc: 'dict.desc',
-  keywords: 'dict.keywords',
+  i18nKey: 'dict',
   link: 'https://clouddict.net/',
 })
 

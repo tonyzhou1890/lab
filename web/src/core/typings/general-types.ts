@@ -2,7 +2,7 @@
  * 服务通用依赖（非脚本类型）加载回调参数
  */
 export interface DepLoadCallbackParams {
-  depName: string
+  path: string
   percent: number
   /**
    * 0--未开始
@@ -20,4 +20,13 @@ export interface DepLoadCallbackParams {
  */
 export interface ServiceInitConfig {
   loadCallback: (params: DepLoadCallbackParams) => void
+}
+
+/**
+ * 文件导出
+ */
+export interface ExportFileOpts {
+  mimeType?: string
+  byteOrderMark?: string | Uint8Array
+  encoding?: string
 }

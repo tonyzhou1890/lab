@@ -6,7 +6,7 @@ import WordCountSchema from './word-count/schema'
 import DigestSchema from './digest/schema'
 import CounterSchema from './counter/schema'
 import QRCodeSchema from './qrcode/schema'
-import ImageEditorSchema from './image-editor/schema'
+import FaviconSchema from './favicon/schema'
 // 外链服务
 import DictSchema from './dict/schema'
 import MinesweeperSchema from './minesweeper/schema'
@@ -22,7 +22,7 @@ export default {
   DigestSchema,
   CounterSchema,
   QRCodeSchema,
-  ImageEditorSchema,
+  FaviconSchema,
   // 外链服务
   DictSchema,
   MinesweeperSchema,
