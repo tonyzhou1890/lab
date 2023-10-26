@@ -1,5 +1,6 @@
 import io from '@/core/io'
 import type { ComposerTranslation } from 'vue-i18n'
+import config from '@/core/config'
 
 let lemmatizer: any = null
 
@@ -7,20 +8,10 @@ let lemmatizer: any = null
 async function init() {
   // 加载 underscore。因为 underscore 以 _ 作为命名空间，其他库也可能用这个符号，所以直接加载覆盖。
   try {
-    const underscoreSrc = '/libs/underscore/underscore-min.js'
-    await io.loadDepFile<string>({
-      path: underscoreSrc,
-      version: '1.7.0',
-      script: true,
-    })
+    await io.loadDepFile<string>(config.deps.undercore)
 
     if (!lemmatizer) {
-      const src = '/libs/lemmatizer/lemmatizer.js'
-      await io.loadDepFile<string>({
-        path: src,
-        version: '0.0.2',
-        script: true,
-      })
+      await io.loadDepFile<string>(config.deps.lemmatizer)
     }
     lemmatizer = new Lemmatizer('/libs/lemmatizer/')
   } catch (e) {

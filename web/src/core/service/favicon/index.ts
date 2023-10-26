@@ -7,6 +7,7 @@ import type { ServiceInitConfig } from '@/core/typings/general-types'
 import { MagickFormat } from '@imagemagick/magick-wasm'
 import JSZip from 'jszip'
 import { svgToPng } from '@/core/utils/image'
+import coreConfig from '@/core/config'
 
 // 所有实例共享的数据
 const local: {
@@ -49,8 +50,7 @@ class FaviconService extends Service {
     try {
       // 加载 magick
       const wasm = await IO.loadDepFile<Blob>({
-        path: '/libs/image-magick/magick.wasm',
-        version: '0.0.23',
+        ...coreConfig.deps.imageMagick,
         loadCallback: config?.loadCallback,
       })
       local.magickWasm = wasm
