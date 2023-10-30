@@ -22,7 +22,7 @@ service/xxx/ 下的文件（夹）：
 
 - worker 是多线程文件。可以被 core，schema, index 等使用，也可以引用 core。
 
-- data-types 是服务特有的数据类型——用于 schema input 和 output，不是函数实际的输出格式。
+- data-types 是服务特有的数据类型——比如用于 schema input 和 output，不是函数实际的输出格式。
 
 ## 功能设计实现
 
