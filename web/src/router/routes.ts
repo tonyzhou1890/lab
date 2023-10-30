@@ -65,6 +65,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/favicon/IndexPage.vue'),
       },
       {
+        path: 'service/area-code',
+        name: 'AreaCode',
+        component: () => import('pages/area-code/IndexPage.vue'),
+      },
+      {
         path: ':catchAll(.*)*',
         component: () => import('pages/404/IndexPage.vue'),
       },

@@ -8,6 +8,7 @@ import digest from './module/digest'
 import counter from './module/counter'
 import qrcode from './module/qrcode'
 import favicon from './module/favicon'
+import areaCode from './module/area-code'
 
 export default {
   global,
@@ -54,4 +55,5 @@ export default {
   counter,
   qrcode,
   favicon,
+  areaCode,
 }

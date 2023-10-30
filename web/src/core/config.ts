@@ -15,6 +15,10 @@ const config = {
       path: '/libs/image-magick/magick.wasm',
       version: '0.0.23',
     },
+    areaCode: {
+      path: '/resources/area-code/data.json',
+      version: '0.0.1',
+    },
   },
 }
 
