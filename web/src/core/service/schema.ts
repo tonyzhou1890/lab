@@ -8,6 +8,7 @@ import CounterSchema from './counter/schema'
 import QRCodeSchema from './qrcode/schema'
 import FaviconSchema from './favicon/schema'
 import AreaCodeSchema from './area-code/schema'
+import PoemSchema from './poem/schema'
 // 外链服务
 import DictSchema from './dict/schema'
 import MinesweeperSchema from './minesweeper/schema'
@@ -25,6 +26,7 @@ export default {
   QRCodeSchema,
   FaviconSchema,
   AreaCodeSchema,
+  PoemSchema,
   // 外链服务
   DictSchema,
   MinesweeperSchema,

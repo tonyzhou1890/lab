@@ -70,6 +70,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/area-code/IndexPage.vue'),
       },
       {
+        path: 'service/poem',
+        name: 'Poem',
+        component: () => import('pages/poem/IndexPage.vue'),
+      },
+      {
         path: ':catchAll(.*)*',
         component: () => import('pages/404/IndexPage.vue'),
       },

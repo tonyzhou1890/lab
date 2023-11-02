@@ -40,7 +40,7 @@ import { loading } from '@/core/io/utils'
 const { t } = useI18n()
 const $q = useQuasar()
 // 是否初始化完毕
-const initialed = ref<boolean>(false)
+const initialized = ref<boolean>(false)
 
 const service = new FaviconService()
 
@@ -56,7 +56,7 @@ async function init() {
     await service.init({
       loadCallback: loading.update,
     })
-    initialed.value = true
+    initialized.value = true
 
     loading.hide()
   } catch (e) {

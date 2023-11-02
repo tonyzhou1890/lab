@@ -37,4 +37,9 @@ export default {
     'Not Initialized': '未初始化',
     'Not Found': '未找到',
   },
+  // 依赖
+  dep: {
+    noData: '暂无依赖或依赖已过期',
+    loadDep: '加载依赖',
+  },
 }

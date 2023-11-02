@@ -41,7 +41,7 @@ import { QTree } from 'quasar'
 
 const { t } = useI18n()
 // 是否初始化完毕
-const initialed = ref<boolean>(false)
+const initialized = ref<boolean>(false)
 
 const service = new AreaCodeService()
 
@@ -66,7 +66,7 @@ async function init() {
     loading.show()
     await service.init()
     tree.value = service.getData()
-    initialed.value = true
+    initialized.value = true
 
     loading.hide()
   } catch (e) {

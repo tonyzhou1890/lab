@@ -19,6 +19,10 @@ const config = {
       path: '/resources/area-code/data.json',
       version: '0.0.1',
     },
+    poem: {
+      path: 'https://general-resources.oss-cn-shanghai.aliyuncs.com/poem/poem.json.zip',
+      version: '1.0.0',
+    },
   },
 }
 

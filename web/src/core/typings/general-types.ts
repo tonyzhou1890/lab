@@ -19,7 +19,7 @@ export interface DepLoadCallbackParams {
  * 服务初始化配置
  */
 export interface ServiceInitConfig {
-  loadCallback: (params: DepLoadCallbackParams) => void
+  loadCallback?: (params: DepLoadCallbackParams) => void
 }
 
 /**
