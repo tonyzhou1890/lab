@@ -4,11 +4,12 @@ services:
     image: "node:18"
     user: "root"
     ports:
-      - 9100:9100
+      - 8650:9100
     working_dir: /home/node/app
     environment:
       - NODE_ENV=production
     volumes:
       - ./:/home/node/app
+      - /root/.ssh:/root/.ssh
     privileged: true
     command: sh ./start.sh
