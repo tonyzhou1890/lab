@@ -10,6 +10,7 @@ import qrcode from './module/qrcode'
 import favicon from './module/favicon'
 import areaCode from './module/area-code'
 import poem from './module/poem'
+import mIcons from './module/m-icons'
 
 export default {
   global,
@@ -58,4 +59,5 @@ export default {
   favicon,
   areaCode,
   poem,
+  mIcons
 }

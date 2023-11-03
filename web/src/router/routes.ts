@@ -75,6 +75,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/poem/IndexPage.vue'),
       },
       {
+        path: 'service/m-icons',
+        name: 'MIcons',
+        component: () => import('pages/m-icons/IndexPage.vue'),
+      },
+      {
         path: ':catchAll(.*)*',
         component: () => import('pages/404/IndexPage.vue'),
       },
