@@ -80,6 +80,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/m-icons/IndexPage.vue'),
       },
       {
+        path: 'service/idiom',
+        name: 'Idiom',
+        component: () => import('pages/idiom/IndexPage.vue'),
+      },
+      {
         path: ':catchAll(.*)*',
         component: () => import('pages/404/IndexPage.vue'),
       },

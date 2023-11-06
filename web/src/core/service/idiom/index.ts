@@ -2,7 +2,7 @@ import create, { WorkerInstance } from '@/core/web-worker/create'
 import Service from '../service-base'
 import worker from './worker?worker'
 import IO from '@/core/io'
-import type { Core, PoemDB } from './core'
+import type { Core, IdiomDB } from './core'
 import type { ServiceInitConfig } from '@/core/typings/general-types'
 import JSZip from 'jszip'
 import coreConfig from '@/core/config'
@@ -27,7 +27,7 @@ const workerMethods = new Proxy({} as Core, {
   },
 })
 
-class PoemService extends Service {
+class IdiomService extends Service {
   constructor() {
     super()
   }
@@ -53,7 +53,7 @@ class PoemService extends Service {
       } else {
         // 加载数据
         const blobData = await IO.loadDepFile<Blob>({
-          ...coreConfig.deps.poem,
+          ...coreConfig.deps.idiom,
           loadCallback: config?.loadCallback,
         })
         local.data = blobData
@@ -64,22 +64,26 @@ class PoemService extends Service {
       const data = await zip.loadAsync(local.data, {
         optimizedBinaryString: true,
       })
-      let poemData: PoemDB | null = null
+      let chengYuData: IdiomDB | null = null
       for (const key in data.files) {
-        if (!data.files[key].dir && data.files[key].name === 'poem.json') {
+        console.log(data.files)
+        if (!data.files[key].dir && data.files[key].name === 'idiom.json') {
           const jsonStr = await data.file(data.files[key].name)?.async('string')
           if (!jsonStr) {
             throw new Error('Resource Not Found')
           } else {
-            poemData = JSON.parse(jsonStr)
+            chengYuData = JSON.parse(jsonStr)
           }
         }
+      }
+      if (!chengYuData) {
+        throw new Error('Resource Not Found')
       }
 
       // 创建多线程
       const instance = await create<Core>(worker, 1)
       local.workerInstance = instance
-      await local.workerInstance.setData('data', poemData)
+      await local.workerInstance.setData('data', chengYuData)
 
       local.inited = true
     } catch (e) {
@@ -105,7 +109,7 @@ class PoemService extends Service {
    * @returns
    */
   async initLocalDep(): Promise<boolean> {
-    const blobData = await IO.read<Blob>(coreConfig.deps.poem)
+    const blobData = await IO.read<Blob>(coreConfig.deps.idiom)
     if (blobData) {
       await this.init({
         data: blobData,
@@ -119,4 +123,4 @@ class PoemService extends Service {
   worker = workerMethods
 }
 
-export default PoemService
+export default IdiomService

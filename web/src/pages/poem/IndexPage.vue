@@ -93,7 +93,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import AreaCodeService from '@/core/service/poem'
+import PoemService from '@/core/service/poem'
 import { type QTableProps } from 'quasar'
 import type { PoemItem } from '@/core/service/poem/core'
 import ServiceSchame from '@/core/service/poem/schema'
@@ -107,7 +107,7 @@ const { t } = useI18n()
 // 是否初始化完毕
 const initialized = ref<boolean>(false)
 
-const service = new AreaCodeService()
+const service = new PoemService()
 
 const list = ref<PoemItem[]>([])
 
