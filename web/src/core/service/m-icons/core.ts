@@ -4,7 +4,7 @@ export interface IconsData {
   icons: {
     label: string
     icon: string
-  }
+  }[]
 }
 
 /**

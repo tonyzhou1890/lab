@@ -38,7 +38,7 @@
           >
             <div
               v-for="icon in tab.icons"
-              :key="icon"
+              :key="icon.icon"
               class="column items-center col-xs-12 col-sm-6 col-md-4"
             >
               <q-icon
