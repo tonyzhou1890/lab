@@ -16,20 +16,18 @@ export interface ErrorNotifyConfig {
  * @param error
  * @param config
  */
-export function errorNotify(
-  error: Error | CoreError,
-  config: ErrorNotifyConfig
-): string {
-  const silence = !!config.silence
+export function errorNotify(error: any, config?: ErrorNotifyConfig): string {
+  const silence = !!config?.silence
   let msg = ''
   // 可翻译核心错误
   if (error instanceof CoreError) {
     // 900 为服务自定义错误 code，其余为通用
     const i18nKey =
-      error.coreErrorCode >= 900 ? config.i18nKey || 'global' : 'global'
+      error.coreErrorCode >= 900 ? config?.i18nKey || 'global' : 'global'
     msg =
       error.coreErrorFullMsg ||
-      config.t(`${i18nKey}.error.${error.coreErrorMsg}`)
+      config?.t?.(`${i18nKey}.error.${error.coreErrorMsg}`) ||
+      ''
   } else {
     // 其他错误
     msg = error.message

@@ -12,6 +12,7 @@ import areaCode from './module/area-code'
 import poem from './module/poem'
 import mIcons from './module/m-icons'
 import idiom from './module/idiom'
+import utf8 from './module/utf8'
 
 export default {
   global,
@@ -62,4 +63,5 @@ export default {
   poem,
   mIcons,
   idiom,
+  utf8,
 }

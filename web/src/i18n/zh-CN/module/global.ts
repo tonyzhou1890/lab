@@ -25,6 +25,7 @@ export default {
     cancel: '取消',
     submit: '提交',
     reset: '重置',
+    result: '结果',
   },
   // 下载
   download: {
@@ -36,6 +37,7 @@ export default {
     'Execute Error': '执行错误',
     'Not Initialized': '未初始化',
     'Not Found': '未找到',
+    'Resource Not Found': '资源未找到',
   },
   // 依赖
   dep: {

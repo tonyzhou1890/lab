@@ -246,7 +246,7 @@ async function localInit() {
     initialized.value = await service.initLocalDep()
     loading.hide()
   } catch (e) {
-    errorNotify(e as Error, { t })
+    errorNotify(e, { t })
     loading.hide()
   }
 }
@@ -262,7 +262,7 @@ async function init() {
 
     loading.hide()
   } catch (e) {
-    errorNotify(e as Error, { t })
+    errorNotify(e, { t })
     loading.hide()
   }
 }

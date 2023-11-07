@@ -11,6 +11,7 @@ import AreaCodeSchema from './area-code/schema'
 import PoemSchema from './poem/schema'
 import MIconsSchema from './m-icons/schema'
 import IdiomSchema from './idiom/schema'
+import Utf8Schema from './utf8/schema'
 // 外链服务
 import DictSchema from './dict/schema'
 import MinesweeperSchema from './minesweeper/schema'
@@ -31,6 +32,7 @@ export default {
   PoemSchema,
   MIconsSchema,
   IdiomSchema,
+  Utf8Schema,
   // 外链服务
   DictSchema,
   MinesweeperSchema,

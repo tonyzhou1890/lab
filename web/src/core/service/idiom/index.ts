@@ -6,6 +6,7 @@ import type { Core, IdiomDB } from './core'
 import type { ServiceInitConfig } from '@/core/typings/general-types'
 import JSZip from 'jszip'
 import coreConfig from '@/core/config'
+import CoreError, { CoreErrorEnum } from '@/core/error'
 
 // 所有实例共享的数据
 const local: {
@@ -70,14 +71,18 @@ class IdiomService extends Service {
         if (!data.files[key].dir && data.files[key].name === 'idiom.json') {
           const jsonStr = await data.file(data.files[key].name)?.async('string')
           if (!jsonStr) {
-            throw new Error('Resource Not Found')
+            return Promise.reject(
+              new CoreError(CoreErrorEnum['Resource Not Found'])
+            )
           } else {
             chengYuData = JSON.parse(jsonStr)
           }
         }
       }
       if (!chengYuData) {
-        throw new Error('Resource Not Found')
+        return Promise.reject(
+          new CoreError(CoreErrorEnum['Resource Not Found'])
+        )
       }
 
       // 创建多线程
