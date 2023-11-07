@@ -11,7 +11,7 @@
         autogrow
         v-model="formData.stringInput"
         class="textarea ova"
-        :label="$t('utf8.textToUtf8') + '*'"
+        :label="$t('utf8.textInput') + '*'"
         lazy-rules
         :rules="[
           (val) => (val && val.length > 0) || $t('global.form.required'),
