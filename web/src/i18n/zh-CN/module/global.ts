@@ -2,6 +2,7 @@ export default {
   failed: '操作失败',
   success: '操作成功',
   title: '飞雪工具箱',
+  titleAppendix: '在线工具',
   keywords: '在线工具箱',
   desc: '飞雪工具箱，一个在线工具箱，包含字体、文本、开发、图片、音视频等相关工具以及小游戏',
   noOption: '无选项',

@@ -14,7 +14,7 @@ const { t } = useI18n()
 useMeta(() => {
   const meta = route.meta
   const metaOptions: MetaOptions = {
-    title: t('global.title'),
+    title: `${t('global.title')}-${t('global.titleAppendix')}`,
     // meta tags
     meta: {
       description: { name: 'description', content: t('global.desc') },
@@ -22,7 +22,9 @@ useMeta(() => {
     },
   }
   if (meta && meta.title) {
-    metaOptions.title = `${t(meta.title as string)} | ${t('global.title')}`
+    metaOptions.title = `${t(meta.title as string)} | ${t('global.title')}-${t(
+      'global.titleAppendix'
+    )}`
   }
   if (meta && meta.desc) {
     metaOptions!.meta!.description!.content = t(meta.desc as string)
