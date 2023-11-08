@@ -1,5 +1,10 @@
 <template>
-  <q-card class="text-dark page-main nav-com">
+  <q-card
+    class="text-dark page-main nav-com"
+    :class="{
+      'is-page': isPage,
+    }"
+  >
     <q-bar
       v-if="!isPage"
       class="bar"
@@ -16,70 +21,86 @@
       </q-btn>
     </q-bar>
 
-    <q-card-section v-if="!isHome">
-      <p class="text-h5 nav-title">{{ $t('layout.pageNav') }}</p>
-      <q-list class="page-list">
-        <q-item
-          v-for="item in pageList"
-          :key="item.title"
-          clickable
-          :tag="item.htmlTag"
-          :target="item.target"
-          :href="item.link"
-          :to="item.route"
-          class="page-nav-item bg-white q-ma-md relative-position text-dark"
-        >
-          <q-item-section
-            v-if="item.icon"
-            avatar
-          >
-            <q-icon :name="item.icon" />
-          </q-item-section>
-
-          <q-item-section>
-            <q-item-label>{{ $t(item.title) }}</q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
+    <q-card-section :class="{ 'q-px-none': isPage }">
+      <q-input
+        square
+        outlined
+        v-model="filter"
+        class="search-input"
+        :placeholder="$t('nav.searchLabel')"
+      />
     </q-card-section>
 
-    <q-card-section>
-      <p
-        v-if="!isHome"
-        class="text-h5 nav-title"
-      >
-        {{ $t('layout.serviceNav') }}
-      </p>
-      <q-list
-        v-for="group in groupedServiceList"
-        :key="group.key"
-      >
-        <p class="text-h6 nav-title">
-          {{ $t(`global.category.${group.key}`) }}
-        </p>
-        <q-list class="page-list service-list">
+    <q-card-section class="nav-section">
+      <q-card-section v-if="!isHome && pageList.length">
+        <p class="text-h5 nav-title">{{ $t('layout.pageNav') }}</p>
+        <q-list class="page-list">
           <q-item
-            v-for="item in group.value"
-            :key="item.code"
+            v-for="item in pageList"
+            :key="item.title"
             clickable
             :tag="item.htmlTag"
             :target="item.target"
             :href="item.link"
             :to="item.route"
-            class="page-nav-item bg-white service-list-item column q-ma-md relative-position text-dark"
-            :data-first-char="item.firstChar"
+            class="page-nav-item bg-white q-ma-md relative-position text-dark"
           >
+            <q-item-section
+              v-if="item.icon"
+              avatar
+            >
+              <q-icon :name="item.icon" />
+            </q-item-section>
+
             <q-item-section>
-              <q-item-label class="text-bold">{{ item.name }}</q-item-label>
-              <q-item-label
-                :title="item.desc"
-                class="service-desc ellipsis-2-lines"
-                >{{ item.desc }}</q-item-label
-              >
+              <q-item-label>{{ item.titleStr }}</q-item-label>
             </q-item-section>
           </q-item>
         </q-list>
-      </q-list>
+      </q-card-section>
+
+      <q-card-section>
+        <p
+          v-if="!isHome"
+          class="text-h5 nav-title"
+        >
+          {{ $t('layout.serviceNav') }}
+        </p>
+        <q-list
+          v-for="group in groupedServiceList"
+          :key="group.key"
+        >
+          <p class="text-h6 nav-title">
+            {{ $t(`global.category.${group.key}`) }}
+          </p>
+          <q-list class="page-list service-list">
+            <q-item
+              v-for="item in group.value"
+              :key="item.code"
+              clickable
+              :tag="item.htmlTag"
+              :target="item.target"
+              :href="item.link"
+              :to="item.route"
+              class="page-nav-item bg-white service-list-item column q-ma-md relative-position text-dark"
+              :data-first-char="item.firstChar"
+            >
+              <q-item-section class="service-item-inner">
+                <q-item-label
+                  :title="item.name"
+                  class="text-bold ellipsis"
+                  >{{ item.name }}</q-item-label
+                >
+                <q-item-label
+                  :title="item.desc"
+                  class="service-desc ellipsis-2-lines"
+                  >{{ item.desc }}</q-item-label
+                >
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-list>
+      </q-card-section>
     </q-card-section>
   </q-card>
 </template>
@@ -104,6 +125,8 @@ const open = ref(type.value === 'page')
 const isPage = computed(() => {
   return type.value === 'page'
 })
+
+const filter = ref<string>('')
 
 const route = useRoute()
 const router = useRouter()
@@ -130,6 +153,7 @@ const pageList = computed<
   {
     icon: string
     title: string
+    titleStr: string
     htmlTag?: string
     target?: string
     link?: string
@@ -138,60 +162,80 @@ const pageList = computed<
       name?: string
     }
   }[]
->(() => [
-  {
-    icon: 'home',
-    title: 'layout.home',
-    htmlTag: 'router-link',
-    target: '_self',
-    route: {
-      path: `/${locale.value}`,
+>(() =>
+  [
+    {
+      icon: 'home',
+      title: 'layout.home',
+      titleStr: '',
+      htmlTag: 'router-link',
+      target: '_self',
+      route: {
+        path: `/${locale.value}`,
+      },
     },
-  },
-])
+  ]
+    .map((page) => {
+      page.titleStr = t(page.title)
+      return page
+    })
+    .filter((page) => {
+      const keyword = filter.value.trim()
+      if (!keyword) return true
+      return page.titleStr.includes(keyword)
+    })
+)
 
 // 应用列表
 const groupedServiceList = computed(() => {
   const list = groupService(Object.values(serviceSchema))
   const routes = router.getRoutes()
-  return list.map((group) => {
-    const routeList = group.value.map((item) => {
-      const htmlTag = item.extra
-        ? 'a'
-        : item.link && item.link.startsWith('http')
-        ? 'a'
-        : 'router-link'
-      let path = ''
-      if (htmlTag !== 'a') {
-        for (let i = 0; i < routes.length; i++) {
-          if (item.code && item.code === routes[i].name) {
-            path = changePathLangIso(routes[i].path, locale.value as string)
-            break
+  return list
+    .map((group) => {
+      const routeList = group.value
+        .map((item) => {
+          const htmlTag = item.extra
+            ? 'a'
+            : item.link && item.link.startsWith('http')
+            ? 'a'
+            : 'router-link'
+          let path = ''
+          if (htmlTag !== 'a') {
+            for (let i = 0; i < routes.length; i++) {
+              if (item.code && item.code === routes[i].name) {
+                path = changePathLangIso(routes[i].path, locale.value as string)
+                break
+              }
+            }
           }
-        }
-      }
+          return {
+            code: item.code,
+            firstChar: t(item.i18nKey + '.title')[0],
+            desc: t(item.i18nKey + '.desc'),
+            name: t(item.i18nKey + '.title'),
+            htmlTag,
+            target: htmlTag === 'a' ? '_blank' : '_self',
+            link: item.link,
+            route:
+              htmlTag === 'a'
+                ? ''
+                : {
+                    path,
+                    query: route.query,
+                  },
+          }
+        })
+        .filter((service) => {
+          const keyword = filter.value.trim()
+          if (!keyword) return true
+          return service.name.includes(keyword)
+        })
       return {
-        code: item.code,
-        firstChar: t(item.i18nKey + '.title')[0],
-        desc: t(item.i18nKey + '.desc'),
-        name: t(item.i18nKey + '.title'),
-        htmlTag,
-        target: htmlTag === 'a' ? '_blank' : '_self',
-        link: item.link,
-        route:
-          htmlTag === 'a'
-            ? ''
-            : {
-                path,
-                query: route.query,
-              },
+        key: group.key,
+        value: routeList,
       }
     })
-    return {
-      key: group.key,
-      value: routeList,
-    }
-  })
+    .filter((group) => group.value.length)
 })
 </script>
 
@@ -203,6 +247,10 @@ const groupedServiceList = computed(() => {
     background-color: transparent;
   }
 
+  .search-input {
+    background-color: rgba($color: #ffffff, $alpha: 0.7);
+  }
+
   .nav-title {
     margin-bottom: 0;
   }
@@ -210,12 +258,25 @@ const groupedServiceList = computed(() => {
   .page-nav-item {
     display: inline-flex;
     width: 200px;
-    border: 1px solid $dark;
+    // border: 1px solid $dark;
+    border-radius: 4px;
+    &:hover {
+      box-shadow: 0 0 5px white;
+      background-color: $info !important;
+      .service-desc {
+        color: white !important;
+      }
+      color: white !important;
+    }
   }
 
   .service-list-item {
     height: 78px;
     vertical-align: middle;
+
+    .service-item-inner {
+      z-index: 3;
+    }
 
     .service-desc {
       color: $grey-7;
@@ -245,6 +306,15 @@ const groupedServiceList = computed(() => {
   // &:deep(.q-router-link--active) {
   //   display: none;
   // }
+
+  &.is-page {
+    box-shadow: none;
+    background-color: transparent;
+    .nav-section {
+      background-color: rgba($color: #ffffff, $alpha: 0.7);
+      border-radius: 4px;
+    }
+  }
 }
 
 @media screen and (max-width: 750px) {

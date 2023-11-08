@@ -2,8 +2,14 @@
   <q-page class="col items-center text-primary">
     <div class="home-screen row">
       <div class="content column fix items-center">
-        <h1 class="title text-bold">{{ $t('global.title') }}</h1>
-        <p class="desc">{{ $t('home.desc') }}</p>
+        <h1 class="title text-bold row items-center">
+          <img
+            class="logo q-mr-md"
+            src="/icons/favicon-128x128.png"
+            alt="logo"
+          />{{ $t('global.title') }}
+        </h1>
+        <p class="desc text-grey tac">{{ $t('home.desc') }}</p>
         <!-- <div>
           <q-btn
             :to="startTo"
@@ -45,14 +51,14 @@ import NavCard from '@/components/NavCard.vue'
 .home-screen {
   overflow: auto;
   box-sizing: border-box;
-  // background-image: linear-gradient(
-  //   to bottom,
-  //   var(--q-primary),
-  //   rgba($primary, 0.5) 50%,
-  //   var(--q-primary)
-  // );
+
+  .logo {
+    width: 60px;
+    height: 60px;
+  }
 
   .content {
+    width: 100%;
     max-width: 1500px;
     padding: 0 20px;
     margin: 0 auto;
@@ -66,9 +72,8 @@ import NavCard from '@/components/NavCard.vue'
   }
 
   .desc {
-    margin: 30px 0;
+    margin: 30px 0 0;
     font-size: 18px;
-    color: $secondary;
   }
 
   .start-btn {
