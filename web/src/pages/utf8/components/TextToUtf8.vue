@@ -35,7 +35,7 @@
 <script setup lang="ts">
 import { ref, toRefs } from 'vue'
 import type { QForm } from 'quasar'
-import type { Utf8Service } from '@/core/service/utf8'
+import type Utf8Service from '@/core/service/utf8'
 import { errorNotify } from '@/core/error/utils'
 
 const props = defineProps<{

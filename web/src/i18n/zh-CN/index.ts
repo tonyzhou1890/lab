@@ -13,6 +13,7 @@ import poem from './module/poem'
 import mIcons from './module/m-icons'
 import idiom from './module/idiom'
 import utf8 from './module/utf8'
+import time from './module/time'
 
 export default {
   global,
@@ -64,4 +65,5 @@ export default {
   mIcons,
   idiom,
   utf8,
+  time,
 }

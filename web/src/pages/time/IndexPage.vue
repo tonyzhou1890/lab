@@ -27,10 +27,7 @@
           :key="tab.value"
           :name="tab.value"
         >
-          <component
-            :is="tab.component"
-            :service="service"
-          />
+          <component :is="tab.component" />
         </q-tab-panel>
       </q-tab-panels>
     </div>
@@ -41,11 +38,11 @@
 import { computed, ref } from 'vue'
 import type { Component } from 'vue'
 import { useI18n } from 'vue-i18n'
-import ServiceSchame from '@/core/service/utf8/schema'
-import Utf8Service from '@/core/service/utf8'
+import ServiceSchame from '@/core/service/time/schema'
 import ServiceBaseInfo from '@/components/ServiceBaseInfo.vue'
-import TextToUtf8 from './components/TextToUtf8.vue'
-import Utf8ToText from './components/Utf8ToText.vue'
+import ClockCom from './components/ClockCom.vue'
+import CountdownCom from './components/CountdownCom.vue'
+import StopwatchCom from './components/StopwatchCom.vue'
 
 const { t } = useI18n()
 
@@ -56,21 +53,25 @@ interface TabItem {
 }
 
 // 当前 tab
-const currTab = ref('text')
+const currTab = ref('clock')
 
-const service = new Utf8Service()
 // tab 列表
 const tabList = computed<TabItem[]>(() => {
   return [
     {
-      name: t('utf8.textToUtf8'),
-      value: 'text',
-      component: TextToUtf8,
+      name: t('time.clock.label'),
+      value: 'clock',
+      component: ClockCom,
     },
     {
-      name: t('utf8.utf8ToText'),
-      value: 'utf8',
-      component: Utf8ToText,
+      name: t('time.countdown.label'),
+      value: 'countdown',
+      component: CountdownCom,
+    },
+    {
+      name: t('time.stopwatch.label'),
+      value: 'stopwatch',
+      component: StopwatchCom,
     },
   ]
 })

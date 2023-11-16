@@ -90,6 +90,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/utf8/IndexPage.vue'),
       },
       {
+        path: 'service/time',
+        name: 'Time',
+        component: () => import('pages/time/IndexPage.vue'),
+      },
+      {
         path: ':catchAll(.*)*',
         component: () => import('pages/404/IndexPage.vue'),
       },

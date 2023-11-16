@@ -12,6 +12,7 @@ import PoemSchema from './poem/schema'
 import MIconsSchema from './m-icons/schema'
 import IdiomSchema from './idiom/schema'
 import Utf8Schema from './utf8/schema'
+import TimeSchema from './time/schema'
 // 外链服务
 import DictSchema from './dict/schema'
 import MinesweeperSchema from './minesweeper/schema'
@@ -33,6 +34,7 @@ export default {
   MIconsSchema,
   IdiomSchema,
   Utf8Schema,
+  TimeSchema,
   // 外链服务
   DictSchema,
   MinesweeperSchema,
