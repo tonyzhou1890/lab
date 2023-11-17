@@ -38,14 +38,16 @@
           >
             <div
               v-for="icon in tab.icons"
-              :key="icon.icon"
+              :key="icon.label"
               class="column items-center col-xs-12 col-sm-6 col-md-4"
             >
               <q-icon
                 class="icon"
                 :name="icon.icon"
               ></q-icon>
-              <p class="label text-grey">{{ icon.label }}</p>
+              <p class="label text-grey full-width text-center">
+                {{ icon.label }}
+              </p>
             </div>
           </q-tab-panel>
         </q-tab-panels>
@@ -119,6 +121,7 @@ async function init() {
       }
       .label {
         font-size: 1.4rem;
+        word-break: break-all;
       }
     }
   }

@@ -39,37 +39,37 @@ class MIconsService extends Service {
       local.data = [
         {
           key: 'm',
-          icons: Object.keys(mIcons).map((item) => {
+          icons: Object.entries(mIcons).map((item) => {
             return {
-              label: core.mStringToIconName(item),
-              icon: mIcons[item],
+              label: core.mStringToIconName(item[0]),
+              icon: item[1] as string,
             }
           }),
         },
         {
           key: 'outlined',
-          icons: Object.keys(outlinedIcons).map((item) => {
+          icons: Object.entries(outlinedIcons).map((item) => {
             return {
-              label: core.mStringToIconName(item, 'o_'),
-              icon: outlinedIcons[item],
+              label: core.mStringToIconName(item[0], 'o_'),
+              icon: item[1] as string,
             }
           }),
         },
         {
           key: 'round',
-          icons: Object.keys(roundIcons).map((item) => {
+          icons: Object.entries(roundIcons).map((item) => {
             return {
-              label: core.mStringToIconName(item, 'r_'),
-              icon: roundIcons[item],
+              label: core.mStringToIconName(item[0], 'r_'),
+              icon: item[1] as string,
             }
           }),
         },
         {
           key: 'sharp',
-          icons: Object.keys(sharpIcons).map((item) => {
+          icons: Object.entries(sharpIcons).map((item) => {
             return {
-              label: core.mStringToIconName(item, 's_'),
-              icon: sharpIcons[item],
+              label: core.mStringToIconName(item[0], 's_'),
+              icon: item[1] as string,
             }
           }),
         },
