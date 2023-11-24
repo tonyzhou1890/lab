@@ -14,6 +14,7 @@ import mIcons from './module/m-icons'
 import idiom from './module/idiom'
 import utf8 from './module/utf8'
 import time from './module/time'
+import baseConvert from './module/base-convert'
 
 export default {
   global,
@@ -66,4 +67,5 @@ export default {
   idiom,
   utf8,
   time,
+  baseConvert,
 }

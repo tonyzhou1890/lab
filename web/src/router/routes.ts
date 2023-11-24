@@ -95,6 +95,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/time/IndexPage.vue'),
       },
       {
+        path: 'service/base-convert',
+        name: 'BaseConvert',
+        component: () => import('pages/base-convert/IndexPage.vue'),
+      },
+      {
         path: ':catchAll(.*)*',
         component: () => import('pages/404/IndexPage.vue'),
       },
