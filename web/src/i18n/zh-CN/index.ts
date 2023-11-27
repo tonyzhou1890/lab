@@ -15,6 +15,7 @@ import idiom from './module/idiom'
 import utf8 from './module/utf8'
 import time from './module/time'
 import baseConvert from './module/base-convert'
+import periodicTableOfElements from './module/periodic-table-of-elements'
 
 export default {
   global,
@@ -68,4 +69,5 @@ export default {
   utf8,
   time,
   baseConvert,
+  periodicTableOfElements,
 }

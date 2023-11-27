@@ -27,6 +27,12 @@ const config = {
       path: 'https://general-resources.oss-cn-shanghai.aliyuncs.com/dict/idiom.json.zip',
       version: '1.0.0',
     },
+    periodicTableOfElements: {
+      path: '/resources/periodic-table-of-elements/data.json',
+      version: '0.0.1',
+      // 这个不需要缓存，因为可能需要数据修正
+      cache: false,
+    },
   },
 }
 

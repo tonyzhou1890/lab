@@ -14,6 +14,7 @@ import IdiomSchema from './idiom/schema'
 import Utf8Schema from './utf8/schema'
 import TimeSchema from './time/schema'
 import BaseConvertSchema from './base-convert/schema'
+import PeriodicTableOfElementsSchema from './periodic-table-of-elements/schema'
 // 外链服务
 import DictSchema from './dict/schema'
 import MinesweeperSchema from './minesweeper/schema'
@@ -37,6 +38,7 @@ export default {
   Utf8Schema,
   TimeSchema,
   BaseConvertSchema,
+  PeriodicTableOfElementsSchema,
   // 外链服务
   DictSchema,
   MinesweeperSchema,

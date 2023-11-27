@@ -1,0 +1,1185 @@
+{
+  "text": "元素周期表，内容根据百度百科整理。",
+  "list": [
+    {
+      "symbol": "H",
+      "atomicNumber": 1,
+      "atomicMass": 1.008,
+      "names": {
+        "zh": { "text": "氢", "phonetic": "qīng" },
+        "en": { "text": "Hydrogen" }
+      },
+      "intro": "密度最小的元素，同位素为氕、氘和氚"
+    },
+    {
+      "symbol": "He",
+      "atomicNumber": 2,
+      "atomicMass": 4.003,
+      "names": {
+        "zh": { "text": "氦", "phonetic": "hài" },
+        "en": { "text": "Helium" }
+      },
+      "intro": "最难液化，稀有气体，由中国学者成功制得氦化合物氦化钠"
+    },
+    {
+      "symbol": "Li",
+      "atomicNumber": 3,
+      "atomicMass": 6.941,
+      "names": {
+        "zh": { "text": "锂", "phonetic": "lǐ" },
+        "en": { "text": "Lithium" }
+      },
+      "intro": "密度小于煤油，用石蜡封存的活泼碱金属，空气中生成黑色氮化锂，可与水反应"
+    },
+    {
+      "symbol": "Be",
+      "atomicNumber": 4,
+      "atomicMass": 9.012,
+      "names": {
+        "zh": { "text": "铍", "phonetic": "pí" },
+        "en": { "text": "Beryllium" }
+      },
+      "intro": "最轻碱土金属元素，有剧毒，与水几乎不反应"
+    },
+    {
+      "symbol": "B",
+      "atomicNumber": 5,
+      "atomicMass": 10.81,
+      "names": {
+        "zh": { "text": "硼", "phonetic": "péng" },
+        "en": { "text": "Boron" }
+      },
+      "intro": "单质硬度仅次于金刚石的非金属元素，重要微量元素"
+    },
+    {
+      "symbol": "C",
+      "atomicNumber": 6,
+      "atomicMass": 12.01,
+      "names": {
+        "zh": { "text": "碳", "phonetic": "tàn" },
+        "en": { "text": "Carbon" }
+      },
+      "intro": "硬度最高（金刚石）、导电（石墨），细胞干重中含量最高，是生命的基本构架"
+    },
+    {
+      "symbol": "N",
+      "atomicNumber": 7,
+      "atomicMass": 14.01,
+      "names": {
+        "zh": { "text": "氮", "phonetic": "dàn" },
+        "en": { "text": "Nitrogen" }
+      },
+      "intro": "空气中含量最多的元素，不活泼，其氧化物是大气污染物"
+    },
+    {
+      "symbol": "O",
+      "atomicNumber": 8,
+      "atomicMass": 16,
+      "names": {
+        "zh": { "text": "氧", "phonetic": "yǎng" },
+        "en": { "text": "Oxygen" }
+      },
+      "intro": "地壳中最多，生物体内最多，支持燃烧和需氧型生物呼吸"
+    },
+    {
+      "symbol": "F",
+      "atomicNumber": 9,
+      "atomicMass": 19,
+      "names": {
+        "zh": { "text": "氟", "phonetic": "fú" },
+        "en": { "text": "Fluorine" }
+      },
+      "intro": "最活泼的非金属元素，化合价没有正价，单质不能被氧化"
+    },
+    {
+      "symbol": "Ne",
+      "atomicNumber": 10,
+      "atomicMass": 20.18,
+      "names": {
+        "zh": { "text": "氖", "phonetic": "nǎi" },
+        "en": { "text": "Neon" }
+      },
+      "intro": "稀有气体，用于光源"
+    },
+    {
+      "symbol": "Na",
+      "atomicNumber": 11,
+      "atomicMass": 22.99,
+      "names": {
+        "zh": { "text": "钠", "phonetic": "nà" },
+        "en": { "text": "Sodium" }
+      },
+      "intro": "活泼，与空气或水接触发生反应，只能储存在石蜡、煤油或稀有气体中，钠光灯是重要黄光光源"
+    },
+    {
+      "symbol": "Mg",
+      "atomicNumber": 12,
+      "atomicMass": 24.31,
+      "names": {
+        "zh": { "text": "镁", "phonetic": "měi" },
+        "en": { "text": "Magnesium" }
+      },
+      "intro": "碱土金属，能在二氧化碳或氮气中燃烧，能与水反应但相当缓慢"
+    },
+    {
+      "symbol": "Al",
+      "atomicNumber": 13,
+      "atomicMass": 26.98,
+      "names": {
+        "zh": { "text": "铝", "phonetic": "lǚ" },
+        "en": { "text": "Aluminium" }
+      },
+      "intro": "地壳里含量最多的金属元素，具有非金属性，应用广泛"
+    },
+    {
+      "symbol": "Si",
+      "atomicNumber": 14,
+      "atomicMass": 28.09,
+      "names": {
+        "zh": { "text": "硅", "phonetic": "guī" },
+        "en": { "text": "Silicon" }
+      },
+      "intro": "地壳中含量仅次于氧，外表很像金属，是芯片的重要元素"
+    },
+    {
+      "symbol": "P",
+      "atomicNumber": 15,
+      "atomicMass": 30.97,
+      "names": {
+        "zh": { "text": "磷", "phonetic": "lín" },
+        "en": { "text": "Phosphorus" }
+      },
+      "intro": "有白磷和红磷，白磷有剧毒且在常温下可以自燃"
+    },
+    {
+      "symbol": "S",
+      "atomicNumber": 16,
+      "atomicMass": 32.06,
+      "names": {
+        "zh": { "text": "硫", "phonetic": "liú" },
+        "en": { "text": "Sulphur" }
+      },
+      "intro": "黄色固体，质地较软且轻，与火山活动密切相关"
+    },
+    {
+      "symbol": "Cl",
+      "atomicNumber": 17,
+      "atomicMass": 35.45,
+      "names": {
+        "zh": { "text": "氯", "phonetic": "lǜ" },
+        "en": { "text": "Chlorine" }
+      },
+      "intro": "黄绿色有毒气体，活泼，支持燃烧"
+    },
+    {
+      "symbol": "Ar",
+      "atomicNumber": 18,
+      "atomicMass": 39.95,
+      "names": {
+        "zh": { "text": "氩", "phonetic": "yà" },
+        "en": { "text": "Argon" }
+      },
+      "intro": "稀有气体，在空气中含量最多的稀有气体"
+    },
+    {
+      "symbol": "K",
+      "atomicNumber": 19,
+      "atomicMass": 39.1,
+      "names": {
+        "zh": { "text": "钾", "phonetic": "jiǎ" },
+        "en": { "text": "Potassium" }
+      },
+      "intro": "比钠还活泼，遇水即燃，钾离子可促进植物体内糖类和淀粉的形成"
+    },
+    {
+      "symbol": "Ca",
+      "atomicNumber": 20,
+      "atomicMass": 40.08,
+      "names": {
+        "zh": { "text": "钙", "phonetic": "gài" },
+        "en": { "text": "Calcium" }
+      },
+      "intro": "空气中会与氮化合，能与水反应，是石灰、骨骼主要组成成分"
+    },
+    {
+      "symbol": "Sc",
+      "atomicNumber": 21,
+      "atomicMass": 44.96,
+      "names": {
+        "zh": { "text": "钪", "phonetic": "kàng" },
+        "en": { "text": "Scandium" }
+      },
+      "intro": "一种柔软过渡金属，常与钆、铒混合存在"
+    },
+    {
+      "symbol": "Ti",
+      "atomicNumber": 22,
+      "atomicMass": 47.87,
+      "names": {
+        "zh": { "text": "钛", "phonetic": "tài" },
+        "en": { "text": "Titanium" }
+      },
+      "intro": "能在氮气中燃烧，熔点高，被称为“太空金属”"
+    },
+    {
+      "symbol": "V",
+      "atomicNumber": 23,
+      "atomicMass": 50.94,
+      "names": {
+        "zh": { "text": "钒", "phonetic": "fán" },
+        "en": { "text": "Vanadium" }
+      },
+      "intro": "高熔点稀有金属，抗腐蚀能力较强"
+    },
+    {
+      "symbol": "Cr",
+      "atomicNumber": 24,
+      "atomicMass": 52,
+      "names": {
+        "zh": { "text": "铬", "phonetic": "gè" },
+        "en": { "text": "Chromium" }
+      },
+      "intro": "硬度最高的金属，主要用于制作不锈钢"
+    },
+    {
+      "symbol": "Mn",
+      "atomicNumber": 25,
+      "atomicMass": 54.94,
+      "names": {
+        "zh": { "text": "锰", "phonetic": "měng" },
+        "en": { "text": "Manganese" }
+      },
+      "intro": "在地壳中分布广泛，高锰钢可用于制造军用头盔或装甲"
+    },
+    {
+      "symbol": "Fe",
+      "atomicNumber": 26,
+      "atomicMass": 55.85,
+      "names": {
+        "zh": { "text": "铁", "phonetic": "tiě" },
+        "en": { "text": "Iron" }
+      },
+      "intro": "地壳含量第二高的金属，单质产量最高，有磁性"
+    },
+    {
+      "symbol": "Co",
+      "atomicNumber": 27,
+      "atomicMass": 58.93,
+      "names": {
+        "zh": { "text": "钴", "phonetic": "gǔ" },
+        "en": { "text": "Cobalt" }
+      },
+      "intro": "有磁性，可作蓝色钴颜料，同位素60Co被应用于X光发生器中"
+    },
+    {
+      "symbol": "Ni",
+      "atomicNumber": 28,
+      "atomicMass": 58.69,
+      "names": {
+        "zh": { "text": "镍", "phonetic": "niè" },
+        "en": { "text": "Nickel" }
+      },
+      "intro": "有磁性和良好可塑性，可用于制作充电电池，甘肃金昌镍矿"
+    },
+    {
+      "symbol": "Cu",
+      "atomicNumber": 29,
+      "atomicMass": 63.55,
+      "names": {
+        "zh": { "text": "铜", "phonetic": "tóng" },
+        "en": { "text": "Copper" }
+      },
+      "intro": "人类发现较早的金属之一，可塑性很好，导电性能优"
+    },
+    {
+      "symbol": "Zn",
+      "atomicNumber": 30,
+      "atomicMass": 65.39,
+      "names": {
+        "zh": { "text": "锌", "phonetic": "xīn" },
+        "en": { "text": "Zinc" }
+      },
+      "intro": "人体需要的微量元素，用于白铁和干电池负极"
+    },
+    {
+      "symbol": "Ga",
+      "atomicNumber": 31,
+      "atomicMass": 69.72,
+      "names": {
+        "zh": { "text": "镓", "phonetic": "jiā" },
+        "en": { "text": "Gallium" }
+      },
+      "intro": "熔点低沸点高，用于半导体"
+    },
+    {
+      "symbol": "Ge",
+      "atomicNumber": 32,
+      "atomicMass": 72.64,
+      "names": {
+        "zh": { "text": "锗", "phonetic": "zhě" },
+        "en": { "text": "Germanium" }
+      },
+      "intro": "具有两性，是一种重要的半导体材料"
+    },
+    {
+      "symbol": "As",
+      "atomicNumber": 33,
+      "atomicMass": 74.92,
+      "names": {
+        "zh": { "text": "砷", "phonetic": "shēn" },
+        "en": { "text": "Arsenic" }
+      },
+      "intro": "又称砒，毒性很强，三氧化二砷俗称砒霜"
+    },
+    {
+      "symbol": "Se",
+      "atomicNumber": 34,
+      "atomicMass": 78.96,
+      "names": {
+        "zh": { "text": "硒", "phonetic": "xī" },
+        "en": { "text": "Selenium" }
+      },
+      "intro": "可用于制作硒鼓，可使玻璃致色为鲜红色"
+    },
+    {
+      "symbol": "Br",
+      "atomicNumber": 35,
+      "atomicMass": 79.9,
+      "names": {
+        "zh": { "text": "溴", "phonetic": "xiù" },
+        "en": { "text": "Bromine" }
+      },
+      "intro": "红棕色液体，活泼，不易溶于水，易溶于有机溶剂"
+    },
+    {
+      "symbol": "Kr",
+      "atomicNumber": 36,
+      "atomicMass": 83.8,
+      "names": {
+        "zh": { "text": "氪", "phonetic": "kè" },
+        "en": { "text": "Krypton" }
+      },
+      "intro": "稀有气体，可与氟化合"
+    },
+    {
+      "symbol": "Rb",
+      "atomicNumber": 37,
+      "atomicMass": 85.47,
+      "names": {
+        "zh": { "text": "铷", "phonetic": "rú" },
+        "en": { "text": "Rubidium" }
+      },
+      "intro": "密度大于水，比钾更活泼，可用于光电效应以及原子钟"
+    },
+    {
+      "symbol": "Sr",
+      "atomicNumber": 38,
+      "atomicMass": 87.62,
+      "names": {
+        "zh": { "text": "锶", "phonetic": "sī" },
+        "en": { "text": "Strontium" }
+      },
+      "intro": "是碱土元素中丰度最小的元素，与水反应会使溶液变白"
+    },
+    {
+      "symbol": "Y",
+      "atomicNumber": 39,
+      "atomicMass": 88.91,
+      "names": {
+        "zh": { "text": "钇", "phonetic": "yǐ" },
+        "en": { "text": "Yttrium" }
+      },
+      "intro": "人工合成的钇铝榴石曾被当做钻石的替代品"
+    },
+    {
+      "symbol": "Zr",
+      "atomicNumber": 40,
+      "atomicMass": 91.22,
+      "names": {
+        "zh": { "text": "锆", "phonetic": "gào" },
+        "en": { "text": "Zirconium" }
+      },
+      "intro": "氧化物立方氧化锆为钻石的人工替代品"
+    },
+    {
+      "symbol": "Nb",
+      "atomicNumber": 41,
+      "atomicMass": 92.91,
+      "names": {
+        "zh": { "text": "铌", "phonetic": "ní" },
+        "en": { "text": "Niobium" }
+      },
+      "intro": "用于制作超导材料，铌钢被用于制作汽车外壳"
+    },
+    {
+      "symbol": "Mo",
+      "atomicNumber": 42,
+      "atomicMass": 95.96,
+      "names": {
+        "zh": { "text": "钼", "phonetic": "mù" },
+        "en": { "text": "Molybdenum" }
+      },
+      "intro": "银白色金属，熔点非常高，可用于半导体，植物生长所需的微量元素"
+    },
+    {
+      "symbol": "Tc",
+      "atomicNumber": 43,
+      "atomicMass": 98,
+      "names": {
+        "zh": { "text": "锝", "phonetic": "dé" },
+        "en": { "text": "Technetium" }
+      },
+      "intro": "原子序数最小的放射性元素，第一个人工合成的元素"
+    },
+    {
+      "symbol": "Ru",
+      "atomicNumber": 44,
+      "atomicMass": 101.1,
+      "names": {
+        "zh": { "text": "钌", "phonetic": "liǎo" },
+        "en": { "text": "Ruthenium" }
+      },
+      "intro": "硬而脆呈浅灰色的多价稀有金属元素"
+    },
+    {
+      "symbol": "Rh",
+      "atomicNumber": 45,
+      "atomicMass": 102.9,
+      "names": {
+        "zh": { "text": "铑", "phonetic": "lǎo" },
+        "en": { "text": "Rhodium" }
+      },
+      "intro": "现代珠宝制作过程进行表面处理的必须元素"
+    },
+    {
+      "symbol": "Pd",
+      "atomicNumber": 46,
+      "atomicMass": 106.4,
+      "names": {
+        "zh": { "text": "钯", "phonetic": "bǎ" },
+        "en": { "text": "Palladium" }
+      },
+      "intro": "银白色金属，可吸收氢气，钯金可用于制作首饰和镶嵌宝石"
+    },
+    {
+      "symbol": "Ag",
+      "atomicNumber": 47,
+      "atomicMass": 107.9,
+      "names": {
+        "zh": { "text": "银", "phonetic": "yín" },
+        "en": { "text": "Silver" }
+      },
+      "intro": "贵金属，导电性最好，银镜反应用于制作镀银玻璃镜"
+    },
+    {
+      "symbol": "Cd",
+      "atomicNumber": 48,
+      "atomicMass": 112.4,
+      "names": {
+        "zh": { "text": "镉", "phonetic": "gé" },
+        "en": { "text": "Cadmium" }
+      },
+      "intro": "重金属，有毒，过量摄入会导致痛痛病，可用于吸收中子"
+    },
+    {
+      "symbol": "In",
+      "atomicNumber": 49,
+      "atomicMass": 114.8,
+      "names": {
+        "zh": { "text": "铟", "phonetic": "yīn" },
+        "en": { "text": "Indium" }
+      },
+      "intro": "可塑性强，有延展性，115In是主要的放射性同位素"
+    },
+    {
+      "symbol": "Sn",
+      "atomicNumber": 50,
+      "atomicMass": 118.7,
+      "names": {
+        "zh": { "text": "锡", "phonetic": "xī" },
+        "en": { "text": "Tin" }
+      },
+      "intro": "人类最早发现应用的元素之一，被用于制造青铜器"
+    },
+    {
+      "symbol": "Sb",
+      "atomicNumber": 51,
+      "atomicMass": 121.8,
+      "names": {
+        "zh": { "text": "锑", "phonetic": "tī" },
+        "en": { "text": "Antimony" }
+      },
+      "intro": "熔点低，被用于制作保险丝，其氧化物可作防火材料，湖南冷水江锑矿"
+    },
+    {
+      "symbol": "Te",
+      "atomicNumber": 52,
+      "atomicMass": 127.6,
+      "names": {
+        "zh": { "text": "碲", "phonetic": "dì" },
+        "en": { "text": "Tellurium" }
+      },
+      "intro": "密度最大的非金属，碲酸含6个羟基"
+    },
+    {
+      "symbol": "I",
+      "atomicNumber": 53,
+      "atomicMass": 126.9,
+      "names": {
+        "zh": { "text": "碘", "phonetic": "diǎn" },
+        "en": { "text": "Iodine" }
+      },
+      "intro": "紫黑色固体，可升华，活泼，甲状腺所需的微量元素"
+    },
+    {
+      "symbol": "Xe",
+      "atomicNumber": 54,
+      "atomicMass": 131.3,
+      "names": {
+        "zh": { "text": "氙", "phonetic": "xiān" },
+        "en": { "text": "Xenon" }
+      },
+      "intro": "稀有气体，可与氟化合，可用于光源"
+    },
+    {
+      "symbol": "Cs",
+      "atomicNumber": 55,
+      "atomicMass": 133,
+      "names": {
+        "zh": { "text": "铯", "phonetic": "sè" },
+        "en": { "text": "Cesium" }
+      },
+      "intro": "具有金色光泽的碱金属，熔点很低，比铷更活泼，遇水即爆"
+    },
+    {
+      "symbol": "Ba",
+      "atomicNumber": 56,
+      "atomicMass": 137.3,
+      "names": {
+        "zh": { "text": "钡", "phonetic": "bèi" },
+        "en": { "text": "Barium" }
+      },
+      "intro": "与水反应不变白，氢氧化钡可溶于水，硫酸钡被应用于钡餐透视"
+    },
+    {
+      "symbol": "La",
+      "atomicNumber": 57,
+      "atomicMass": 139,
+      "names": {
+        "zh": { "text": "镧", "phonetic": "lán" },
+        "en": { "text": "Lanthanum" }
+      },
+      "intro": "银白色金属，质软，活泼，必须保存于石蜡或矿物油中"
+    },
+    {
+      "symbol": "Ce",
+      "atomicNumber": 58,
+      "atomicMass": 140,
+      "names": {
+        "zh": { "text": "铈", "phonetic": "shì" },
+        "en": { "text": "Cerium" }
+      },
+      "intro": "银灰色稀土金属，用刀刮即可在空气中燃烧，用来制造打火石"
+    },
+    {
+      "symbol": "Pr",
+      "atomicNumber": 59,
+      "atomicMass": 141,
+      "names": {
+        "zh": { "text": "镨", "phonetic": "pǔ" },
+        "en": { "text": "Praseodymium" }
+      },
+      "intro": "银白色金属，质软，是用量较大的稀土元素"
+    },
+    {
+      "symbol": "Nd",
+      "atomicNumber": 60,
+      "atomicMass": 144,
+      "names": {
+        "zh": { "text": "钕", "phonetic": "nǚ" },
+        "en": { "text": "Neodymium" }
+      },
+      "intro": "化学性质较活泼，可在空气中点燃，磁性强，主要用作永磁材料"
+    },
+    {
+      "symbol": "Pm",
+      "atomicNumber": 61,
+      "atomicMass": 145,
+      "names": {
+        "zh": { "text": "钷", "phonetic": "pǒ" },
+        "en": { "text": "Promethium" }
+      },
+      "intro": "有放射性，用于β射线源、热源及原子电池等"
+    },
+    {
+      "symbol": "Sm",
+      "atomicNumber": 62,
+      "atomicMass": 150.5,
+      "names": {
+        "zh": { "text": "钐", "phonetic": "shān" },
+        "en": { "text": "Samarium" }
+      },
+      "intro": "银白色稀土金属，容易磁化却很难退磁"
+    },
+    {
+      "symbol": "Eu",
+      "atomicNumber": 63,
+      "atomicMass": 152,
+      "names": {
+        "zh": { "text": "铕", "phonetic": "yǒu" },
+        "en": { "text": "Europium" }
+      },
+      "intro": "稀土元素中最活泼的金属，能直接与空气和水反应，能放出红光"
+    },
+    {
+      "symbol": "Gd",
+      "atomicNumber": 64,
+      "atomicMass": 157,
+      "names": {
+        "zh": { "text": "钆", "phonetic": "gá" },
+        "en": { "text": "Gadolinium" }
+      },
+      "intro": "银白色金属，有磁性，未配对电子达到上限，用途较广"
+    },
+    {
+      "symbol": "Tb",
+      "atomicNumber": 65,
+      "atomicMass": 159,
+      "names": {
+        "zh": { "text": "铽", "phonetic": "tè" },
+        "en": { "text": "Terbium" }
+      },
+      "intro": "银灰色稀土金属，通电时改变形状，用于打印机的打印头等精密设备"
+    },
+    {
+      "symbol": "Dy",
+      "atomicNumber": 66,
+      "atomicMass": 162.5,
+      "names": {
+        "zh": { "text": "镝", "phonetic": "dī" },
+        "en": { "text": "Dysprosium" }
+      },
+      "intro": "银白色稀土金属，硬度低，用于制造磁盘（尤其是机械硬盘）"
+    },
+    {
+      "symbol": "Ho",
+      "atomicNumber": 67,
+      "atomicMass": 165,
+      "names": {
+        "zh": { "text": "钬", "phonetic": "huǒ" },
+        "en": { "text": "Holmium" }
+      },
+      "intro": "银白色，质软，可用来制磁性材料"
+    },
+    {
+      "symbol": "Er",
+      "atomicNumber": 68,
+      "atomicMass": 167,
+      "names": {
+        "zh": { "text": "铒", "phonetic": "ěr" },
+        "en": { "text": "Erbium" }
+      },
+      "intro": "银灰色，质软，可用来制特种合金，激光器等"
+    },
+    {
+      "symbol": "Tm",
+      "atomicNumber": 69,
+      "atomicMass": 169,
+      "names": {
+        "zh": { "text": "铥", "phonetic": "diū" },
+        "en": { "text": "Thulium" }
+      },
+      "intro": "银白色，质软，可用来制X射线源等"
+    },
+    {
+      "symbol": "Yb",
+      "atomicNumber": 70,
+      "atomicMass": 173,
+      "names": {
+        "zh": { "text": "镱", "phonetic": "yì" },
+        "en": { "text": "Ytterbium" }
+      },
+      "intro": "银白色，质软，可用来制特种合金，也用作激光材料等"
+    },
+    {
+      "symbol": "Lu",
+      "atomicNumber": 71,
+      "atomicMass": 175,
+      "names": {
+        "zh": { "text": "镥", "phonetic": "lǔ" },
+        "en": { "text": "Lutetium" }
+      },
+      "intro": "银白色，质软，可用于核工业"
+    },
+    {
+      "symbol": "Hf",
+      "atomicNumber": 72,
+      "atomicMass": 178.5,
+      "names": {
+        "zh": { "text": "铪", "phonetic": "hā" },
+        "en": { "text": "Hafnium" }
+      },
+      "intro": "银白色，熔点高。可用来制耐高温合金，也用于核工业等"
+    },
+    {
+      "symbol": "Ta",
+      "atomicNumber": 73,
+      "atomicMass": 181,
+      "names": {
+        "zh": { "text": "钽", "phonetic": "tǎn" },
+        "en": { "text": "Tantalum" }
+      },
+      "intro": "钢灰色，耐腐蚀质硬，熔点高。可用于航天工业及核工业"
+    },
+    {
+      "symbol": "W",
+      "atomicNumber": 74,
+      "atomicMass": 184,
+      "names": {
+        "zh": { "text": "钨", "phonetic": "wū" },
+        "en": { "text": "Tungsten" }
+      },
+      "intro": "稳定金属元素中熔点最高，白炽灯丝首选，江西大余钨矿"
+    },
+    {
+      "symbol": "Re",
+      "atomicNumber": 75,
+      "atomicMass": 186,
+      "names": {
+        "zh": { "text": "铼", "phonetic": "lái" },
+        "en": { "text": "Rhenium" }
+      },
+      "intro": "最晚被发现的稳定元素，金属熔点仅次于钨，可作灯丝"
+    },
+    {
+      "symbol": "Os",
+      "atomicNumber": 76,
+      "atomicMass": 190,
+      "names": {
+        "zh": { "text": "锇", "phonetic": "é" },
+        "en": { "text": "Osmium" }
+      },
+      "intro": "密度最大的金属，熔点极高（3000℃以上），硬度大，用于轴承"
+    },
+    {
+      "symbol": "Ir",
+      "atomicNumber": 77,
+      "atomicMass": 192,
+      "names": {
+        "zh": { "text": "铱", "phonetic": "yī" },
+        "en": { "text": "Iridium" }
+      },
+      "intro": "熔点高，质硬而脆。可用来制科学仪器等"
+    },
+    {
+      "symbol": "Pt",
+      "atomicNumber": 78,
+      "atomicMass": 195,
+      "names": {
+        "zh": { "text": "铂", "phonetic": "bó" },
+        "en": { "text": "Platinum" }
+      },
+      "intro": "化学性质极稳定，被应用于珠宝首饰中的贵金属，俗称铂金"
+    },
+    {
+      "symbol": "Au",
+      "atomicNumber": 79,
+      "atomicMass": 197,
+      "names": {
+        "zh": { "text": "金", "phonetic": "jīn" },
+        "en": { "text": "Gold" }
+      },
+      "intro": "化学性质极稳定，人类最早发现及应用的贵金属，全球硬通货"
+    },
+    {
+      "symbol": "Hg",
+      "atomicNumber": 80,
+      "atomicMass": 200.6,
+      "names": {
+        "zh": { "text": "汞", "phonetic": "gǒng" },
+        "en": { "text": "Mercury" }
+      },
+      "intro": "水银，常温下为液态的金属，汞光灯是重要光源，贵州铜仁汞矿，有毒"
+    },
+    {
+      "symbol": "Tl",
+      "atomicNumber": 81,
+      "atomicMass": 204.5,
+      "names": {
+        "zh": { "text": "铊", "phonetic": "tā" },
+        "en": { "text": "Thallium" }
+      },
+      "intro": "银白色，质软。可用来制合金等。铊的化合物有剧毒"
+    },
+    {
+      "symbol": "Pb",
+      "atomicNumber": 82,
+      "atomicMass": 207,
+      "names": {
+        "zh": { "text": "铅", "phonetic": "qiān" },
+        "en": { "text": "Lead" }
+      },
+      "intro": "密度大，熔点低，对人体有毒性。许多化妆品中必须含有的元素"
+    },
+    {
+      "symbol": "Bi",
+      "atomicNumber": 83,
+      "atomicMass": 209,
+      "names": {
+        "zh": { "text": "铋", "phonetic": "bì" },
+        "en": { "text": "Bismuth" }
+      },
+      "intro": "合金熔点很低，可用来做保险丝和汽锅上的安全塞等，\\n有极微弱的放射性"
+    },
+    {
+      "symbol": "Po",
+      "atomicNumber": 84,
+      "atomicMass": 209,
+      "names": {
+        "zh": { "text": "钋", "phonetic": "pō" },
+        "en": { "text": "Polonium" }
+      },
+      "intro": "银白色金属，放射性，能在黑暗中发光，用作中子源"
+    },
+    {
+      "symbol": "At",
+      "atomicNumber": 85,
+      "atomicMass": 210,
+      "names": {
+        "zh": { "text": "砹", "phonetic": "ài" },
+        "en": { "text": "Astatine" }
+      },
+      "intro": "单质外表与碘相似，放射、活泼，地球中含量最小的天然元素"
+    },
+    {
+      "symbol": "Rn",
+      "atomicNumber": 86,
+      "atomicMass": 222,
+      "names": {
+        "zh": { "text": "氡", "phonetic": "dōng" },
+        "en": { "text": "Radon" }
+      },
+      "intro": "放射性气体，镭射气"
+    },
+    {
+      "symbol": "Fr",
+      "atomicNumber": 87,
+      "atomicMass": 223,
+      "names": {
+        "zh": { "text": "钫", "phonetic": "fāng" },
+        "en": { "text": "Francium" }
+      },
+      "intro": "放射性碱金属，地球中含量极小，金属性可能不如铯"
+    },
+    {
+      "symbol": "Ra",
+      "atomicNumber": 88,
+      "atomicMass": 226,
+      "names": {
+        "zh": { "text": "镭", "phonetic": "léi" },
+        "en": { "text": "Radium" }
+      },
+      "intro": "放射性碱土金属，其射线可用于治疗癌症"
+    },
+    {
+      "symbol": "Ac",
+      "atomicNumber": 89,
+      "atomicMass": 227,
+      "names": {
+        "zh": { "text": "锕", "phonetic": "ā" },
+        "en": { "text": "Actinium" }
+      },
+      "intro": "放射性，能在暗处发光，空气中可被氧化，碱性较强"
+    },
+    {
+      "symbol": "Th",
+      "atomicNumber": 90,
+      "atomicMass": 232,
+      "names": {
+        "zh": { "text": "钍", "phonetic": "tǔ" },
+        "en": { "text": "Thorium" }
+      },
+      "intro": "放射性，半衰期可长达上百亿年，可用于裂变"
+    },
+    {
+      "symbol": "Pa",
+      "atomicNumber": 91,
+      "atomicMass": 231,
+      "names": {
+        "zh": { "text": "镤", "phonetic": "pú" },
+        "en": { "text": "Protactinium" }
+      },
+      "intro": "放射性，镤231半衰期3万多年"
+    },
+    {
+      "symbol": "U",
+      "atomicNumber": 92,
+      "atomicMass": 238,
+      "names": {
+        "zh": { "text": "铀", "phonetic": "yóu" },
+        "en": { "text": "Uranium" }
+      },
+      "intro": "放射性，半衰期长达几十亿年，同位素铀235被用于制作原子弹"
+    },
+    {
+      "symbol": "Np",
+      "atomicNumber": 93,
+      "atomicMass": 237,
+      "names": {
+        "zh": { "text": "镎", "phonetic": "ná" },
+        "en": { "text": "Neptunium" }
+      },
+      "intro": "放射，在铀矿中少量存在"
+    },
+    {
+      "symbol": "Pu",
+      "atomicNumber": 94,
+      "atomicMass": 244,
+      "names": {
+        "zh": { "text": "钚", "phonetic": "bù" },
+        "en": { "text": "Plutonium" }
+      },
+      "intro": "放射，在铀矿中少量存在，用于裂变核燃料"
+    },
+    {
+      "symbol": "Am",
+      "atomicNumber": 95,
+      "atomicMass": 243,
+      "names": {
+        "zh": { "text": "镅", "phonetic": "méi" },
+        "en": { "text": "Americium" }
+      },
+      "intro": "人造 放射\\n用于烟雾报警器中"
+    },
+    {
+      "symbol": "Cm",
+      "atomicNumber": 96,
+      "atomicMass": 247,
+      "names": {
+        "zh": { "text": "锔", "phonetic": "jú" },
+        "en": { "text": "Curium" }
+      },
+      "intro": "人造 放射"
+    },
+    {
+      "symbol": "Bk",
+      "atomicNumber": 97,
+      "atomicMass": 247,
+      "names": {
+        "zh": { "text": "锫", "phonetic": "péi" },
+        "en": { "text": "Berkelium" }
+      },
+      "intro": "人造 放射"
+    },
+    {
+      "symbol": "Cf",
+      "atomicNumber": 98,
+      "atomicMass": 251,
+      "names": {
+        "zh": { "text": "锎", "phonetic": "kāi" },
+        "en": { "text": "Californium" }
+      },
+      "intro": "人造 放射"
+    },
+    {
+      "symbol": "Es",
+      "atomicNumber": 99,
+      "atomicMass": 252,
+      "names": {
+        "zh": { "text": "锿", "phonetic": "āi" },
+        "en": { "text": "Einsteinium" }
+      },
+      "intro": "人造 放射"
+    },
+    {
+      "symbol": "Fm",
+      "atomicNumber": 100,
+      "atomicMass": 257,
+      "names": {
+        "zh": { "text": "镄", "phonetic": "fèi" },
+        "en": { "text": "Fermium" }
+      },
+      "intro": "人造 放射"
+    },
+    {
+      "symbol": "Md",
+      "atomicNumber": 101,
+      "atomicMass": 258,
+      "names": {
+        "zh": { "text": "钔", "phonetic": "mén" },
+        "en": { "text": "Mendelevium" }
+      },
+      "intro": "人造 放射"
+    },
+    {
+      "symbol": "No",
+      "atomicNumber": 102,
+      "atomicMass": 259,
+      "names": {
+        "zh": { "text": "锘", "phonetic": "nuò" },
+        "en": { "text": "Nobelium" }
+      },
+      "intro": "人造 放射"
+    },
+    {
+      "symbol": "Lr",
+      "atomicNumber": 103,
+      "atomicMass": 260,
+      "names": {
+        "zh": { "text": "铹", "phonetic": "láo" },
+        "en": { "text": "Lawrencium" }
+      },
+      "intro": "人造 放射"
+    },
+    {
+      "symbol": "Rf",
+      "atomicNumber": 104,
+      "atomicMass": 261,
+      "names": {
+        "zh": { "text": "𬬻", "phonetic": "lú" },
+        "en": { "text": "Rutherfordium" }
+      },
+      "intro": "人造 放射"
+    },
+    {
+      "symbol": "Db",
+      "atomicNumber": 105,
+      "atomicMass": 262,
+      "names": {
+        "zh": { "text": "𬭊", "phonetic": "dù" },
+        "en": { "text": "Dubnium" }
+      },
+      "intro": "人造 放射"
+    },
+    {
+      "symbol": "Sg",
+      "atomicNumber": 106,
+      "atomicMass": 263,
+      "names": {
+        "zh": { "text": "𬭳", "phonetic": "xǐ" },
+        "en": { "text": "Seaborgium" }
+      },
+      "intro": "人造 放射"
+    },
+    {
+      "symbol": "Bh",
+      "atomicNumber": 107,
+      "atomicMass": 264,
+      "names": {
+        "zh": { "text": "𬭛", "phonetic": "bō" },
+        "en": { "text": "Bohrium" }
+      },
+      "intro": "人造 放射"
+    },
+    {
+      "symbol": "Hs",
+      "atomicNumber": 108,
+      "atomicMass": 265,
+      "names": {
+        "zh": { "text": "𬭶", "phonetic": "hēi" },
+        "en": { "text": "Hassium" }
+      },
+      "intro": "人造 放射"
+    },
+    {
+      "symbol": "Mt",
+      "atomicNumber": 109,
+      "atomicMass": 266,
+      "names": {
+        "zh": { "text": "鿏", "phonetic": "mài" },
+        "en": { "text": "Meitnerium" }
+      },
+      "intro": "人造 放射"
+    },
+    {
+      "symbol": "Ds",
+      "atomicNumber": 110,
+      "atomicMass": 269,
+      "names": {
+        "zh": { "text": "𫟼", "phonetic": "dá" },
+        "en": { "text": "Darmstadtium" }
+      },
+      "intro": "人造 放射"
+    },
+    {
+      "symbol": "Rg",
+      "atomicNumber": 111,
+      "atomicMass": 272,
+      "names": {
+        "zh": { "text": "𬬭", "phonetic": "lún" },
+        "en": { "text": "Roentgenium" }
+      },
+      "intro": "人造 放射"
+    },
+    {
+      "symbol": "Cn",
+      "atomicNumber": 112,
+      "atomicMass": 277,
+      "names": {
+        "zh": { "text": "鿔", "phonetic": "gē" },
+        "en": { "text": "Copernicium" }
+      },
+      "intro": "人造 放射"
+    },
+    {
+      "symbol": "Nh",
+      "atomicNumber": 113,
+      "atomicMass": 286,
+      "names": {
+        "zh": { "text": "鿭", "phonetic": "nǐ" },
+        "en": { "text": "Nihonium" }
+      },
+      "intro": "人造 放射"
+    },
+    {
+      "symbol": "Fl",
+      "atomicNumber": 114,
+      "atomicMass": 289,
+      "names": {
+        "zh": { "text": "𫓧", "phonetic": "fū" },
+        "en": { "text": "Flerovium" }
+      },
+      "intro": "第一种表现出惰性气体特征的超重元素，人造 放射"
+    },
+    {
+      "symbol": "Mc",
+      "atomicNumber": 115,
+      "atomicMass": 289,
+      "names": {
+        "zh": { "text": "镆", "phonetic": "mò" },
+        "en": { "text": "Moscovium" }
+      },
+      "intro": "人造 放射"
+    },
+    {
+      "symbol": "Lv",
+      "atomicNumber": 116,
+      "atomicMass": 293,
+      "names": {
+        "zh": { "text": "𫟷", "phonetic": "lì" },
+        "en": { "text": "Livermorium" }
+      },
+      "intro": "人造 放射"
+    },
+    {
+      "symbol": "Ts",
+      "atomicNumber": 117,
+      "atomicMass": 294,
+      "names": {
+        "zh": { "text": "鿬", "phonetic": "tián" },
+        "en": { "text": "Tennessine" }
+      },
+      "intro": "人造 放射"
+    },
+    {
+      "symbol": "Og",
+      "atomicNumber": 118,
+      "atomicMass": 294,
+      "names": {
+        "zh": { "text": "鿫", "phonetic": "ào" },
+        "en": { "text": "Oganesson" }
+      },
+      "intro": "人造 放射"
+    }
+  ]
+}

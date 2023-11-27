@@ -100,6 +100,12 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/base-convert/IndexPage.vue'),
       },
       {
+        path: 'service/periodic-table-of-elements',
+        name: 'PeriodicTableOfElements',
+        component: () =>
+          import('pages/periodic-table-of-elements/IndexPage.vue'),
+      },
+      {
         path: ':catchAll(.*)*',
         component: () => import('pages/404/IndexPage.vue'),
       },

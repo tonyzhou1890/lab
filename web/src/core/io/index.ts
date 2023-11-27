@@ -76,8 +76,8 @@ const IO = {
           version: config.version,
           data: res,
         })
-        return res as T
       }
+      return res as T
     }
     return null
   },
