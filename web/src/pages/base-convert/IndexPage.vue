@@ -118,7 +118,9 @@ const result = ref<string>('')
 function onSubmit() {
   try {
     result.value = service.convert(
-      formData.value.stringInput,
+      formData.value.sourceBase < 37
+        ? formData.value.stringInput.toLowerCase()
+        : formData.value.stringInput,
       formData.value.sourceBase,
       formData.value.targetBase,
       formData.value.sourceBaseStr,

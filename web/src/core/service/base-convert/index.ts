@@ -39,7 +39,7 @@ class BaseConvertService extends Service {
   }
 
   purifyBaseStr(baseStr: string): string {
-    return [...new Set(baseStr.replace(/[\s\.\\\/]/g, ''))].join('')
+    return [...new Set(baseStr.replace(/[\s\.\\\/'"`]/g, ''))].join('')
   }
 }
 
