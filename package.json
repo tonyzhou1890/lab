@@ -1,6 +1,6 @@
 {
   "name": "lab",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "在线工具箱",
   "main": "index.js",
   "scripts": {
