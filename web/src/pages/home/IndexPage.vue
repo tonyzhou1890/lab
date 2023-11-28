@@ -1,5 +1,5 @@
 <template>
-  <q-page class="col items-center text-primary">
+  <q-page class="col items-center text-grey-10">
     <div class="home-screen row">
       <div class="content column fix items-center">
         <h1 class="title text-bold row items-center">
@@ -9,7 +9,7 @@
             alt="logo"
           />{{ $t('global.title') }}
         </h1>
-        <p class="desc text-grey tac">{{ $t('home.desc') }}</p>
+        <p class="desc text-grey-8 tac">{{ $t('home.desc') }}</p>
         <!-- <div>
           <q-btn
             :to="startTo"

@@ -17,6 +17,7 @@ export default {
     text: '文本',
     dev: '开发',
     font: '字体',
+    reference: '查询',
     image: '图片',
     audio: '音频',
     video: '视频',

@@ -71,7 +71,7 @@
       </q-form>
       <section class="result-section">
         <h2 class="section-title">{{ $t('global.form.result') }}</h2>
-        <div class="result ova break-all">
+        <div class="result text-body1 text-center ova break-all">
           {{ result }}
         </div>
       </section>

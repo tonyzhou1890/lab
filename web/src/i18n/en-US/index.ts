@@ -15,6 +15,7 @@ export default {
       text: 'Text',
       dev: 'Development',
       font: 'Font',
+      reference: 'Reference',
       image: 'Image',
       audio: 'Audio',
       video: 'Video',

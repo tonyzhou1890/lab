@@ -23,7 +23,7 @@
     "@types/file-saver": "^2.0.5",
     "@types/js-md5": "^0.7.0",
     "@types/qrcode": "^1.5.2",
-    "allbox": "0.4.0",
+    "allbox": "^0.5.0",
     "axios": "^1.2.1",
     "crypto-js": "^4.1.1",
     "dayjs": "^1.11.10",

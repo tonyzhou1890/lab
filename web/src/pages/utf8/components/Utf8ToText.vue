@@ -27,7 +27,9 @@
     </q-form>
     <section class="result-section">
       <h2 class="section-title">{{ $t('global.form.result') }}</h2>
-      <div class="result ova break-all">{{ result }}</div>
+      <div class="result text-body1 text-center ova break-all">
+        {{ result }}
+      </div>
     </section>
   </div>
 </template>
@@ -36,7 +38,7 @@
 import { ref, toRefs } from 'vue'
 import type { QForm } from 'quasar'
 import { useI18n } from 'vue-i18n'
-import type { Utf8Service } from '@/core/service/utf8'
+import type Utf8Service from '@/core/service/utf8'
 import { errorNotify } from '@/core/error/utils'
 
 const { t } = useI18n()
@@ -59,7 +61,7 @@ const formData = ref<FormData>({
   utf8Input: '',
 })
 
-const result = ref<Uint8Array | null>(null)
+const result = ref<string | null>(null)
 
 async function onSubmit() {
   try {

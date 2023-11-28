@@ -30,7 +30,7 @@
           v-if="result"
           bordered
           separator
-          class="result-list"
+          class="result-list text-body1"
         >
           <q-item>
             <q-item-section

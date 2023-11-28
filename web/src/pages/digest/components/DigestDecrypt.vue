@@ -65,7 +65,7 @@
     </q-form>
     <section class="result-section">
       <h2 class="section-title">{{ $t('digest.encryptResult') }}</h2>
-      <q-list>
+      <q-list class="text-body1">
         <q-item
           v-for="item in resultList"
           :key="item._id"
