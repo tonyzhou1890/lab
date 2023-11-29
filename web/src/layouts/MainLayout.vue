@@ -86,7 +86,7 @@ const title = computed(() => {
   return title
 })
 
-locale.value = route.params.lang ?? 'zh-CN'
+locale.value = (route.params.lang as string) ?? 'zh-CN'
 
 const leftDrawerRef = ref<typeof LeftDrawer | null>(null)
 

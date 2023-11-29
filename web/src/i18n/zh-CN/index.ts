@@ -16,6 +16,7 @@ import utf8 from './module/utf8'
 import time from './module/time'
 import baseConvert from './module/base-convert'
 import periodicTableOfElements from './module/periodic-table-of-elements'
+import temperatureConvert from './module/temperature-convert'
 
 export default {
   global,
@@ -70,4 +71,5 @@ export default {
   time,
   baseConvert,
   periodicTableOfElements,
+  temperatureConvert,
 }
