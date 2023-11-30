@@ -17,6 +17,7 @@ import BaseConvertSchema from './base-convert/schema'
 import PeriodicTableOfElementsSchema from './periodic-table-of-elements/schema'
 import TemperatureConvertSchema from './temperature-convert/schema'
 import AngleConvertSchema from './angle-convert/schema'
+import BMISchema from './bmi/schema'
 // 外链服务
 import DictSchema from './dict/schema'
 import MinesweeperSchema from './minesweeper/schema'
@@ -43,6 +44,7 @@ export default {
   PeriodicTableOfElementsSchema,
   TemperatureConvertSchema,
   AngleConvertSchema,
+  BMISchema,
   // 外链服务
   DictSchema,
   MinesweeperSchema,

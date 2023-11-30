@@ -30,6 +30,7 @@
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { QMarkdown } from '@quasar/quasar-ui-qmarkdown'
+import '@quasar/quasar-ui-qmarkdown/dist/index.css'
 
 const props = defineProps<{
   serviceName: string

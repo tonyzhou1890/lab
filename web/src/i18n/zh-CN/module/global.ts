@@ -27,6 +27,7 @@ export default {
   form: {
     required: '必填',
     inputError: '输入有误',
+    positiveNumber: '请输入正数（大于 0 的数）',
     ok: '确定',
     cancel: '取消',
     submit: '提交',

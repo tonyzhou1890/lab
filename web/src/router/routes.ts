@@ -110,6 +110,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/angle-convert/IndexPage.vue'),
       },
       {
+        path: 'service/bmi',
+        name: 'BMI',
+        component: () => import('pages/BMI/IndexPage.vue'),
+      },
+      {
         path: 'service/periodic-table-of-elements',
         name: 'PeriodicTableOfElements',
         component: () =>
