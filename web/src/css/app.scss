@@ -28,7 +28,7 @@
 .page-main {
   width: 100%;
   box-sizing: border-box;
-  max-width: 1200px;
+  max-width: 1050px;
   min-height: calc(100vh - 110px);
   margin: 30px auto 30px;
   background-color: rgba($color: #ffffff, $alpha: 0.8);
@@ -49,7 +49,7 @@
     font-weight: bold;
     line-height: 1.4;
   }
-  @media screen and(max-width: 1200px) {
+  @media screen and(max-width: 1050px) {
     min-height: calc(100vh - 50px);
     margin: 0 auto;
   }

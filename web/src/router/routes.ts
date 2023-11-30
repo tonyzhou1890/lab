@@ -105,6 +105,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/temperature-convert/IndexPage.vue'),
       },
       {
+        path: 'service/angle-convert',
+        name: 'AngleConvert',
+        component: () => import('pages/angle-convert/IndexPage.vue'),
+      },
+      {
         path: 'service/periodic-table-of-elements',
         name: 'PeriodicTableOfElements',
         component: () =>
