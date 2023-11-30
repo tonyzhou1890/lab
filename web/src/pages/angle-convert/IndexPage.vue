@@ -5,7 +5,7 @@
       <q-form
         ref="formRef"
         @submit="onSubmit"
-        class="q-gutter-md form"
+        class="form"
       >
         <!-- 源类型 -->
         <q-select

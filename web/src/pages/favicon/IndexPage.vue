@@ -4,7 +4,7 @@
     <q-form
       ref="formRef"
       @submit="onSubmit"
-      class="q-gutter-md form"
+      class="form"
     >
       <q-file
         v-model="file"

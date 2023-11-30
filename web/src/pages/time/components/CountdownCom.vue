@@ -2,7 +2,7 @@
   <div class="full-width tac">
     <div
       v-if="!isRunning"
-      class="set-time col"
+      class="set-time flex flex-center column"
     >
       <q-time
         v-model="time"

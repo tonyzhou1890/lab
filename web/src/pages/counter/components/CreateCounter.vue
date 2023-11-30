@@ -5,7 +5,7 @@
         <q-form
           ref="formRef"
           @submit="onSubmit"
-          class="q-gutter-md form"
+          class="form"
         >
           <!-- 最小值 -->
           <q-input

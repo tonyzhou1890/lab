@@ -3,7 +3,7 @@
     <q-form
       ref="formRef"
       @submit="onSubmit"
-      class="q-gutter-md form"
+      class="form"
     >
       <!-- 字符串 -->
       <q-input

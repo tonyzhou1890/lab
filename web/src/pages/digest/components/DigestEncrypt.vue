@@ -3,7 +3,7 @@
     <q-form
       ref="formRef"
       @submit="onSubmit"
-      class="q-gutter-md form"
+      class="form"
     >
       <!-- 选择是字符串还是文件 -->
       <q-field
