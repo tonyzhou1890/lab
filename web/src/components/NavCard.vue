@@ -1,27 +1,27 @@
 <template>
   <q-card
-    class="text-dark page-main nav-com"
+    class="text-dark page-main nav-com position-relative"
     :class="{
       'is-page': isPage,
     }"
   >
-    <q-bar
+    <q-btn
       v-if="!isPage"
-      class="bar"
+      flat
+      icon="close"
+      class="absolute-top-right"
+      v-close-popup
+      @click="handleClose"
     >
-      <q-space />
+      <q-tooltip class="bg-white text-dark text-body1">{{
+        $t('global.close')
+      }}</q-tooltip>
+    </q-btn>
 
-      <q-btn
-        dense
-        flat
-        icon="close"
-        v-close-popup
-      >
-        <q-tooltip class="bg-white text-dark">Close</q-tooltip>
-      </q-btn>
-    </q-bar>
-
-    <q-card-section :class="{ 'q-px-none': isPage }">
+    <q-card-section
+      :class="{ 'q-px-none': isPage }"
+      v-show="!isPage"
+    >
       <q-input
         square
         outlined
@@ -32,7 +32,10 @@
     </q-card-section>
 
     <q-card-section class="nav-section">
-      <q-card-section v-if="!isHome && pageList.length">
+      <q-card-section
+        v-if="!hidePageNav && pageList.length"
+        class="q-pa-none"
+      >
         <p class="text-h5 nav-title">{{ $t('layout.pageNav') }}</p>
         <q-list class="page-list">
           <q-item
@@ -43,7 +46,7 @@
             :target="item.target"
             :href="item.link"
             :to="item.route"
-            class="page-nav-item bg-white q-ma-md relative-position text-dark"
+            class="page-nav-item bg-white q-ma-md relative-position text-dark block-shadow"
           >
             <q-item-section
               v-if="item.icon"
@@ -59,9 +62,9 @@
         </q-list>
       </q-card-section>
 
-      <q-card-section>
+      <q-card-section class="q-pa-none">
         <p
-          v-if="!isHome"
+          v-if="!hidePageNav"
           class="text-h5 nav-title"
         >
           {{ $t('layout.serviceNav') }}
@@ -69,8 +72,11 @@
         <q-list
           v-for="group in groupedServiceList"
           :key="group.key"
+          class="group q-mb-lg"
         >
-          <p class="text-h6 nav-title">
+          <p
+            class="text-h5 text-bold nav-title inline-block q-pa-md q-ma-none tac block-shadow"
+          >
             {{ $t(`global.category.${group.key}`) }}
           </p>
           <q-list class="page-list service-list">
@@ -82,13 +88,24 @@
               :target="item.target"
               :href="item.link"
               :to="item.route"
-              class="page-nav-item bg-white service-list-item column q-ma-md relative-position text-dark"
-              :data-first-char="item.firstChar"
+              class="page-nav-item bg-white service-list-item column q-ma-md relative-position text-dark block-shadow"
             >
-              <q-item-section class="service-item-inner">
+              <q-item-section class="service-item-inner tac ova">
+                <div class="service-icon text-white flex flex-center text-h5">
+                  <q-icon
+                    v-if="item.icon"
+                    size="2rem"
+                    :name="(item.icon as string)"
+                  ></q-icon>
+                  <span
+                    v-else
+                    class="icon-text"
+                    >{{ item.firstChar }}</span
+                  >
+                </div>
                 <q-item-label
                   :title="item.name"
-                  class="text-bold ellipsis"
+                  class="service-name text-bold ellipsis"
                   >{{ item.name }}</q-item-label
                 >
                 <q-item-label
@@ -116,11 +133,11 @@ import { changePathLangIso } from '@/core/utils'
 const props = defineProps<{
   // type 为 page 的时候，dialog 不可关闭
   type?: string
+  // 隐藏页面导航
+  hidePageNav?: boolean
 }>()
 
 const type = toRef(props, 'type')
-
-const open = ref(type.value === 'page')
 
 const isPage = computed(() => {
   return type.value === 'page'
@@ -131,22 +148,21 @@ const filter = ref<string>('')
 const route = useRoute()
 const router = useRouter()
 
-const isHome = computed(() => {
-  return route.name === 'Home' || route.name === 'LangHome'
-})
-
 const { locale, t } = useI18n({ useScope: 'global' })
 
-function toggle(value?: boolean) {
-  if (isPage.value) return
-  if (value !== undefined) {
-    open.value = !!value
-  } else {
-    open.value = !open.value
-  }
+const emit = defineEmits<{
+  (e: 'close'): void
+}>()
+
+function handleClose() {
+  emit('close')
 }
 
-defineExpose({ toggle })
+function setFilter(value: string) {
+  filter.value = value
+}
+
+defineExpose({ setFilter })
 
 // 导航页面列表
 const pageList = computed<
@@ -210,6 +226,7 @@ const groupedServiceList = computed(() => {
           }
           return {
             code: item.code,
+            icon: item.icon,
             firstChar: t(item.i18nKey + '.title')[0],
             desc: t(item.i18nKey + '.desc'),
             name: t(item.i18nKey + '.title'),
@@ -228,7 +245,9 @@ const groupedServiceList = computed(() => {
         .filter((service) => {
           const keyword = filter.value.trim()
           if (!keyword) return true
-          return service.name.includes(keyword)
+          return (
+            service.name.includes(keyword) || service.desc.includes(keyword)
+          )
         })
       return {
         key: group.key,
@@ -242,6 +261,7 @@ const groupedServiceList = computed(() => {
 <style lang="scss" scoped>
 .nav-com {
   font-size: 16px;
+  box-shadow: none;
 
   .bar {
     background-color: transparent;
@@ -252,12 +272,18 @@ const groupedServiceList = computed(() => {
   }
 
   .nav-title {
-    margin-bottom: 0;
+    min-width: 120px;
+    background-color: white;
+  }
+
+  .page-list {
+    margin: 0 -16px;
   }
 
   .page-nav-item {
     display: inline-flex;
     width: 200px;
+    background-color: white;
     // border: 1px solid $dark;
     border-radius: 4px;
     &:hover {
@@ -271,11 +297,23 @@ const groupedServiceList = computed(() => {
   }
 
   .service-list-item {
-    height: 78px;
+    height: 178px;
     vertical-align: middle;
 
     .service-item-inner {
       z-index: 3;
+    }
+
+    .service-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      margin: 0 auto 10px;
+      background-color: $primary;
+    }
+
+    .service-name {
+      font-size: 22px;
     }
 
     .service-desc {
@@ -308,30 +346,33 @@ const groupedServiceList = computed(() => {
   // }
 
   &.is-page {
-    box-shadow: none;
     background-color: transparent;
+    width: 90vw;
+    padding: 0;
     .nav-section {
-      background-color: rgba($color: #ffffff, $alpha: 0.7);
+      background-color: transparent;
+      padding: 0;
       border-radius: 4px;
     }
   }
 }
 
 @media screen and (max-width: 750px) {
-  .page-main {
-    padding: 10px 0;
-  }
   .nav-com {
     .page-nav-item {
       width: calc(50% - 32px);
+      &:nth-child(2n) {
+        margin-right: 0;
+      }
     }
   }
 }
 
-@media screen and (max-width: 380px) {
+@media screen and (max-width: 420px) {
   .nav-com {
     .page-nav-item {
       width: calc(100% - 32px);
+      margin-right: 0;
     }
   }
 }

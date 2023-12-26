@@ -1,5 +1,5 @@
 {
-  "name": "lab",
+  "name": "instant-lab",
   "version": "1.9.1",
   "description": "在线工具箱",
   "main": "index.js",

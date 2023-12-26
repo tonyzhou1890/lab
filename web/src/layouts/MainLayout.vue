@@ -1,17 +1,6 @@
 <template>
   <q-layout view="hHh Lpr lff">
-    <div class="page-bg">
-      <q-img
-        class="bg"
-        src="@/assets/images/global/winter.svg"
-        alt=""
-        fit="cover"
-      />
-    </div>
-    <q-header
-      class="header"
-      :class="{ 'bg-transparent': headerTrans }"
-    >
+    <q-header class="header">
       <q-toolbar class="toolbar">
         <q-btn
           flat
@@ -20,10 +9,15 @@
           icon="menu"
           aria-label="Menu"
           @click="toggleLeftDrawer"
-          v-show="!hideMenuEtc"
         />
-        <q-toolbar-title>
-          <span v-show="!hideMenuEtc">{{ title }}</span>
+        <q-toolbar-title v-show="!hideMenuEtc">
+          <img
+            class="logo q-mr-md"
+            src="/icons/favicon-128x128.png"
+            alt="logo"
+            v-show="hideMenuEtc"
+          />
+          <span>{{ title }}</span>
         </q-toolbar-title>
         <q-btn
           v-show="false"
@@ -72,9 +66,9 @@ const hideMenuEtc = computed(() => {
   return ['Home', 'LangHome', 'Nav'].includes(route.name as string)
 })
 
-const headerTrans = computed(() => {
-  return ['Home', 'LangHome'].includes(route.name as string)
-})
+// const noHeader = computed(() => {
+//   return ['Home', 'LangHome'].includes(route.name as string)
+// })
 
 const title = computed(() => {
   const meta = route.meta
@@ -92,7 +86,7 @@ const leftDrawerRef = ref<typeof LeftDrawer | null>(null)
 
 function toggleLeftDrawer() {
   if (leftDrawerRef.value) {
-    leftDrawerRef.value.toggle(true)
+    leftDrawerRef.value.toggle()
   }
 }
 
@@ -114,6 +108,11 @@ function toggleLanguage() {
   }
 }
 .header {
+  .logo {
+    width: 22px;
+    height: 22px;
+    vertical-align: middle;
+  }
   :deep(.q-toolbar__title) {
     font-size: 16px;
   }

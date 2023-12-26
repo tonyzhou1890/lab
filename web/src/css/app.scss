@@ -1,4 +1,8 @@
 // app global css in SCSS form
+body {
+  background-color: #fff5f1;
+}
+
 .poa {
   position: absolute;
 }
@@ -28,7 +32,7 @@
 .page-main {
   width: 100%;
   box-sizing: border-box;
-  max-width: 1050px;
+  max-width: 1200px;
   min-height: calc(100vh - 110px);
   margin: 30px auto 30px;
   background-color: rgba($color: #ffffff, $alpha: 0.8);
@@ -92,4 +96,13 @@
 // cursor
 .cp {
   cursor: pointer;
+}
+
+// block shadow
+.block-shadow {
+  box-shadow: 8px 8px 20px 0 rgba(55, 99, 170, 0.1), -8px -8px 20px 0 #fafafa;
+}
+
+.block-shadow-bottom-right {
+  box-shadow: 8px 8px 20px 0 rgba(55, 99, 170, 0.1);
 }
