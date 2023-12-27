@@ -243,10 +243,11 @@ const groupedServiceList = computed(() => {
           }
         })
         .filter((service) => {
-          const keyword = filter.value.trim()
+          const keyword = filter.value.trim().toLowerCase()
           if (!keyword) return true
           return (
-            service.name.includes(keyword) || service.desc.includes(keyword)
+            service.name.toLowerCase().includes(keyword) ||
+            service.desc.toLowerCase().includes(keyword)
           )
         })
       return {

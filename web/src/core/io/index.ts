@@ -1,63 +1,152 @@
 import localforage from 'localforage'
+import type LocalForage from 'localforage'
 import { apiBundle } from '@/boot/axios'
 import { DepLoadCallbackParams } from '@/core/typings/general-types'
 import { noop } from '../utils'
+import { matchVersion, getDataSize } from './utils'
+import getTypeName from 'allbox/dist/common.get-type-name'
 
-const forageInstances = {
+const defaultName = 'default'
+const metaname = 'metadata'
+const storeMetadataName = 'storeMetadata'
+// 存储实例
+const forageInstances: {
+  [x: string]: LocalForage
+} = {
+  // 默认存储仓库--未指定 storeName 的资源会存在这里
   deafult: localforage.createInstance({
-    name: 'default',
+    name: defaultName,
+    storeName: defaultName,
+  }),
+  // 仓库元数据
+  metadata: localforage.createInstance({
+    name: defaultName,
+    storeName: metaname,
   }),
 }
 
+// 读取参数
 export interface IOReadConfig<T> {
-  path: string
+  key: string
+  storeName?: string
   version?: string
   cache?: boolean
   request?: () => Promise<T>
 }
 
+// 读取结果
 export interface IOData<T> {
   data: T
-  version: string
+  version?: string
+  // 当前是否为最新
+  latest: boolean
 }
 
+// 写入参数
 export interface IOWriteConfig<T> {
-  path: string
+  key: string
+  storeName?: string
   version?: string
   data: T
 }
 
+// 仓库元数据
+export interface StoreMetadata {
+  storeName: string
+  data: {
+    key: string
+    version?: string
+    size: number
+    exact: boolean
+    type: string
+    created: string
+    updated: string
+  }[]
+}
+
+// 加载依赖参数
 export interface DepLoadConfig {
-  path: string
+  key: string
+  storeName?: string
+  url: string
   version?: string
   cache?: boolean
   script?: boolean
   loadCallback?: (params: DepLoadCallbackParams) => void
 }
 
+// 获取仓库实例，如果没有，创建
+function getStore(storeName = defaultName) {
+  if (!forageInstances[storeName]) {
+    forageInstances[storeName] = localforage.createInstance({
+      name: defaultName,
+      storeName,
+    })
+  }
+  return forageInstances[storeName]
+}
+
 /**
  * 这里不需要使用 class，因为 IO 没有内部状态，没有实例化隔离数据的必要
  */
 const IO = {
-  store: forageInstances.deafult,
+  /**
+   * 读取仓库元数据
+   * @param storeName
+   * @returns
+   */
+  async getStoreMetadata(storeName?: string) {
+    try {
+      const metaStore = getStore(metaname)
+      const list =
+        (await metaStore.getItem<StoreMetadata[]>(storeMetadataName)) ?? []
+      return list.filter((item) =>
+        storeName ? item.storeName === storeName : true
+      )
+    } catch (e) {
+      throw e
+    }
+  },
+
   /**
    * 读取数据
    * @desc
-   * 这个 read 用来根据 path 读取本地缓存文件。
+   * 这个 read 用来根据 key 读取本地缓存文件。
    * 或者在本地不存在的情况下，依据是否配置了请求函数进行远程请求并缓存。
    * @param config
    * @returns
    */
-  async read<T>(config: IOReadConfig<T>): Promise<T | null> {
+  async read<T>(config: IOReadConfig<T>): Promise<IOData<T> | null> {
+    const storeName = config.storeName || defaultName
+    const store = getStore(storeName)
+    const metaStore = getStore(metaname)
     // 如果没有指定不使用缓存，先从缓存读取
     if (config.cache !== false) {
-      const data = await this.store.getItem<IOData<T>>(config.path)
-      if (data) {
-        if (
-          (config.version && data.version === config.version) ||
-          !config.version
-        ) {
-          return data.data as T
+      // 元数据
+      const metadata = (
+        await metaStore.getItem<StoreMetadata[]>(storeMetadataName)
+      )?.find((item) => item.storeName === storeName)
+      const dataInfo = metadata?.data?.find((item) => item.key === config.key)
+      // 元数据预判断
+      if (dataInfo) {
+        const matched =
+          // 没有版本号，则缓存一直有效
+          !dataInfo.version || !config.version
+            ? {
+                valid: true,
+                latest: true,
+              }
+            : matchVersion(dataInfo.version, config.version)
+        if (matched.valid) {
+          // 预判断有效的情况下，获取缓存
+          const data = await store.getItem<T>(config.key)
+          if (data) {
+            return {
+              data,
+              version: dataInfo.version,
+              latest: matched.latest,
+            }
+          }
         }
       }
     }
@@ -72,12 +161,17 @@ const IO = {
       // 缓存
       if (res && config.cache !== false) {
         await this.write({
-          path: config.path,
+          key: config.key,
+          storeName: config.storeName,
           version: config.version,
           data: res,
         })
       }
-      return res as T
+      return {
+        data: res,
+        version: config.version,
+        latest: true,
+      }
     }
     return null
   },
@@ -87,24 +181,111 @@ const IO = {
    * @returns
    */
   async write<T>(config: IOWriteConfig<T>): Promise<boolean> {
+    const storeName = config.storeName || defaultName
+    const store = getStore(storeName)
+    const metaStore = getStore(metaname)
     try {
-      await this.store.setItem(config.path, {
-        data: config.data,
-        version: config.version,
-      })
+      await store.setItem(config.key, config.data)
+
+      // 元数据
+      const metadataList =
+        (await metaStore.getItem<StoreMetadata[]>(storeMetadataName)) || []
+      let metadata = metadataList.find((item) => item.storeName === storeName)
+      if (!metadata) {
+        metadata = {
+          storeName,
+          data: [],
+        }
+        metadataList.push(metadata)
+      }
+      let dataInfo = metadata?.data?.find((item) => item.key === config.key)
+      const dataSize = getDataSize(config.data)
+      const type = getTypeName(config.data)
+      if (!dataInfo) {
+        dataInfo = {
+          key: config.key,
+          version: config.version,
+          size: dataSize.size,
+          exact: dataSize.exact,
+          type,
+          created: Date.toString(),
+          updated: Date.toString(),
+        }
+        metadata.data.push(dataInfo)
+      } else {
+        Object.assign(dataInfo, {
+          key: config.key,
+          version: config.version,
+          size: dataSize.size,
+          exact: dataSize.exact,
+          type,
+          updated: Date.toString(),
+        })
+      }
+
+      await metaStore.setItem(storeMetadataName, metadataList)
     } catch (e) {
-      return false
+      throw e
     }
     return true
   },
   /**
+   * 删除数据
+   * @param config
+   */
+  async remove(config: { storeName: string; key: string }) {
+    try {
+      const store = getStore(config.storeName)
+      await store.removeItem(config.key)
+
+      const metaStore = getStore(metaname)
+      const metadataList =
+        (await metaStore.getItem<StoreMetadata[]>(storeMetadataName)) || []
+      const metadata = metadataList?.find(
+        (item) => item.storeName === config.storeName
+      ) ?? {
+        storeName: config.storeName,
+        data: [],
+      }
+      metadata.data = metadata.data.filter((item) => item.key !== config.key)
+
+      await metaStore.setItem(storeMetadataName, metadataList)
+    } catch (e) {
+      throw e
+    }
+  },
+  /**
+   * 清空数据库
+   * @param storeName
+   */
+  async clear(storeName?: string) {
+    if (!storeName) {
+      const storeList = Object.values(forageInstances)
+      for (let i = 0; i < storeList.length; i++) {
+        await storeList[i].clear()
+      }
+    } else {
+      const store = getStore(storeName)
+      await store.clear()
+
+      if (storeName !== metaname) {
+        const metaStore = getStore(metaname)
+        const metadataList = (
+          (await metaStore.getItem<StoreMetadata[]>(storeMetadataName)) || []
+        ).filter((item) => item.storeName === storeName)
+
+        await metaStore.setItem(storeMetadataName, metadataList)
+      }
+    }
+  },
+  /**
    * @name 加载依赖文件
    */
-  async loadDepFile<T>(config: DepLoadConfig): Promise<T> {
+  async loadDepFile<T>(config: DepLoadConfig): Promise<IOData<T> | null> {
     return new Promise(async (resolve, reject) => {
       const cb =
         typeof config.loadCallback === 'function' ? config.loadCallback : noop
-      const src = config.path + (config.version ? `?${config.version}` : '')
+      const src = config.url + (config.version ? `?${config.version}` : '')
       const request = () => {
         return apiBundle.IOAPI!.get<any, T>(src, {
           responseType: config.script === true ? 'text' : 'blob',
@@ -115,7 +296,8 @@ const IO = {
               percent = progressEvent.loaded / progressEvent.total
             }
             cb({
-              path: config.path,
+              storeName: config.storeName,
+              key: config.key,
               percent,
               status: percent === 1 ? 3 : 2,
             })
@@ -123,12 +305,13 @@ const IO = {
         })
       }
       try {
-        const readRes = (await this.read<T>({
-          path: config.path,
+        const readRes = await this.read<T>({
+          storeName: config.storeName,
+          key: config.key,
           version: config.version,
           cache: config.cache,
           request,
-        })) as T
+        })
         // 如果是脚本，需要通过 script 解析
         if (config.script === true) {
           let script = document.querySelector(
@@ -141,9 +324,9 @@ const IO = {
           }
           script.onerror = (e) => reject(e)
           // innerText 会导致无法正确解析，比如出现 <br> 标签
-          script.innerHTML = readRes as string
+          script.innerHTML = (readRes?.data ?? '') as string
           cb({
-            path: config.path,
+            key: config.key,
             percent: 1,
             status: 3,
           })
@@ -151,7 +334,7 @@ const IO = {
         } else {
           // 非脚本，直接完成
           cb({
-            path: config.path,
+            key: config.key,
             percent: 1,
             status: 3,
           })
@@ -162,6 +345,16 @@ const IO = {
       }
     })
   },
+}
+
+if (process.env.CLIENT) {
+  console.log('browser')
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  window.IO = IO
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  window.localforage = localforage
 }
 
 export default IO

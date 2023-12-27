@@ -2,7 +2,8 @@
  * 服务通用依赖（非脚本类型）加载回调参数
  */
 export interface DepLoadCallbackParams {
-  path: string
+  storeName?: string
+  key: string
   percent: number
   /**
    * 0--未开始
