@@ -2,18 +2,18 @@
   <div class="service-title tac">
     <h1 class="title">{{ info.title }}</h1>
   </div>
-  <p class="desc">{{ info.desc }}</p>
+  <p class="desc tac">{{ info.desc }}</p>
   <section
     v-if="info.doc"
     class="doc-section"
     :data-expand="expand"
   >
     <h2 class="section-title">
-      <span>{{ $t('global.doc') }}</span>
+      <span class="q-mr-md">{{ $t('global.doc') }}</span>
       <q-icon
         class="arrow cp"
         name="arrow_forward"
-        color="grey"
+        color="primary"
         @click="toggleDoc"
       />
     </h2>

@@ -4,19 +4,22 @@ import { computed } from 'vue'
 const props = defineProps({
   prefix: {
     type: String,
-    default: 'icon'
+    default: 'icon',
   },
   name: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 })
 
 const symbolId = computed(() => `#${props.prefix}-${props.name}`)
 </script>
 
 <template>
-  <svg class="svg-icon" aria-hidden="true">
+  <svg
+    class="svg-icon"
+    aria-hidden="true"
+  >
     <use :href="symbolId" />
   </svg>
 </template>

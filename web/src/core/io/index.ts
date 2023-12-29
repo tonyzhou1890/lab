@@ -325,21 +325,14 @@ const IO = {
           script.onerror = (e) => reject(e)
           // innerText 会导致无法正确解析，比如出现 <br> 标签
           script.innerHTML = (readRes?.data ?? '') as string
-          cb({
-            key: config.key,
-            percent: 1,
-            status: 3,
-          })
-          resolve(readRes)
-        } else {
-          // 非脚本，直接完成
-          cb({
-            key: config.key,
-            percent: 1,
-            status: 3,
-          })
-          resolve(readRes)
         }
+        // 非脚本，直接完成
+        cb({
+          key: config.key,
+          percent: 1,
+          status: 3,
+        })
+        resolve(readRes)
       } catch (e) {
         return reject(e)
       }

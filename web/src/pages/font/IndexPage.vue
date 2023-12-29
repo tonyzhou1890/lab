@@ -1,16 +1,27 @@
 <template>
   <div class="page-main app">
     <ServiceBaseInfo service-name="font" />
-    <div class="content">
+    <div class="content q-pt-lg">
       <div class="file">
-        <q-file v-model="file" :label="$t('font.fileLabel')" accept=".ttf, .woff, .otf" />
+        <q-file
+          outlined
+          v-model="file"
+          :label="$t('font.fileLabel')"
+          accept=".ttf, .woff, .otf"
+        />
       </div>
-      <div class="full-width" v-show="parsedFlag">
+      <div
+        class="full-width"
+        v-show="parsedFlag"
+      >
         <!-- font info -->
         <section class="info-section">
-          <h2 class="section-title">{{ $t('font.fontInfo') }}</h2>
+          <SectionTitle>{{ $t('font.fontInfo') }}</SectionTitle>
           <q-list>
-            <q-item v-for="item in fontInfo" :key="item._id">
+            <q-item
+              v-for="item in fontInfo"
+              :key="item._id"
+            >
               <q-item-section class="text-bold">{{ item.name }}</q-item-section>
               <q-item-section>{{ item.value }}</q-item-section>
             </q-item>
@@ -18,10 +29,75 @@
         </section>
         <!-- font glyph list -->
         <section class="glyph-section">
-          <h2 class="section-title">{{ $t('font.glyphs') }}</h2>
-          <q-select class="glyph-select" :options="glyphsOptions" option-value="id" option-label="label"
-            v-model="selectedGlyphGroup" emit-value map-options @update:model-value="drawGlyph"></q-select>
-          <div class="glyph-draw-list q-pt-md" ref="glyphContainer"></div>
+          <SectionTitle>{{ $t('font.glyphs') }}</SectionTitle>
+          <q-select
+            outlined
+            class="glyph-select"
+            :options="glyphsOptions"
+            option-value="id"
+            option-label="label"
+            v-model="selectedGlyphGroup"
+            emit-value
+            map-options
+            @update:model-value="drawGlyph"
+          ></q-select>
+          <!-- 字形列表 -->
+          <div
+            class="glyph-draw-list q-pt-md"
+            ref="glyphContainer"
+          >
+            <div
+              v-for="item in drawnGlyphs"
+              :key="item._id"
+              class="glyph-item hover-shadow inline-block q-ma-xs relative-position cursor-pointer"
+              :data-index="item.index"
+            >
+              <img
+                :src="item.dataUrl"
+                class="glyph-img"
+              />
+              <p class="text-body1 ellipsis no-margin tac">
+                {{ formatUnicode(item.glyph.unicode) }}
+              </p>
+              <q-tooltip
+                anchor="top middle"
+                self="bottom middle"
+                class="text-body1"
+                :offset="[10, 10]"
+                >{{ $t('font.name') + '：' + item.glyph.name }}</q-tooltip
+              >
+            </div>
+          </div>
+        </section>
+        <!-- 字体裁剪 -->
+        <section class="cut-section">
+          <SectionTitle>{{ $t('font.cut') }}</SectionTitle>
+          <q-form
+            class="cut-form q-gutter-y-md"
+            bottom="false"
+            @submit="onSubmit"
+          >
+            <q-input
+              outlined
+              v-model="toCutText"
+              :label="$t('font.cutLabel')"
+              class="text-body1 cut-text"
+              type="textarea"
+              lazy-rules
+              :rules="[
+                (val) =>
+                  (val !== null && val !== '') || $t('global.form.required'),
+              ]"
+            />
+            <div class="btns row justify-center">
+              <q-btn
+                :loading="btnLoading"
+                :label="$t('global.form.submit')"
+                type="submit"
+                color="primary"
+              ></q-btn>
+            </div>
+          </q-form>
         </section>
       </div>
     </div>
@@ -30,10 +106,11 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import fontService from '@/core/service/font'
+import FontService from '@/core/service/font'
 import type * as OpenType from 'opentype.js'
 import { useI18n } from 'vue-i18n'
-import ServiceBaseInfo from '@/components/ServiceBaseInfo.vue'
+import { formatUnicode, setCssFont } from '@/core/utils/index'
+import { useQuasar } from 'quasar'
 
 interface FontInfoItem {
   _id?: number
@@ -46,23 +123,49 @@ interface GlyphOption {
   label: string
 }
 
+const $q = useQuasar()
+
 const { t } = useI18n()
 
-const file = ref(null)
+const file = ref<File | null>(null)
 
-let parsedFont: OpenType.Font | undefined = undefined
-let parsedFlag = ref(false)
+const parsedFlag = ref(0)
+
+const service = new FontService()
+
+const glyphsOptions = ref<GlyphOption[]>([])
+
+const selectedGlyphGroup = ref<null | number>(null)
+
+const glyphContainer = ref<HTMLDivElement | null>(null)
+
+const drawnGlyphs = ref<
+  {
+    _id: number
+    dataUrl: string
+    index: number
+    glyph: OpenType.Glyph
+  }[]
+>([])
+
+const fontWidth = 70
 
 watch(file, async (newValue: File | null) => {
   console.log(newValue)
   if (newValue) {
-    parsedFont = await fontService.parse(await newValue.arrayBuffer())
-    if (parsedFont) {
+    service.parse(await newValue.arrayBuffer())
+    if (service.fontParsed) {
+      glyphsOptions.value = service.glyphsOptions
       selectedGlyphGroup.value = 0
-      parsedFlag.value = true
-      drawGlyph()
+      parsedFlag.value++
+      drawnGlyphs.value = service.drawSlectedGlyphs(0, fontWidth)
+      // 设置字体
+      fontFaceName.value = setCssFont(newValue)
+      console.log(service.fontParsed)
     }
-    console.log(parsedFont)
+  } else {
+    parsedFlag.value = 0
+    fontFaceName.value = ''
   }
 })
 
@@ -71,27 +174,27 @@ const fontInfo = computed<FontInfoItem[]>(() => {
   if (!parsedFlag.value) {
     return []
   }
-  const names = parsedFont?.names
+  const names = service.fontParsed?.names
   return [
     {
       name: t('font.fontFamily'),
-      value: names?.fontFamily?.zh ?? '',
+      value: names?.fontFamily?.zh ?? names?.fontFamily?.en ?? '',
     },
     {
       name: t('font.copyright'),
-      value: names?.copyright?.zh ?? '',
+      value: names?.copyright?.zh ?? names?.copyright?.en ?? '',
     },
     {
       name: t('font.license'),
-      value: names?.license?.zh ?? '',
+      value: names?.license?.zh ?? names?.license?.en ?? '',
     },
     {
       name: t('font.version'),
-      value: names?.version?.zh ?? '',
+      value: names?.version?.zh ?? names?.version?.en ?? '',
     },
     {
       name: t('font.charNum'),
-      value: parsedFont?.numGlyphs ?? 0,
+      value: service.fontParsed?.numGlyphs ?? 0,
     },
   ].map((item: FontInfoItem) => {
     item._id = Math.random()
@@ -99,74 +202,80 @@ const fontInfo = computed<FontInfoItem[]>(() => {
   })
 })
 
-// 字形信息
-const glyphsOptions = computed<GlyphOption[]>(() => {
-  if (!parsedFlag.value) {
-    return []
-  }
-  return new Array(Math.ceil((parsedFont?.numGlyphs ?? 0) / 100))
-    .fill(0)
-    .map((_, index: number) => {
-      return {
-        id: index,
-        label: `${100 * index + 1}~${Math.min(
-          100 * (index + 1),
-          parsedFont?.numGlyphs ?? 0
-        )}`,
-      }
-    })
-})
-
-const selectedGlyphGroup = ref<null | number>(null)
-
-const glyphContainer = ref<HTMLDivElement | null>(null)
-
 const drawGlyph = () => {
-  setTimeout(() => {
-    if (
-      parsedFont &&
-      glyphContainer.value &&
-      selectedGlyphGroup.value !== null
-    ) {
-      const start = selectedGlyphGroup.value * 100
-      const end = Math.min(
-        (selectedGlyphGroup.value + 1) * 100,
-        parsedFont?.numGlyphs ?? 0
-      )
-      const fragment = document.createDocumentFragment()
-      const DPR = window.devicePixelRatio
-      for (let i = start; i < end; i++) {
-        const canvas = document.createElement('canvas')
-        canvas.style.width = '50px'
-        canvas.style.height = '50px'
-        canvas.width = 50 * DPR
-        canvas.height = 50 * DPR
-        const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
-        ctx.scale(DPR, DPR)
-        ctx.font = '12px arial'
-        ctx.fillStyle = 'gray'
-        ctx.fillText(i.toString(), 0, 12)
-        const glyph = parsedFont.glyphs.get(i)
-        if (glyph !== undefined) {
-          glyph.draw(ctx, 5, 40, 35)
-        }
-        fragment.appendChild(canvas)
-      }
-      glyphContainer.value.innerHTML = ''
-      glyphContainer.value.appendChild(fragment)
-    }
+  drawnGlyphs.value = service.drawSlectedGlyphs(
+    selectedGlyphGroup.value!,
+    fontWidth
+  )
+}
+
+// 字体裁剪
+const fontFaceName = ref('')
+const toCutText = ref('')
+const btnLoading = ref(false)
+
+function onSubmit() {
+  // 文字过滤--不要换行符、制表符等
+  const text = toCutText.value.replace(/[\r\n\t]/g, '')
+  if (!text) {
+    return $q.notify(t('font.cutLabel'))
+  }
+  btnLoading.value = true
+  const newFont = service.cutFont(text)
+  btnLoading.value = false
+
+  $q.dialog({
+    title: t('global.download.title'),
+    message: `${t('global.download.msg')}`,
+    cancel: true,
+    persistent: true,
+  }).onOk(() => {
+    const names = service.fontParsed?.names
+    newFont.download(
+      (names?.fontFamily?.zh || names?.fontFamily?.en || 'custom font') + '.otf'
+    )
   })
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .page-main {
-
   .file,
   .glyph-select {
     width: 300px;
     max-width: 90%;
     margin: 0 auto;
+  }
+  .glyph-draw-list {
+    .glyph-item {
+      width: 72px;
+      height: 100px;
+      box-sizing: border-box;
+      border: 1px solid grey;
+      vertical-align: middle;
+      &:hover {
+        border-color: $dark;
+        background-color: $blue-2;
+      }
+      .glyph-img {
+        width: 70px;
+        height: 70px;
+        vertical-align: middle;
+      }
+      &::before {
+        content: attr(data-index);
+        font-size: 12px;
+        position: absolute;
+        color: $grey;
+        left: 3px;
+        top: 0px;
+      }
+    }
+  }
+  .cut-section {
+    .cut-text {
+      font-family: v-bind('fontFaceName');
+    }
   }
 }
 </style>

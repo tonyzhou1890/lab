@@ -10,7 +10,7 @@ service/xxx/ 下的文件（夹）：
 
 - index 是工具服务的入口，功能导出文件。UI 会调用这个文件使用功能。
 
-- core 是核心功能，不涉及多语言、UI、错误提示等。core 可以没有。
+- core 是核心功能，不涉及多语言、UI、错误提示等。core 可以没有。大部分服务比较简单，功能直接写到 index 里就可以了。core 主要是为了抽象 index 里的复杂功能，或者提供给 worker 使用。
 
 - schema 是服务概要，实际上就是用一个对象表示服务提供的功能。该模块每个服务都要有，可以描述丰富，提供可编排功能，也可以只包含名称、图标、关键字、描述。schema 可引入 index 的功能，也可以直接从 core 引入。功能编排依据此文件。每个暴露的功能都是一个 async 函数。编排器、执行器会提供环境参数，包括完成回调，错误回调。
 
@@ -20,7 +20,7 @@ service/xxx/ 下的文件（夹）：
 
 - utils 是内部工具文件（当然，其他地方也可以调用。但通用的函数更建议放在 service/core 下的 utils 里）。
 
-- worker 是多线程文件。可以被 core，schema, index 等使用，也可以引用 core。
+- worker 是多线程文件，主要引用 core 的功能。可以被 schema, index 等使用。
 
 - data-types 是服务特有的数据类型——用于 schema input 和 output，不是函数实际的输出格式。
 

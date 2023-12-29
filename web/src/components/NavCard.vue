@@ -1,6 +1,6 @@
 <template>
   <q-card
-    class="text-dark page-main nav-com position-relative"
+    class="text-dark page-main nav-com relative-position"
     :class="{
       'is-page': isPage,
     }"
@@ -9,7 +9,7 @@
       v-if="!isPage"
       flat
       icon="close"
-      class="absolute-top-right"
+      class="absolute-top-right close-btn"
       v-close-popup
       @click="handleClose"
     >
@@ -263,7 +263,11 @@ const groupedServiceList = computed(() => {
 .nav-com {
   font-size: 16px;
   box-shadow: none;
+  padding-top: 30px;
 
+  .close-btn {
+    z-index: 3;
+  }
   .bar {
     background-color: transparent;
   }
@@ -288,7 +292,6 @@ const groupedServiceList = computed(() => {
     // border: 1px solid $dark;
     border-radius: 4px;
     &:hover {
-      box-shadow: 0 0 5px white;
       background-color: $info !important;
       .service-desc {
         color: white !important;

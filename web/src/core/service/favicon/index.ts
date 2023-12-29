@@ -51,9 +51,10 @@ class FaviconService extends Service {
       // 加载 magick
       const wasm = await IO.loadDepFile<Blob>({
         ...coreConfig.deps.imageMagick,
+        key: 'imageMagick',
         loadCallback: config?.loadCallback,
       })
-      local.magickWasm = wasm
+      local.magickWasm = wasm!.data
 
       // 创建多线程
       const instance = await create<Core>(worker)

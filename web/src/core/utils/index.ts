@@ -1,4 +1,5 @@
 import config from '../config'
+import { isEmpty } from './validate'
 
 /**
  * 空函数
@@ -101,4 +102,41 @@ export function getPermutationStringByIndex(chars: string[], index: bigint) {
       return temp
     }
   }
+}
+
+/**
+ * 格式化 unicode 码为字符串
+ * @param index
+ * @returns
+ */
+export function formatUnicode(index?: number) {
+  if (isEmpty(index)) {
+    return ''
+  }
+  const strLen = index!.toString().length > 4 ? 4 : 4
+  return (
+    'U+' +
+    index!.toString(16).toUpperCase().padStart(strLen, '0').slice(-strLen)
+  )
+}
+
+/**
+ * 设置自定义字体
+ * @param font
+ * @param name
+ * @desc 暂不考虑字体重复和内存膨胀问题
+ */
+export function setCssFont(font: File, name?: string) {
+  name = name ?? 'font-' + Math.random().toString().substring(2)
+  const url = `url(${URL.createObjectURL(font)})`
+  const style = document.createElement('style')
+  style.id = name
+  style.innerHTML = `
+      @font-face {
+        font-family: ${name};
+        src: ${url}
+      }
+      `
+  document.head.appendChild(style)
+  return name
 }

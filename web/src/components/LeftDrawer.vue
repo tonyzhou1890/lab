@@ -5,7 +5,7 @@
     :width="width"
     transition-show="slide-right"
     transition-hide="slide-left"
-    class="left-drawer block-shadow-bottom-right"
+    class="left-drawer block-shadow"
   >
     <NavCard
       class="dialog-nav"

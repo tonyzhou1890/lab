@@ -1,6 +1,7 @@
 // app global css in SCSS form
 body {
   background-color: #fff5f1;
+  font-size: 16px;
 }
 
 .poa {
@@ -53,6 +54,10 @@ body {
     font-weight: bold;
     line-height: 1.4;
   }
+  &.app {
+    box-shadow: 0 0 20px 0 rgba(55, 99, 170, 0.1);
+    border-radius: 8px;
+  }
   @media screen and(max-width: 1050px) {
     min-height: calc(100vh - 50px);
     margin: 0 auto;
@@ -100,9 +105,11 @@ body {
 
 // block shadow
 .block-shadow {
-  box-shadow: 8px 8px 20px 0 rgba(55, 99, 170, 0.1), -8px -8px 20px 0 #fafafa;
+  box-shadow: 0 0 20px 0 rgba(55, 99, 170, 0.1);
 }
 
-.block-shadow-bottom-right {
-  box-shadow: 8px 8px 20px 0 rgba(55, 99, 170, 0.1);
+.hover-shadow {
+  &:hover {
+    box-shadow: 0 0 20px 0 rgba(55, 99, 170, 0.1);
+  }
 }

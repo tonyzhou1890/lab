@@ -10,4 +10,7 @@ export default {
   version: '版本',
   charNum: '字符数',
   glyphs: '字形信息',
+  name: '名称',
+  cut: '字体裁剪',
+  cutLabel: '请输入文本',
 }
