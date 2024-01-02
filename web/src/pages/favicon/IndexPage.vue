@@ -60,6 +60,7 @@ async function init() {
 
     loading.hide()
   } catch (e) {
+    loading.hide()
     errorNotify(e as Error, { t })
   }
 }

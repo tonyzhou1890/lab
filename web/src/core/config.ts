@@ -26,7 +26,7 @@ const config = {
       storeName: depsStores.libs,
     },
     imageMagick: {
-      url: `${ossPrefix}/libs/image-magick/magick.wasm`,
+      url: `${ossPrefix}/libs/image-magick/magick.zip`,
       version: '0.0.23',
       storeName: depsStores.libs,
     },
@@ -36,12 +36,12 @@ const config = {
       storeName: depsStores.resources,
     },
     poem: {
-      url: 'https://general-resources.oss-cn-shanghai.aliyuncs.com/poem/poem.json.zip',
+      url: `${ossPrefix}/poem/poem.json.zip`,
       version: '1.0.0',
       storeName: depsStores.resources,
     },
     idiom: {
-      url: 'https://general-resources.oss-cn-shanghai.aliyuncs.com/dict/idiom.json.zip',
+      url: `${ossPrefix}/dict/idiom.json.zip`,
       version: '1.0.0',
       storeName: depsStores.resources,
     },
@@ -50,6 +50,10 @@ const config = {
       version: '0.0.1',
       // 这个不需要缓存，因为可能需要数据修正
       cache: false,
+    },
+    // 字体--这里的地址是字体列表，不缓存
+    fonts: {
+      // url: ``,
     },
   },
 }

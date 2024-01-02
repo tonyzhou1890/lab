@@ -5,6 +5,7 @@ import { DepLoadCallbackParams } from '@/core/typings/general-types'
 import { noop } from '../utils'
 import { matchVersion, getDataSize } from './utils'
 import getTypeName from 'allbox/dist/common.get-type-name'
+import { StringKeyObjType } from 'allbox/dist/types'
 
 const defaultName = 'default'
 const metaname = 'metadata'
@@ -32,6 +33,10 @@ export interface IOReadConfig<T> {
   version?: string
   cache?: boolean
   request?: () => Promise<T>
+  /**
+   * 其他元信息
+   */
+  extra?: StringKeyObjType
 }
 
 // 读取结果
@@ -47,6 +52,10 @@ export interface IOWriteConfig<T> {
   key: string
   storeName?: string
   version?: string
+  /**
+   * 其他元信息
+   */
+  extra?: StringKeyObjType
   data: T
 }
 
@@ -59,6 +68,10 @@ export interface StoreMetadata {
     size: number
     exact: boolean
     type: string
+    /**
+     * 其他元信息
+     */
+    extra?: StringKeyObjType
     created: string
     updated: string
   }[]
@@ -129,6 +142,7 @@ const IO = {
       const dataInfo = metadata?.data?.find((item) => item.key === config.key)
       // 元数据预判断
       if (dataInfo) {
+        console.log('dataInfo: ', dataInfo, config)
         const matched =
           // 没有版本号，则缓存一直有效
           !dataInfo.version || !config.version
@@ -165,6 +179,7 @@ const IO = {
           storeName: config.storeName,
           version: config.version,
           data: res,
+          extra: config.extra,
         })
       }
       return {
@@ -208,8 +223,9 @@ const IO = {
           size: dataSize.size,
           exact: dataSize.exact,
           type,
-          created: Date.toString(),
-          updated: Date.toString(),
+          extra: config.extra,
+          created: Date(),
+          updated: Date(),
         }
         metadata.data.push(dataInfo)
       } else {
@@ -219,7 +235,8 @@ const IO = {
           size: dataSize.size,
           exact: dataSize.exact,
           type,
-          updated: Date.toString(),
+          extra: config.extra,
+          updated: Date(),
         })
       }
 
@@ -287,22 +304,26 @@ const IO = {
         typeof config.loadCallback === 'function' ? config.loadCallback : noop
       const src = config.url + (config.version ? `?${config.version}` : '')
       const request = () => {
-        return apiBundle.IOAPI!.get<any, T>(src, {
-          responseType: config.script === true ? 'text' : 'blob',
-          withCredentials: false,
-          onDownloadProgress: (progressEvent) => {
-            let percent = 0
-            if (progressEvent.total) {
-              percent = progressEvent.loaded / progressEvent.total
-            }
-            cb({
-              storeName: config.storeName,
-              key: config.key,
-              percent,
-              status: percent === 1 ? 3 : 2,
-            })
-          },
-        })
+        // 确保不读取浏览器缓存
+        return apiBundle.IOAPI!.get<any, T>(
+          src + `${src.includes('?') ? '&' : '?'}t=${Date.now()}`,
+          {
+            responseType: config.script === true ? 'text' : 'blob',
+            withCredentials: false,
+            onDownloadProgress: (progressEvent) => {
+              let percent = 0
+              if (progressEvent.total) {
+                percent = progressEvent.loaded / progressEvent.total
+              }
+              cb({
+                storeName: config.storeName,
+                key: config.key,
+                percent,
+                status: percent === 1 ? 3 : 2,
+              })
+            },
+          }
+        )
       }
       try {
         const readRes = await this.read<T>({
@@ -311,6 +332,9 @@ const IO = {
           version: config.version,
           cache: config.cache,
           request,
+          extra: {
+            src,
+          },
         })
         // 如果是脚本，需要通过 script 解析
         if (config.script === true) {

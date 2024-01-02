@@ -20,7 +20,13 @@ export const loading = {
   },
 }
 
-// 比对版本
+/**
+ * @name matchVersion
+ * @param v1
+ * @param v2
+ * @returns
+ * @desc 对比版本，只要主版本一致，缓存就有效
+ */
 export function matchVersion(v1: string, v2: string) {
   const res = {
     valid: true,

@@ -12,11 +12,10 @@ import coreConfig from '@/core/config'
 // 所有实例共享的数据
 const local: {
   workerInstance: null | WorkerInstance<Core>
-  magickWasm: null | Blob
+  magickWasm?: Blob
   inited: boolean
 } = {
   workerInstance: null,
-  magickWasm: null,
   inited: false,
 }
 
@@ -54,7 +53,16 @@ class FaviconService extends Service {
         key: 'imageMagick',
         loadCallback: config?.loadCallback,
       })
-      local.magickWasm = wasm!.data
+      // 解压数据
+      const zip = new JSZip()
+      const data = await zip.loadAsync(wasm!.data, {
+        optimizedBinaryString: true,
+      })
+      local.magickWasm = await data.file('magick.wasm')?.async('blob')
+
+      if (!local.magickWasm) {
+        throw new Error('Resource Not Found')
+      }
 
       // 创建多线程
       const instance = await create<Core>(worker)
