@@ -6,19 +6,9 @@
   <section
     v-if="info.doc"
     class="doc-section"
-    :data-expand="expand"
   >
-    <h2 class="section-title">
-      <span class="q-mr-md">{{ $t('global.doc') }}</span>
-      <q-icon
-        class="arrow cp"
-        name="arrow_forward"
-        color="primary"
-        @click="toggleDoc"
-      />
-    </h2>
+    <SectionTitle :defaultShow="false">{{ $t('global.doc') }}</SectionTitle>
     <QMarkdown
-      v-show="expand"
       :src="info.doc"
       no-heading-anchor-links
     />
@@ -27,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { QMarkdown } from '@quasar/quasar-ui-qmarkdown'
 import '@quasar/quasar-ui-qmarkdown/dist/index.css'
@@ -49,20 +39,4 @@ const info = computed(() => {
     doc: doc === `${props.serviceName}.doc` ? '' : doc,
   }
 })
-
-const expand = ref<boolean>(false)
-
-function toggleDoc() {
-  expand.value = !expand.value
-}
 </script>
-
-<style lang="scss" scoped>
-.doc-section {
-  &[data-expand='true'] {
-    .arrow {
-      transform: rotate(90deg);
-    }
-  }
-}
-</style>

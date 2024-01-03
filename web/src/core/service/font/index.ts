@@ -1,16 +1,79 @@
 import type * as OpenType from 'opentype.js'
 import openType from 'opentype.js'
 import Service from '../service-base'
+import IO, { DepLoadConfig } from '@/core/io'
+import config from '@/core/config'
+import { CoreErrorEnum } from '@/core/error'
+import JSZip from 'jszip'
+
+export interface FontConfig {
+  name: string
+  path: string
+  fontPath: string
+  version: string
+  compressedSize: number
+}
 
 class FontService extends Service {
   constructor() {
     super()
   }
 
-  fontList: string[] = []
+  fontIndex: {
+    storeName: string
+    list: FontConfig[]
+  } = { storeName: 'fonts', list: [] }
   fontBuffer: null | ArrayBuffer = null
   fontParsed: null | OpenType.Font = null
   glyphsOptions: { id: number; label: string }[] = []
+
+  /**
+   * @desc 初始化，主要是拉取字体列表
+   */
+  async init(): Promise<void> {
+    const data = await IO.loadDepFile<Blob>({
+      key: 'fonts',
+      ...config.deps.fonts,
+    })
+    Object.assign(this.fontIndex, JSON.parse((await data?.data.text()) ?? ''))
+  }
+
+  /**
+   * @param cfg
+   * @returns
+   * @desc 加载远程字体
+   */
+  async loadFont(
+    cfg: FontConfig & {
+      loadCallback: DepLoadConfig['loadCallback']
+    }
+  ): Promise<Blob | void> {
+    const url = new URL(cfg.path, config.deps.fonts.url)
+    const data = await IO.loadDepFile<Blob>({
+      key: cfg.name,
+      url: url.href,
+      version: cfg.version,
+      storeName: this.fontIndex.storeName,
+      loadCallback: cfg.loadCallback,
+    })
+    if (!data?.data) {
+      throw new Error(CoreErrorEnum[201])
+    }
+    // 解压数据
+    const zip = new JSZip()
+    const font = await (
+      await zip.loadAsync(data.data, {
+        optimizedBinaryString: true,
+      })
+    )
+      .file(cfg.fontPath)
+      ?.async('blob')
+
+    if (!font) {
+      throw new Error(CoreErrorEnum[201])
+    }
+    return font
+  }
 
   parse(buffer?: ArrayBuffer): OpenType.Font {
     if ((buffer && buffer !== this.fontBuffer) || !this.fontParsed) {
@@ -34,16 +97,27 @@ class FontService extends Service {
     return this.fontParsed as OpenType.Font
   }
 
+  /**
+   * @param glyph
+   * @param cellWidth
+   * @param padding
+   * @returns
+   * @desc 计算字体绘制坐标。参考：view-source:https://opentype.js.org/glyph-inspector.html
+   */
   getDrawParams(glyph: OpenType.Glyph, cellWidth: number, padding: number) {
     const font = this.fontParsed as OpenType.Font
-    const scale = cellWidth / font.unitsPerEm
-    const x = (cellWidth - (glyph.advanceWidth ?? 0) * scale) / 2 + padding
     const head = font.tables.head
+    const maxWidth = head.xMax - head.xMin
     const maxHeight = head.yMax - head.yMin
+    const fontScale = Math.min(cellWidth / maxWidth, cellWidth / maxHeight)
+    const fontSize = fontScale * font.unitsPerEm
+    const glyphWidth = fontScale * (glyph.advanceWidth ?? 0)
+    const x = (cellWidth - glyphWidth) / 2 + padding
     const fontBaseline = (cellWidth * head.yMax) / maxHeight + padding
     return {
       x,
       y: fontBaseline,
+      fontSize,
     }
   }
 
@@ -52,7 +126,7 @@ class FontService extends Service {
       throw new Error('not parsed')
     }
     const res: {
-      _id: number
+      _id: symbol
       dataUrl: string
       index: number
       glyph: OpenType.Glyph
@@ -67,12 +141,12 @@ class FontService extends Service {
       const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
       ctx.scale(DPR, DPR)
       const glyph = this.fontParsed.glyphs.get(i)
-      const drawParams = this.getDrawParams(glyph, width * 0.7, width * 0.15)
+      const drawParams = this.getDrawParams(glyph, width * 0.9, width * 0.05)
 
-      glyph?.draw(ctx, drawParams.x, drawParams.y, width * 0.7)
+      glyph?.draw(ctx, drawParams.x, drawParams.y, drawParams.fontSize)
 
       res.push({
-        _id: Math.random(),
+        _id: Symbol(),
         dataUrl: canvas.toDataURL(),
         index: i,
         glyph,

@@ -29,7 +29,11 @@ export default boot(({ app }) => {
   //       so you can easily perform requests against your app's API
   // 请求拦截
   IOAPI.interceptors.request.use(
-    (config) => config,
+    (config) => {
+      // 需要 oss 设置，目前只能设置单文件
+      // config.headers.set('Cache-Control', 'no-cache')
+      return config
+    },
     // 发送失败
     (error) => Promise.reject(error)
   )

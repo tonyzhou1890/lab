@@ -142,7 +142,7 @@ const IO = {
       const dataInfo = metadata?.data?.find((item) => item.key === config.key)
       // 元数据预判断
       if (dataInfo) {
-        console.log('dataInfo: ', dataInfo, config)
+        // console.log('dataInfo: ', dataInfo, config)
         const matched =
           // 没有版本号，则缓存一直有效
           !dataInfo.version || !config.version

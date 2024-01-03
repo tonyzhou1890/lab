@@ -89,7 +89,7 @@ function handleSearch() {
     width: 100vw;
     height: 7.8vw;
     // 存在边线，需要 -1 像素解决
-    margin-bottom: -1px;
+    margin-bottom: -2px;
     background-image: url('@/assets/images/home/wave.png?t');
     background-size: 100%;
   }

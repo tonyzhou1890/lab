@@ -53,7 +53,9 @@ const config = {
     },
     // 字体--这里的地址是字体列表，不缓存
     fonts: {
-      // url: ``,
+      url: `${ossPrefix}/fonts/index.json`,
+      version: '0.0.1',
+      cache: false,
     },
   },
 }

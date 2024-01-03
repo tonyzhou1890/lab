@@ -1,3 +1,6 @@
+/**
+ * @desc 错误枚举。其实这枚举用起来不如 Map 方便
+ */
 export enum CoreErrorEnum {
   'Execute Error' = 100,
   'Not Initialized' = 101,
@@ -6,16 +9,4 @@ export enum CoreErrorEnum {
   // worker
   'Action Not Found' = 202,
   'Custom' = 900,
-}
-
-export default class CoreError {
-  constructor(code: number) {
-    this.coreErrorCode = code
-    this.coreErrorMsg = CoreErrorEnum[code] ?? 'Unknown Error'
-    // 该字段有值的时候，直接提示，否则根据 coreErrorMsg 翻译
-    this.coreErrorFullMsg = ''
-  }
-  coreErrorCode
-  coreErrorMsg
-  coreErrorFullMsg
 }

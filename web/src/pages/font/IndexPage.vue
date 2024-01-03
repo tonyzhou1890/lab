@@ -3,12 +3,46 @@
     <ServiceBaseInfo service-name="font" />
     <div class="content q-pt-lg">
       <div class="file">
-        <q-file
+        <q-select
           outlined
-          v-model="file"
           :label="$t('font.fileLabel')"
-          accept=".ttf, .woff, .otf"
-        />
+          :options="fontList"
+          option-value="_id"
+          option-label="name"
+          v-model="fontSelectecd"
+          map-options
+          @update:model-value="selectFont"
+        >
+          <template v-slot:option="scope">
+            <q-item
+              v-bind="scope.itemProps"
+              class="font-select-item"
+              :class="{
+                select: !scope.opt.path && !scope.opt.file,
+                local: scope.opt.file,
+              }"
+            >
+              <q-item-section>
+                <q-item-label
+                  ><span class="name">{{ scope.opt.name }}</span></q-item-label
+                >
+              </q-item-section>
+              <!-- 有 path，说明是远程字体，显示字体大小和图标 -->
+              <q-item-section
+                v-if="scope.opt.path"
+                side
+              >
+                <q-icon
+                  name="cloud"
+                  color="primary"
+                />
+                <q-item-label caption>{{
+                  format.humanStorageSize(scope.opt.compressedSize)
+                }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </template>
+        </q-select>
       </div>
       <div
         class="full-width"
@@ -105,12 +139,20 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
-import FontService from '@/core/service/font'
+import { computed, onMounted, ref, watch } from 'vue'
+import FontService, { FontConfig } from '@/core/service/font'
 import type * as OpenType from 'opentype.js'
 import { useI18n } from 'vue-i18n'
-import { formatUnicode, setCssFont } from '@/core/utils/index'
-import { useQuasar } from 'quasar'
+import {
+  formatUnicode,
+  setCssFont,
+  getLocalFile,
+  getFileName,
+} from '@/core/utils/index'
+import { useQuasar, format } from 'quasar'
+import { CoreErrorEnum } from '@/core/error'
+import { errorNotify } from '@/core/error/utils'
+import { loading } from '@/core/io/utils'
 
 interface FontInfoItem {
   _id?: number
@@ -129,6 +171,9 @@ const { t } = useI18n()
 
 const file = ref<File | null>(null)
 
+const fontList = ref<(FontConfig & { _id: symbol; file?: File })[]>()
+const fontSelectecd = ref<FontConfig & { file?: File }>()
+
 const parsedFlag = ref(0)
 
 const service = new FontService()
@@ -141,17 +186,99 @@ const glyphContainer = ref<HTMLDivElement | null>(null)
 
 const drawnGlyphs = ref<
   {
-    _id: number
+    _id: symbol
     dataUrl: string
     index: number
     glyph: OpenType.Glyph
   }[]
 >([])
 
+// 预览字体宽度
 const fontWidth = 70
 
+onMounted(async () => {
+  try {
+    await service.init()
+    fontList.value = [
+      {
+        _id: Symbol(),
+        name: t('font.localFile'),
+        path: '',
+        fontPath: '',
+        version: '',
+        compressedSize: 0,
+      },
+      ...service.fontIndex.list.map((item) => {
+        return {
+          ...item,
+          _id: Symbol(),
+        }
+      }),
+    ]
+  } catch (e) {
+    errorNotify(e, { t })
+  }
+})
+
+// 选择字体
+async function selectFont() {
+  const cfg = fontSelectecd.value
+  // 选择的本地
+  if (!cfg?.path && !cfg?.file) {
+    fontSelectecd.value = undefined
+    const files = await getLocalFile({
+      accept: '.ttf, .woff, .otf',
+    })
+    if (files[0]) {
+      file.value = files[0]
+      const name = getFileName(files[0])
+      let fontCfg = fontList.value?.find(
+        (item) => item.name === name && item.file
+      )
+      if (fontCfg) {
+        // 如果列表缓存已经有了，直接替换
+        fontCfg.file = files[0]
+      } else {
+        fontCfg = {
+          _id: Symbol(),
+          name: getFileName(files[0]),
+          path: '',
+          fontPath: '',
+          file: files[0],
+          version: '',
+          compressedSize: 0,
+        }
+        // 否则添加新缓存到列表
+        fontList.value?.push(fontCfg)
+      }
+      fontSelectecd.value = fontCfg
+    }
+  } else if (!cfg?.path) {
+    // 缓存的字体
+    file.value = cfg.file as File
+  } else {
+    // 远程拉取
+    try {
+      loading.show()
+      const blob = await service.loadFont({
+        ...cfg,
+        loadCallback: loading.update,
+      })
+      if (blob) {
+        // console.log(blob)
+        file.value = new File([blob], cfg.name)
+      } else {
+        throw new Error(CoreErrorEnum[201])
+      }
+      loading.hide()
+    } catch (e) {
+      loading.hide()
+      errorNotify(e, { t })
+    }
+  }
+}
+
 watch(file, async (newValue: File | null) => {
-  console.log(newValue)
   if (newValue) {
     service.parse(await newValue.arrayBuffer())
     if (service.fontParsed) {
@@ -161,7 +288,7 @@ watch(file, async (newValue: File | null) => {
       drawnGlyphs.value = service.drawSlectedGlyphs(0, fontWidth)
       // 设置字体
       fontFaceName.value = setCssFont(newValue)
-      console.log(service.fontParsed)
+      // console.log(service.fontParsed)
     }
   } else {
     parsedFlag.value = 0
@@ -195,6 +322,10 @@ const fontInfo = computed<FontInfoItem[]>(() => {
     {
       name: t('font.charNum'),
       value: service.fontParsed?.numGlyphs ?? 0,
+    },
+    {
+      name: t('font.size'),
+      value: format.humanStorageSize(service.fontBuffer?.byteLength ?? 0),
     },
   ].map((item: FontInfoItem) => {
     item._id = Math.random()
@@ -249,7 +380,8 @@ function onSubmit() {
   .glyph-draw-list {
     .glyph-item {
       width: 72px;
-      height: 100px;
+      height: 107px;
+      padding-top: 7px;
       box-sizing: border-box;
       border: 1px solid grey;
       vertical-align: middle;
@@ -265,6 +397,7 @@ function onSubmit() {
       &::before {
         content: attr(data-index);
         font-size: 12px;
+        line-height: 14px;
         position: absolute;
         color: $grey;
         left: 3px;
@@ -276,6 +409,12 @@ function onSubmit() {
     .cut-text {
       font-family: v-bind('fontFaceName');
     }
+  }
+}
+.font-select-item {
+  &.select {
+    color: $grey-1;
+    background-color: $primary !important;
   }
 }
 </style>

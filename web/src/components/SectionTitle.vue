@@ -16,7 +16,17 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-const show = ref(true)
+
+const props = withDefaults(
+  defineProps<{
+    defaultShow?: boolean
+  }>(),
+  {
+    defaultShow: true,
+  }
+)
+
+const show = ref(props.defaultShow)
 
 function toggle() {
   show.value = !show.value

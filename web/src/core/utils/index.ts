@@ -140,3 +140,24 @@ export function setCssFont(font: File, name?: string) {
   document.head.appendChild(style)
   return name
 }
+
+/**
+ * @param cfg
+ * @returns
+ * @desc 获取本地文件
+ */
+export function getLocalFile(cfg: {
+  accept: string
+  multiple?: boolean
+}): Promise<File[]> {
+  return new Promise((resolve) => {
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.multiple = cfg.multiple || false
+    input.accept = cfg.accept
+    input.onchange = () => {
+      resolve([].slice.call(input.files))
+    }
+    input.click()
+  })
+}

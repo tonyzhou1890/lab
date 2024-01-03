@@ -1,4 +1,4 @@
-import CoreError, { CoreErrorEnum } from '../error'
+import { CoreErrorEnum } from '../error'
 
 /**
  * svg 转 png
@@ -47,9 +47,7 @@ export function svgToPng(
         if (file) {
           resolve(file)
         } else {
-          const error = new CoreError(CoreErrorEnum['Execute Error'])
-          error.coreErrorFullMsg = 'canvas to blob error'
-          reject(error)
+          reject(new Error(CoreErrorEnum[100]))
         }
       }, 'image/png')
     }
