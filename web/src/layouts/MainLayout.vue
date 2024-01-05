@@ -38,6 +38,7 @@
     </q-page-container>
   </q-layout>
   <vue-meta />
+  <back-top />
 </template>
 
 <script setup lang="ts">
@@ -47,6 +48,7 @@ import { useI18n } from 'vue-i18n'
 import { changePathLangIso } from '../core/utils'
 import VueMeta from '@/components/VueMeta.vue'
 import LeftDrawer from '@/components/LeftDrawer.vue'
+import BackTop from '@/components/BackTop.vue'
 const { locale, t } = useI18n({ useScope: 'global' })
 
 const route = useRoute()
