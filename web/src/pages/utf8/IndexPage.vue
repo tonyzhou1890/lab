@@ -14,7 +14,7 @@
         />
       </q-tabs>
       <q-tab-panels
-        class="bg-transparent"
+        class="bg-transparent q-px-none"
         keep-alive
         v-model="currTab"
         animated

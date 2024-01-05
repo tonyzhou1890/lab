@@ -3,12 +3,13 @@
     <q-form
       ref="formRef"
       @submit="onSubmit"
-      class="form"
+      class="form q-gutter-y-md"
     >
       <!-- 文本 -->
       <q-input
         type="textarea"
         autogrow
+        outlined
         v-model="formData.utf8Input"
         class="textarea ova"
         :label="$t('utf8.utf8Input') + '*'"
@@ -26,7 +27,7 @@
       </div>
     </q-form>
     <section class="result-section">
-      <h2 class="section-title">{{ $t('global.form.result') }}</h2>
+      <section-title>{{ $t('global.form.result') }}</section-title>
       <div class="result text-body1 text-center ova break-all">
         {{ result }}
       </div>
