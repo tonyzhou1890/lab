@@ -4,7 +4,7 @@
     <div class="content">
       <q-input
         class="search-input"
-        filled
+        outlined
         v-model="filter"
         :label="$t('mIcons.searchPlaceholder')"
       />
