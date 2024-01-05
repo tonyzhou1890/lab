@@ -67,14 +67,3 @@ const tabList = computed<TabItem[]>(() => {
   ]
 })
 </script>
-
-<style lang="scss">
-.page-main {
-  .file,
-  .glyph-select {
-    width: 300px;
-    max-width: 90%;
-    margin: 0 auto;
-  }
-}
-</style>

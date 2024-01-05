@@ -2,8 +2,6 @@ import create, { WorkerInstance } from '@/core/web-worker/create'
 import worker from './worker?worker'
 export { charset, encryptTypes, decryptTypes } from './core'
 import type { Encrypt, Decrypt } from './core'
-import CoreError, { CoreErrorEnum } from '@/core/error'
-import { DigestError } from './error'
 import type { WorkerCallPromisify } from '@/core/web-worker/create'
 
 export interface Core {
@@ -49,14 +47,14 @@ function end() {
   }
 }
 
-// type decryptCallback = { total: number, checkedItems: number, result: string, error: CoreError | DigestError } => void
+// type decryptCallback = { total: number, checkedItems: number, result: string, error: Error } => void
 export interface DecryptCallbackParameter {
   total: bigint
   checkedItems: bigint
   speed: bigint // unit: items/s
   timeRemaining: bigint
   result: string
-  error?: CoreError | DigestError
+  error?: Error
 }
 type decryptCallback = (param: DecryptCallbackParameter) => void
 /**
@@ -142,16 +140,6 @@ function decrypt(
                 (status.total - status.checkedItems) / status.speed
             }
 
-            // 如果出错，结束
-            if (typeof res[i] !== 'string') {
-              callback({
-                ...status,
-                error: res[i] as CoreError & DigestError,
-              })
-              _stop()
-              return
-            }
-
             // 找到结果或者全部尝试完毕，结束
             if (res[i] || status.checkedItems === status.total) {
               _stop()
@@ -169,12 +157,11 @@ function decrypt(
           brutalForce(start)
         })
         .catch((e) => {
+          console.log(e)
           _stop()
-          const temp = new CoreError(CoreErrorEnum['Execute Error'])
-          temp.coreErrorFullMsg = e?.message ?? ''
           callback({
             ...status,
-            error: temp,
+            error: e,
           })
         })
   }

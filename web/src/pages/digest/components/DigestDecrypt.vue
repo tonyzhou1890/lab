@@ -3,12 +3,13 @@
     <q-form
       ref="formRef"
       @submit="onSubmit"
-      class="form"
+      class="form q-gutter-y-md"
     >
       <!-- 摘要密文 -->
       <q-input
         type="textarea"
         autogrow
+        outlined
         v-model="formData.stringInput"
         :label="$t('digest.decryptForm.string') + '*'"
         lazy-rules
@@ -35,6 +36,7 @@
         v-model="formData.charsetKeys"
         :options="charsetOptions"
         multiple
+        outlined
         emit-value
         map-options
         :label="$t('digest.decryptForm.charset') + '*'"
@@ -45,6 +47,7 @@
       <!-- 算法 -->
       <q-select
         v-model="formData.algorithm"
+        outlined
         :options="options"
         :label="$t('digest.decryptForm.algorithm')"
       />
@@ -64,13 +67,15 @@
       </div>
     </q-form>
     <section class="result-section">
-      <h2 class="section-title">{{ $t('digest.encryptResult') }}</h2>
+      <section-title>{{ $t('digest.encryptResult') }}</section-title>
       <q-list class="text-body1">
         <q-item
           v-for="item in resultList"
           :key="item._id"
         >
-          <q-item-section class="text-bold">{{ item.name }}</q-item-section>
+          <q-item-section class="text-bold col-4 col-md-6">{{
+            item.name
+          }}</q-item-section>
           <q-item-section class="break-all">{{ item.value }}</q-item-section>
         </q-item>
       </q-list>
@@ -150,10 +155,10 @@ function decryptCallback(data: DecryptCallbackParameter): void {
     result.value.checkedItems = data.checkedItems
     result.value.speed = data.speed
     result.value.timeRemaining = data.timeRemaining
-    result.value.result = data.result
 
-    if (data.result) {
+    if (data.result || data.checkedItems === data.total) {
       decrypting.value = false
+      result.value.result = data.result || t('digest.notFound')
     }
   }
   // handleStop()

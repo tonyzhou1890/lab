@@ -264,7 +264,7 @@ const groupedServiceList = computed(() => {
   font-size: 16px;
   box-shadow: none;
   padding-top: 30px;
-
+  overflow: visible;
   .close-btn {
     z-index: 3;
   }

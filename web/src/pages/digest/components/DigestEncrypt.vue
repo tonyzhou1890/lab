@@ -3,7 +3,7 @@
     <q-form
       ref="formRef"
       @submit="onSubmit"
-      class="form"
+      class="form q-gutter-y-md"
     >
       <!-- 选择是字符串还是文件 -->
       <q-field
@@ -29,6 +29,7 @@
         v-if="formData.type === 'string'"
         type="textarea"
         autogrow
+        outlined
         v-model="formData.stringInput"
         :label="$t('digest.encryptForm.string') + '*'"
         lazy-rules
@@ -40,6 +41,7 @@
       <q-file
         v-else
         v-model="formData.fileInput"
+        outlined
         :label="$t('digest.encryptForm.file') + '*'"
         lazy-rules
         :rules="[
@@ -49,6 +51,7 @@
       <!-- 算法 -->
       <q-select
         v-model="formData.algorithm"
+        outlined
         :options="options"
         :label="$t('digest.encryptForm.algorithm')"
       />
@@ -62,13 +65,15 @@
       </div>
     </q-form>
     <section class="result-section">
-      <h2 class="section-title">{{ $t('digest.encryptResult') }}</h2>
+      <SectionTitle>{{ $t('digest.encryptResult') }}</SectionTitle>
       <q-list class="text-body1">
         <q-item
           v-for="item in resultList"
           :key="item._id"
         >
-          <q-item-section class="text-bold">{{ item.name }}</q-item-section>
+          <q-item-section class="text-bold col-4 col-md-6">{{
+            item.name
+          }}</q-item-section>
           <q-item-section class="break-all">{{ item.value }}</q-item-section>
         </q-item>
       </q-list>
@@ -138,14 +143,15 @@ async function onSubmit() {
   console.log('submit')
 
   calculating.value = true
-  const res = await digestService.worker.encrypt(
-    formData.value.algorithm,
-    source
-  )
-  if (typeof res === 'string') {
-    result.value = res
-  } else {
-    errorNotify(res, {
+
+  try {
+    const res = await digestService.worker.encrypt(
+      formData.value.algorithm,
+      source
+    )
+    result.value = res || ''
+  } catch (e) {
+    errorNotify(e, {
       t,
       i18nKey: 'digest',
     })

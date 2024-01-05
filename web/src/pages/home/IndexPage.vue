@@ -1,6 +1,6 @@
 <template>
   <q-page class="col items-center text-grey-1">
-    <div class="header ova column items-center">
+    <div class="header ovh column items-center">
       <h1 class="title text-bold row items-center">
         <img
           class="logo q-mr-md"

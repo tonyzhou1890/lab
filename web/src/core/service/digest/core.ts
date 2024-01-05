@@ -1,7 +1,7 @@
 import Crypto from 'crypto-js'
 import jsmd5 from 'js-md5'
 import { getPermutationStringByIndex } from '@/core/utils'
-import CoreError, { CoreErrorEnum } from '@/core/error'
+import { CoreErrorEnum } from '@/core/error'
 import { DigestErrorEnum } from './error'
 
 // https://cloud.tencent.com/developer/ask/sof/1400715
@@ -98,15 +98,11 @@ function deSha(
  * @name encrypt
  * @description 加密操作封装
  */
-function encrypt(
-  type: string,
-  message: string | ArrayBuffer
-): string | CoreError {
+function encrypt(type: string, message: string | ArrayBuffer): string {
   const temp = encryptTypes.find((item) => item.name === type)
 
   if (!temp) {
-    const e = new CoreError(CoreErrorEnum['Not Found'])
-    return e
+    throw new Error(CoreErrorEnum[200])
   }
 
   if (temp.name === 'md5') {
@@ -143,22 +139,22 @@ function decrypt(
   chars: string[],
   start: bigint,
   end: bigint
-): string | CoreError {
+): string {
   const temp = decryptTypes.find((item) => item.name === type)
 
   if (!temp) {
-    return new CoreError(CoreErrorEnum['Not Found'])
+    throw new Error(CoreErrorEnum[200])
   }
 
   // 检查字符集
   if (!chars.length) {
-    return new CoreError(DigestErrorEnum['Charset Error'])
+    throw new Error(DigestErrorEnum[901])
   }
 
   if (temp.name === 'md5') {
     // 检查密文
     if (cipher.length !== 16 && cipher.length !== 32) {
-      return new CoreError(DigestErrorEnum['Cipher Length Error'])
+      throw new Error(DigestErrorEnum[902])
     }
     return deMd5(chars, start, end, cipher, cipher.length === 16)
   } else if (temp.name === 'sha1') {

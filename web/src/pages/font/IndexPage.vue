@@ -34,7 +34,7 @@
               >
                 <q-icon
                   name="cloud"
-                  color="primary"
+                  color="blue-5"
                 />
                 <q-item-label caption>{{
                   format.humanStorageSize(scope.opt.compressedSize)

@@ -1,3 +1,5 @@
+import { CoreErrorEnum } from '../error'
+
 // worker 收到信息并执行相关操作
 function thread<T extends { [x: string]: any }>(utils: T) {
   self.onmessage = async function (e: MessageEvent) {
@@ -22,15 +24,14 @@ function thread<T extends { [x: string]: any }>(utils: T) {
         postMessage({
           action,
           _sign,
-          errorCode: 100, // 执行出错
-          errorMsg: (e as Error).message,
+          error: e,
         })
       }
     } else {
       postMessage({
         action,
         _sign,
-        errorCode: 202, // 操作未找到
+        error: CoreErrorEnum[202],
       })
     }
   }

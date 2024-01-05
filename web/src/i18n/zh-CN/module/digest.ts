@@ -38,6 +38,7 @@ export default {
   calculating: '计算中',
   speed: '速度',
   timeRemaining: '剩余时间',
+  notFound: '未找到',
   result: '结果',
   // 错误提示
   error: {

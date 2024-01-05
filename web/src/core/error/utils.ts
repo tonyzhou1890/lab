@@ -34,7 +34,6 @@ export function errorNotify(error: any, config?: ErrorNotifyConfig): string {
     msg = error.message
   }
 
-  console.log(error, msg)
   if (!silence) {
     Notify.create({
       message: msg,

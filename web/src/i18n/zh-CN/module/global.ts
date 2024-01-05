@@ -46,6 +46,7 @@ export default {
     'Not Initialized': '未初始化',
     'Not Found': '未找到',
     'Resource Not Found': '资源未找到',
+    'Action Not Found': '操作未找到',
   },
   // 依赖
   dep: {

@@ -1,4 +1,3 @@
-import CoreError from '../error'
 /**
  * worker job type
  */
@@ -10,7 +9,7 @@ export interface WorkerJobType {
 /**
  * worker job wrap type
  */
-export interface WorkerJobWrapType<T> {
+export interface WorkerJobWrapType<T = any> {
   _sign: number
   job: WorkerJobType
   p: {
@@ -49,36 +48,47 @@ async function create<T extends { [x: string]: any }>(
 
   const workerNum =
     threadNum ?? Math.max(window.navigator.hardwareConcurrency - 1, 1) // 线程数量
-  const quene = new Map()
+
   const waiting: Array<WorkerJobWrapType<R>> = []
-  const workers = new Array(workerNum).fill(null).map((_, index) => {
+  const workers: {
+    index: number
+    worker: Worker
+    task: WorkerJobWrapType | null
+  }[] = new Array(workerNum).fill(null).map((_, index) => {
     return {
       index,
       worker:
         type === 'string'
           ? new Worker(w as string)
           : new (w as new () => Worker)(),
-      idle: true, // 是否空闲
+      task: null,
     }
   })
 
   workers.map((item) => {
     item.worker.addEventListener('message', (e) => {
-      if (e.data?._sign) {
-        const { errorCode, errorMsg, _sign, result, action } = e.data
-        const queneItem = quene.get(_sign)
+      const task = item.task
+      // 任务发出的消息
+      if (task && task?._sign === e.data?._sign) {
+        const { error, result } = e.data
         // 发生错误
-        if (errorCode !== undefined) {
-          const error = new CoreError(errorCode)
-          error.coreErrorFullMsg = action + (errorMsg || '')
-          queneItem.p.reject(error)
+        if (error) {
+          task.p.reject(typeof error === 'string' ? new Error(error) : error)
         } else {
           // 返回结果
-          queneItem.p.resolve(result)
+          task.p.resolve(result)
         }
-        quene.delete(e.data._sign)
-        item.idle = true
+        item.task = null
         // 尝试接受新任务
+        assignJob()
+      }
+    })
+    item.worker.addEventListener('error', (e) => {
+      const task = item.task
+      // 执行任务过程出错
+      if (task) {
+        task.p.reject(e)
+        item.task = null
         assignJob()
       }
     })
@@ -89,17 +99,15 @@ async function create<T extends { [x: string]: any }>(
    */
   function assignJob() {
     let idleWorker = null
-    let waitingJob = null
+
     if (waiting.length) {
-      idleWorker = workers.find((item) => item.idle)
+      idleWorker = workers.find((item) => !item.task)
       if (idleWorker) {
-        idleWorker.idle = false
-        waitingJob = waiting.shift() as WorkerJobWrapType<R>
-        quene.set(waitingJob._sign, waitingJob)
+        idleWorker.task = waiting.shift() as WorkerJobWrapType<R>
 
         idleWorker.worker.postMessage({
-          ...waitingJob.job,
-          _sign: waitingJob._sign,
+          ...idleWorker.task.job,
+          _sign: idleWorker.task._sign,
         })
       }
     }
