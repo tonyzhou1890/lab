@@ -1,6 +1,6 @@
 import CoreError, { CoreErrorEnum } from '@/core/error'
 import Service from '../service-base'
-import angleConvert from 'allbox/dist/common.angle-convert'
+import angleConvert from 'allbox/dist/other.angle-convert'
 
 export type AngleType = 'D' | 'R'
 

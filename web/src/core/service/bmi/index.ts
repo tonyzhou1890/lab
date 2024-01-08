@@ -1,6 +1,6 @@
 import CoreError, { CoreErrorEnum } from '@/core/error'
 import Service from '../service-base'
-import bmi from 'allbox/dist/common.bmi'
+import bmi from 'allbox/dist/other.bmi'
 
 class BMIService extends Service {
   constructor() {

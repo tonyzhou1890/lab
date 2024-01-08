@@ -39,7 +39,7 @@
             <div
               v-for="icon in tab.icons"
               :key="icon.label"
-              class="column items-center col-xs-12 col-sm-6 col-md-4"
+              class="column items-center q-pa-xs col-sm-4 col-xs-6"
             >
               <q-icon
                 class="icon"
@@ -79,7 +79,6 @@ const currTab = ref('')
 
 const tabList = computed(() => {
   const res = service.filterList(data.value, filter.value, t)
-  console.log(res)
   return res
 })
 

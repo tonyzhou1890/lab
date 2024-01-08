@@ -715,10 +715,10 @@ ajv@^8.0.1:
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
-allbox@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.npmmirror.com/allbox/-/allbox-0.5.0.tgz#3b09d33bfee6e6482d34009c90b8b92b69b3e5a9"
-  integrity sha512-MNnKDcwKuv3mNWethoLLwXVlk/8XU1TTsEGEoJGP2JHzZa2lp5HdIeY2xy/5LoTYXauPXsDhV4hpnGTxrYkrkw==
+allbox@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.npmmirror.com/allbox/-/allbox-0.6.0.tgz#c2d85d310578a49eb97f6d98e2b2a7d24a9d31b4"
+  integrity sha512-jG82Ugxxq+5o6d4Jw67lHKukVhg5Nl/Xbym+cy2FCduEudf4A2vojSxf2Lech2em5iyMhN5me8yo2MhhyZ7LDw==
 
 ansi-escapes@^4.2.1:
   version "4.3.2"

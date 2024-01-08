@@ -1,6 +1,6 @@
 import CoreError, { CoreErrorEnum } from '@/core/error'
 import Service from '../service-base'
-import temperatureConvert from 'allbox/dist/common.temperature-convert'
+import temperatureConvert from 'allbox/dist/other.temperature-convert'
 
 export type TempType = 'C' | 'F' | 'K'
 

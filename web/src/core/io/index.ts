@@ -4,7 +4,7 @@ import { apiBundle } from '@/boot/axios'
 import { DepLoadCallbackParams } from '@/core/typings/general-types'
 import { noop } from '../utils'
 import { matchVersion, getDataSize } from './utils'
-import getTypeName from 'allbox/dist/common.get-type-name'
+import getTypeName from 'allbox/dist/other.get-type-name'
 import { StringKeyObjType } from 'allbox/dist/types'
 
 const defaultName = 'default'
