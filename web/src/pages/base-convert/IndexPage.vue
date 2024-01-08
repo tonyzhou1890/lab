@@ -5,7 +5,7 @@
       <q-form
         ref="formRef"
         @submit="onSubmit"
-        class="form"
+        v-bind="config.form"
       >
         <!-- 源进制 -->
         <q-select
@@ -15,11 +15,13 @@
           option-label="label"
           emit-value
           map-options
+          v-bind="config.field"
           :label="$t('baseConvert.sourceBase')"
         />
         <q-input
           v-if="formData.sourceBase === 37"
           v-model.trim="formData.sourceBaseStr"
+          v-bind="config.field"
           @update:model-value="
             (val) => handleUpdateBaseStr(val, 'sourceBaseStr')
           "
@@ -32,6 +34,7 @@
         <q-input
           type="textarea"
           autogrow
+          v-bind="config.field"
           v-model="formData.stringInput"
           class="textarea ova"
           :label="$t('baseConvert.source') + '*'"
@@ -48,6 +51,7 @@
           option-label="label"
           emit-value
           map-options
+          v-bind="config.field"
           :label="$t('baseConvert.targetBase')"
         />
         <q-input
@@ -56,6 +60,7 @@
           @update:model-value="
             (val) => handleUpdateBaseStr(val, 'targetBaseStr')
           "
+          v-bind="config.field"
           :rules="[
             (val) => (val && val.length > 0) || $t('global.form.required'),
           ]"
@@ -70,7 +75,7 @@
         </div>
       </q-form>
       <section class="result-section">
-        <h2 class="section-title">{{ $t('global.form.result') }}</h2>
+        <section-title>{{ $t('global.form.result') }}</section-title>
         <div class="result text-body1 text-center ova break-all">
           {{ result }}
         </div>
@@ -82,12 +87,17 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { storeToRefs } from 'pinia'
 import ServiceSchame from '@/core/service/base-convert/schema'
 import BaseConvertService from '@/core/service/base-convert'
 import ServiceBaseInfo from '@/components/ServiceBaseInfo.vue'
 import { errorNotify } from '@/core/error/utils'
+import { useAppStore } from '@/stores/app'
 
 const { t } = useI18n()
+
+const appStore = useAppStore()
+const { config } = storeToRefs(appStore)
 
 const service = new BaseConvertService()
 
@@ -135,14 +145,3 @@ function handleUpdateBaseStr(val: any, key: 'sourceBaseStr' | 'targetBaseStr') {
   formData.value[key] = service.purifyBaseStr(String(val ?? ''))
 }
 </script>
-
-<style lang="scss" scoped>
-.page-main {
-  .content {
-    .form {
-      max-width: 500px;
-      margin: 0 auto;
-    }
-  }
-}
-</style>

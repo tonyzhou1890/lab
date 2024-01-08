@@ -54,6 +54,12 @@ body {
     font-weight: bold;
     line-height: 1.4;
   }
+  .content {
+    overflow: auto;
+    .form {
+      max-width: 500px;
+    }
+  }
   &.app {
     box-shadow: 0 0 20px 0 rgba(55, 99, 170, 0.1);
     border-radius: 8px;
