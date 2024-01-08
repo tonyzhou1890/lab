@@ -10,7 +10,6 @@
         v-model="file"
         :label="$t('favicon.file') + '*'"
         accept="image/jpeg, image/png, image/x-ico, image/webp, image/svg+xml"
-        lazy-rules
         :rules="[
           (val) => (val !== null && val !== '') || $t('global.form.required'),
         ]"

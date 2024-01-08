@@ -12,7 +12,6 @@
           type="number"
           v-model.number="formData.weight"
           :label="$t('bmi.weight') + 'kg *'"
-          lazy-rules
           :rules="[
             (val) => !isEmpty(val) || $t('global.form.required'),
             (val) => val > 0 || $t('global.form.positiveNumber'),
@@ -23,7 +22,6 @@
           type="number"
           v-model.number="formData.height"
           :label="$t('bmi.height') + 'cm *'"
-          lazy-rules
           :rules="[
             (val) => !isEmpty(val) || $t('global.form.required'),
             (val) => val > 0 || $t('global.form.positiveNumber'),

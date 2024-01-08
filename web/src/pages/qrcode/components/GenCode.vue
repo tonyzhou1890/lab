@@ -11,7 +11,6 @@
         autogrow
         v-model="formData.stringInput"
         :label="$t('qrcode.genForm.string') + '*'"
-        lazy-rules
         maxlength="300"
         :rules="[
           (val) => (val && val.length > 0) || $t('global.form.required'),

@@ -3,12 +3,13 @@
     <q-form
       ref="formRef"
       @submit="onSubmit"
-      class="form q-gutter-y-md"
+      v-bind="config.form"
     >
       <!-- 选择是字符串还是文件 -->
       <q-field
         v-model="formData.type"
         borderless
+        v-bind="config.field"
         :label="$t('digest.encryptForm.type')"
       >
         <q-radio
@@ -29,10 +30,9 @@
         v-if="formData.type === 'string'"
         type="textarea"
         autogrow
-        outlined
+        v-bind="config.field"
         v-model="formData.stringInput"
         :label="$t('digest.encryptForm.string') + '*'"
-        lazy-rules
         :rules="[
           (val) => (val && val.length > 0) || $t('global.form.required'),
         ]"
@@ -41,9 +41,8 @@
       <q-file
         v-else
         v-model="formData.fileInput"
-        outlined
+        v-bind="config.field"
         :label="$t('digest.encryptForm.file') + '*'"
-        lazy-rules
         :rules="[
           (val) => (val !== null && val !== '') || $t('global.form.required'),
         ]"
@@ -51,7 +50,7 @@
       <!-- 算法 -->
       <q-select
         v-model="formData.algorithm"
-        outlined
+        v-bind="config.field"
         :options="options"
         :label="$t('digest.encryptForm.algorithm')"
       />
@@ -87,6 +86,8 @@ import type { QForm } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import digestService, { encryptTypes } from '@/core/service/digest'
 import { errorNotify } from '@/core/error/utils'
+import { storeToRefs } from 'pinia'
+import { useAppStore } from '@/stores/app'
 
 interface FormData {
   type: string
@@ -96,6 +97,9 @@ interface FormData {
 }
 
 const { t } = useI18n()
+
+const appStore = useAppStore()
+const { config } = storeToRefs(appStore)
 
 // 表单实例引用
 const formRef = ref<QForm | null>(null)

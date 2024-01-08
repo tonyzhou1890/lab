@@ -13,7 +13,6 @@
             v-model.number="conf.min"
             mask="#"
             :label="$t('counter.min') + '*'"
-            lazy-rules
             :rules="[
               (val) => !isEmpty(val) || $t('global.form.required'),
               (val) => val <= (conf.max ?? 0) || $t('global.form.inputError'),
@@ -25,7 +24,6 @@
             v-model.number="conf.max"
             mask="#"
             :label="$t('counter.max') + '*'"
-            lazy-rules
             :rules="[
               (val) => !isEmpty(val) || $t('global.form.required'),
               (val) =>
@@ -37,7 +35,6 @@
             type="number"
             v-model.number="conf.step"
             :label="$t('counter.step') + '*'"
-            lazy-rules
             :rules="[
               (val) => !isEmpty(val) || $t('global.form.required'),
               (val) => val > 0 || $t('global.form.inputError'),
@@ -48,7 +45,6 @@
             type="number"
             v-model.number="conf.initial"
             :label="$t('counter.initial') + '*'"
-            lazy-rules
             :rules="[
               (val) => !isEmpty(val) || $t('global.form.required'),
               (val) =>

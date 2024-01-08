@@ -3,17 +3,16 @@
     <q-form
       ref="formRef"
       @submit="onSubmit"
-      class="form q-gutter-y-md"
+      v-bind="config.form"
     >
       <!-- 文本 -->
       <q-input
         type="textarea"
         autogrow
-        outlined
+        v-bind="config.field"
         v-model="formData.utf8Input"
         class="textarea ova"
         :label="$t('utf8.utf8Input') + '*'"
-        lazy-rules
         :rules="[
           (val) => (val && val.length > 0) || $t('global.form.required'),
         ]"
@@ -41,8 +40,13 @@ import type { QForm } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import type Utf8Service from '@/core/service/utf8'
 import { errorNotify } from '@/core/error/utils'
+import { storeToRefs } from 'pinia'
+import { useAppStore } from '@/stores/app'
 
 const { t } = useI18n()
+
+const appStore = useAppStore()
+const { config } = storeToRefs(appStore)
 
 const props = defineProps<{
   service: Utf8Service

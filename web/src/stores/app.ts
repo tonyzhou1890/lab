@@ -15,6 +15,21 @@ export const useAppStore = defineStore('app', {
         outlined: true,
         hideBottomSpace: true,
       },
+      tabPanels: {
+        class: {
+          'bg-transparent': true,
+        },
+        keepAlive: true,
+        animated: true,
+        swipeable: true,
+        transitionPrev: 'jump-up',
+        transitionNext: 'jump-up',
+      },
+      tabPanel: {
+        class: {
+          'q-px-none': true,
+        },
+      },
     },
   }),
   getters: {

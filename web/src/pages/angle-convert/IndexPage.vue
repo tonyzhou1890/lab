@@ -22,7 +22,6 @@
           type="number"
           v-model.number="formData.stringInput"
           :label="$t('angleConvert.sourceInput') + '*'"
-          lazy-rules
           :rules="[(val) => !isEmpty(val) || $t('global.form.required')]"
         />
         <div class="btns row justify-center">

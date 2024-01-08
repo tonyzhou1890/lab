@@ -4,7 +4,7 @@
     <div class="content">
       <q-input
         class="search-input"
-        outlined
+        v-bind="config.field"
         v-model="filter"
         :label="$t('mIcons.searchPlaceholder')"
       />
@@ -22,18 +22,14 @@
         </q-tabs>
 
         <q-tab-panels
-          class="bg-transparent"
-          keep-alive
           v-model="currTab"
-          animated
-          swipeable
-          transition-prev="jump-up"
-          transition-next="jump-up"
+          v-bind="config.tabPanels"
         >
           <q-tab-panel
             v-for="tab in tabList"
             :key="tab.key"
             :name="tab.key"
+            v-bind="config.tabPanel"
             class="icons-tab row"
           >
             <div
@@ -65,8 +61,14 @@ import ServiceBaseInfo from '@/components/ServiceBaseInfo.vue'
 import { useI18n } from 'vue-i18n'
 import { errorNotify } from '@/core/error/utils'
 import { loading } from '@/core/io/utils'
+import { storeToRefs } from 'pinia'
+import { useAppStore } from '@/stores/app'
 
 const { t } = useI18n()
+
+const appStore = useAppStore()
+const { config } = storeToRefs(appStore)
+
 // 是否初始化完毕
 const initialized = ref<boolean>(false)
 

@@ -45,6 +45,7 @@ const setWidth = debounce(() => {
 }, 30)
 
 onMounted(() => {
+  setWidth()
   window.addEventListener('resize', setWidth)
 })
 

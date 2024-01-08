@@ -1,10 +1,10 @@
 <template>
   <div class="page-main app">
     <ServiceBaseInfo service-name="font" />
-    <div class="content q-pt-lg">
+    <div class="content q-pt-md">
       <div class="file">
         <q-select
-          outlined
+          v-bind="config.field"
           :label="$t('font.fileLabel')"
           :options="fontList"
           option-value="_id"
@@ -65,7 +65,7 @@
         <section class="glyph-section">
           <SectionTitle>{{ $t('font.glyphs') }}</SectionTitle>
           <q-select
-            outlined
+            v-bind="config.field"
             class="glyph-select"
             :options="glyphsOptions"
             option-value="id"
@@ -107,17 +107,17 @@
         <section class="cut-section">
           <SectionTitle>{{ $t('font.cut') }}</SectionTitle>
           <q-form
-            class="cut-form q-gutter-y-md"
+            v-bind="config.form"
+            class="cut-form"
             bottom="false"
             @submit="onSubmit"
           >
             <q-input
-              outlined
+              v-bind="config.field"
               v-model="toCutText"
               :label="$t('font.cutLabel')"
               class="text-body1 cut-text"
               type="textarea"
-              lazy-rules
               :rules="[
                 (val) =>
                   (val !== null && val !== '') || $t('global.form.required'),
@@ -153,6 +153,8 @@ import { useQuasar, format } from 'quasar'
 import { CoreErrorEnum } from '@/core/error'
 import { errorNotify } from '@/core/error/utils'
 import { loading } from '@/core/io/utils'
+import { storeToRefs } from 'pinia'
+import { useAppStore } from '@/stores/app'
 
 interface FontInfoItem {
   _id?: number
@@ -168,6 +170,9 @@ interface GlyphOption {
 const $q = useQuasar()
 
 const { t } = useI18n()
+
+const appStore = useAppStore()
+const { config } = storeToRefs(appStore)
 
 const file = ref<File | null>(null)
 
@@ -406,6 +411,9 @@ function onSubmit() {
     }
   }
   .cut-section {
+    .cut-form {
+      max-width: initial;
+    }
     .cut-text {
       font-family: v-bind('fontFaceName');
     }

@@ -38,7 +38,6 @@
           v-model="formData.stringInput"
           class="textarea ova"
           :label="$t('baseConvert.source') + '*'"
-          lazy-rules
           :rules="[
             (val) => (val && val.length > 0) || $t('global.form.required'),
           ]"

@@ -22,7 +22,6 @@
           type="number"
           v-model.number="formData.stringInput"
           :label="$t('temperatureConvert.sourceInput') + '*'"
-          lazy-rules
           :rules="[(val) => !isEmpty(val) || $t('global.form.required')]"
         />
         <!-- 目标温度 -->

@@ -3,16 +3,16 @@
     <q-form
       ref="formRef"
       @submit="onSubmit"
-      class="form q-gutter-y-md"
+      v-bind="config.form"
+      class="ovh"
     >
       <!-- 摘要密文 -->
       <q-input
         type="textarea"
         autogrow
-        outlined
+        v-bind="config.field"
         v-model="formData.stringInput"
         :label="$t('digest.decryptForm.string') + '*'"
-        lazy-rules
         :rules="[
           (val) => (val && val.length > 0) || $t('global.form.required'),
         ]"
@@ -20,9 +20,9 @@
       <!-- 原字符串最大长度 -->
       <q-field
         v-model="formData.sourceLength"
+        v-bind="config.field"
         borderless
         :label="$t('digest.decryptForm.sourceLength') + '*'"
-        lazy-rules
       >
         <q-slider
           v-model="formData.sourceLength"
@@ -36,7 +36,7 @@
         v-model="formData.charsetKeys"
         :options="charsetOptions"
         multiple
-        outlined
+        v-bind="config.field"
         emit-value
         map-options
         :label="$t('digest.decryptForm.charset') + '*'"
@@ -47,7 +47,7 @@
       <!-- 算法 -->
       <q-select
         v-model="formData.algorithm"
-        outlined
+        v-bind="config.field"
         :options="options"
         :label="$t('digest.decryptForm.algorithm')"
       />
@@ -92,6 +92,8 @@ import digestService from '@/core/service/digest'
 import serviceSchema from '@/core/service/digest/schema'
 import type { DecryptCallbackParameter } from '@/core/service/digest'
 import { errorNotify } from '@/core/error/utils'
+import { storeToRefs } from 'pinia'
+import { useAppStore } from '@/stores/app'
 
 interface FormData {
   stringInput: string
@@ -101,6 +103,9 @@ interface FormData {
 }
 
 const { t } = useI18n()
+
+const appStore = useAppStore()
+const { config } = storeToRefs(appStore)
 
 // 表单实例引用
 const formRef = ref<QForm | null>(null)
@@ -216,10 +221,3 @@ const resultList = computed(() => {
   ]
 })
 </script>
-
-<style lang="scss" scoped>
-.form {
-  max-width: 500px;
-  margin: 0 auto;
-}
-</style>
