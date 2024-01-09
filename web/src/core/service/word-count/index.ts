@@ -8,10 +8,16 @@ let lemmatizer: any = null
 async function init() {
   // 加载 underscore。因为 underscore 以 _ 作为命名空间，其他库也可能用这个符号，所以直接加载覆盖。
   try {
-    await io.loadDepFile<string>(config.deps.undercore)
+    await io.loadDepFile<string>({
+      key: 'underscore',
+      ...config.deps.undercore,
+    })
 
     if (!lemmatizer) {
-      await io.loadDepFile<string>(config.deps.lemmatizer)
+      await io.loadDepFile<string>({
+        key: 'lemmatizer',
+        ...config.deps.lemmatizer,
+      })
     }
     lemmatizer = new Lemmatizer('/libs/lemmatizer/')
   } catch (e) {
@@ -38,7 +44,8 @@ function count(data: string): WordCountItem[] {
     'en'
   )
   // 中文统计
-  const zhData = data.replace(/[^\u4e00-\u9fa5]/g, '')
+  // \u4e00-\u9fa5 已经不准确了，改成下面这个
+  const zhData = data.replace(/[^\p{sc=Han}]/gu, '')
   const zhRes: NumberObj = _count(zhData.split(''), 'zh')
 
   let res: WordCountItem[] = []

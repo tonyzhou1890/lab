@@ -1,8 +1,11 @@
+import doc from './word-count.doc.md?raw'
+
 export default {
   title: '词频统计',
   keywords: '词频统计，导出生词本',
   desc: '统计文本(UTF-8)里各单词出现的频率，统计结果可以导出为生词本。结果仅供参考。',
-  fileLabel: '选择 txt 文本',
+  doc,
+  fileLabel: '选择文本文件',
   fileInfo: '文本基本信息',
   fileName: '文件名',
   fileSize: '文件大小',

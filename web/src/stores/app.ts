@@ -27,7 +27,7 @@ export const useAppStore = defineStore('app', {
       },
       tabPanel: {
         class: {
-          'q-px-none': true,
+          // 'q-px-none': true,
         },
       },
     },
