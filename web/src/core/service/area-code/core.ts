@@ -34,7 +34,7 @@ function makeTree(areaCodeData: AreaCodeData): AreaCodeTreeNode[] {
       children: [],
     }
     const provinceCodePrefix = provinceCode.substring(0, 2)
-    console.log(provinceCodePrefix)
+    // console.log(provinceCodePrefix)
     // 获取市
     cityKeys.forEach((cityCode) => {
       if (cityCode.startsWith(provinceCodePrefix)) {

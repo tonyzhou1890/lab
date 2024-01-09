@@ -3,7 +3,7 @@
     <ServiceBaseInfo :service-name="ServiceSchame.i18nKey" />
     <div class="content">
       <q-input
-        filled
+        v-bind="config.field"
         v-model="filter"
         :label="$t('areaCode.searchPlaceholder')"
       />
@@ -38,8 +38,14 @@ import { useI18n } from 'vue-i18n'
 import { errorNotify } from '@/core/error/utils'
 import { loading } from '@/core/io/utils'
 import { QTree } from 'quasar'
+import { storeToRefs } from 'pinia'
+import { useAppStore } from '@/stores/app'
 
 const { t } = useI18n()
+
+const appStore = useAppStore()
+const { config } = storeToRefs(appStore)
+
 // 是否初始化完毕
 const initialized = ref<boolean>(false)
 
