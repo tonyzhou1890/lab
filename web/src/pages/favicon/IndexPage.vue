@@ -4,12 +4,13 @@
     <q-form
       ref="formRef"
       @submit="onSubmit"
-      class="form"
+      v-bind="config.form"
     >
       <q-file
         v-model="file"
         :label="$t('favicon.file') + '*'"
-        accept="image/jpeg, image/png, image/x-ico, image/webp, image/svg+xml"
+        v-bind="config.field"
+        accept="image/jpeg, image/png, image/webp, image/svg+xml, image/tiff, .heic"
         :rules="[
           (val) => (val !== null && val !== '') || $t('global.form.required'),
         ]"
@@ -35,8 +36,14 @@ import { useI18n } from 'vue-i18n'
 import { useQuasar } from 'quasar'
 import { errorNotify } from '@/core/error/utils'
 import { loading } from '@/core/io/utils'
+import { storeToRefs } from 'pinia'
+import { useAppStore } from '@/stores/app'
 
 const { t } = useI18n()
+
+const appStore = useAppStore()
+const { config } = storeToRefs(appStore)
+
 const $q = useQuasar()
 // 是否初始化完毕
 const initialized = ref<boolean>(false)
