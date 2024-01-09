@@ -14,18 +14,14 @@
         />
       </q-tabs>
       <q-tab-panels
-        class="bg-transparent"
-        keep-alive
         v-model="currTab"
-        animated
-        swipeable
-        transition-prev="jump-up"
-        transition-next="jump-up"
+        v-bind="config.tabPanels"
       >
         <q-tab-panel
           v-for="tab in tabList"
           :key="tab.value"
           :name="tab.value"
+          v-bind="config.tabPanel"
         >
           <component :is="tab.component" />
         </q-tab-panel>
@@ -42,8 +38,13 @@ import ServiceBaseInfo from '@/components/ServiceBaseInfo.vue'
 import GenCode from './components/GenCode.vue'
 import RecognizeCode from './components/RecognizeCode.vue'
 import ScanCode from './components/ScanCode.vue'
+import { storeToRefs } from 'pinia'
+import { useAppStore } from '@/stores/app'
 
 const { t } = useI18n()
+
+const appStore = useAppStore()
+const { config } = storeToRefs(appStore)
 
 interface TabItem {
   name: string

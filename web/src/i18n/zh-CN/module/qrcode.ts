@@ -1,7 +1,10 @@
+import doc from './qrcode.doc.md?raw'
+
 export default {
   title: '二维码生成识别',
   keywords: '二维码生成，二维码识别',
   desc: '可以生成、识别、扫描二维码',
+  doc,
   generate: '生成',
   recognize: '识别',
   scan: '扫描',

@@ -3,15 +3,17 @@
     <q-form
       ref="formRef"
       @submit="onSubmit"
-      class="form"
+      v-bind="config.form"
     >
       <!-- 字符串 -->
       <q-input
         type="textarea"
         autogrow
+        v-bind="config.field"
         v-model="formData.stringInput"
         :label="$t('qrcode.genForm.string') + '*'"
         maxlength="300"
+        counter
         :rules="[
           (val) => (val && val.length > 0) || $t('global.form.required'),
         ]"
@@ -25,7 +27,7 @@
       </div>
     </q-form>
     <section class="result-section">
-      <h2 class="section-title">{{ $t('qrcode.qrcode') }}</h2>
+      <section-title>{{ $t('qrcode.qrcode') }}</section-title>
       <div class="content tac">
         <canvas ref="canvasRef"></canvas>
       </div>
@@ -38,12 +40,17 @@ import { ref } from 'vue'
 import type { QForm } from 'quasar'
 import { useQuasar } from 'quasar'
 import qrcodeService from '@/core/service/qrcode'
+import { storeToRefs } from 'pinia'
+import { useAppStore } from '@/stores/app'
 
 interface FormData {
   stringInput: string
 }
 
 const $q = useQuasar()
+
+const appStore = useAppStore()
+const { config } = storeToRefs(appStore)
 
 // 表单实例引用
 const formRef = ref<QForm | null>(null)

@@ -29,7 +29,7 @@
       ></q-btn>
     </div>
     <section class="result-section">
-      <h2 class="section-title">{{ $t('qrcode.recognizeResult') }}</h2>
+      <section-title>{{ $t('qrcode.recognizeResult') }}</section-title>
       <q-list>
         <q-item class="result">
           <q-item-section class="break-all">{{ result }}</q-item-section>

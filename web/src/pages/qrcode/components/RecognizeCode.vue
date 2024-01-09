@@ -3,13 +3,14 @@
     <q-form
       ref="formRef"
       @submit="onSubmit"
-      class="form"
+      v-bind="config.form"
     >
       <!-- 文件 -->
       <q-file
         v-model="formData.fileInput"
         :label="$t('qrcode.recognizeForm.file') + '*'"
         accept="image/png, image/jpeg, image/webp"
+        v-bind="config.field"
         :rules="[
           (val) => (val !== null && val !== '') || $t('global.form.required'),
         ]"
@@ -24,7 +25,7 @@
       </div>
     </q-form>
     <section class="result-section">
-      <h2 class="section-title">{{ $t('qrcode.recognizeResult') }}</h2>
+      <section-title>{{ $t('qrcode.recognizeResult') }}</section-title>
       <q-list>
         <q-item class="result">
           <q-item-section class="break-all">{{ result }}</q-item-section>
@@ -40,12 +41,17 @@ import type { QForm } from 'quasar'
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import qrcodeService from '@/core/service/qrcode'
+import { storeToRefs } from 'pinia'
+import { useAppStore } from '@/stores/app'
 
 interface FormData {
   fileInput: null | File
 }
 
 const { t } = useI18n()
+
+const appStore = useAppStore()
+const { config } = storeToRefs(appStore)
 
 const $q = useQuasar()
 
