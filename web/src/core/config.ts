@@ -37,7 +37,7 @@ const config = {
     },
     poem: {
       url: `${ossPrefix}/poem/poem.json.zip`,
-      version: '1.0.0',
+      version: '2.0.0',
       storeName: depsStores.resources,
     },
     idiom: {

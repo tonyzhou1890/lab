@@ -12,6 +12,7 @@ export interface FontConfig {
   fontPath: string
   version: string
   compressedSize: number
+  ignore?: boolean
 }
 
 class FontService extends Service {
@@ -35,7 +36,8 @@ class FontService extends Service {
       key: 'fonts',
       ...config.deps.fonts,
     })
-    Object.assign(this.fontIndex, JSON.parse((await data?.data.text()) ?? ''))
+    Object.assign(this.fontIndex, JSON.parse((await data?.data.text()) ?? '{}'))
+    this.fontIndex.list = this.fontIndex.list.filter((item) => !item.ignore)
   }
 
   /**
@@ -45,7 +47,7 @@ class FontService extends Service {
    */
   async loadFont(
     cfg: FontConfig & {
-      loadCallback: DepLoadConfig['loadCallback']
+      loadCallback?: DepLoadConfig['loadCallback']
     }
   ): Promise<Blob | void> {
     const url = new URL(cfg.path, config.deps.fonts.url)
@@ -196,6 +198,47 @@ class FontService extends Service {
       glyphs,
     })
     return newFont
+  }
+
+  /**
+   * 设置自定义字体
+   * @param font
+   * @param name
+   * @desc 暂不考虑字体重复和内存膨胀问题
+   */
+  setCssFont(font: File, name?: string) {
+    name = name ?? 'font-' + Math.random().toString().substring(2)
+    const url = `url(${URL.createObjectURL(font)})`
+    const style = document.createElement('style')
+    style.id = name
+    style.innerHTML = `
+      @font-face {
+        font-family: ${name};
+        src: ${url}
+      }
+      `
+    document.head.appendChild(style)
+    return name
+  }
+
+  /**
+   * @param name
+   * @desc 根据指定名称自动设置 css 字体。在 setCssFont 基础上增加了下载筛选字体的过程
+   */
+  async setCssFontAuto(name: string) {
+    try {
+      await this.init()
+      const targetFont = this.fontIndex.list.find((item) => item.name === name)
+      if (targetFont) {
+        const fontFile = await this.loadFont(targetFont)
+        if (fontFile) {
+          return this.setCssFont(fontFile as File, name)
+        }
+      }
+    } catch (e) {
+      console.warn(e)
+      return false
+    }
   }
 }
 

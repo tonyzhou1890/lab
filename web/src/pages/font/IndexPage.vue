@@ -143,12 +143,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 import FontService, { FontConfig } from '@/core/service/font'
 import type * as OpenType from 'opentype.js'
 import { useI18n } from 'vue-i18n'
-import {
-  formatUnicode,
-  setCssFont,
-  getLocalFile,
-  getFileName,
-} from '@/core/utils/index'
+import { formatUnicode, getLocalFile, getFileName } from '@/core/utils/index'
 import { useQuasar, format } from 'quasar'
 import { CoreErrorEnum } from '@/core/error'
 import { errorNotify } from '@/core/error/utils'
@@ -292,7 +287,7 @@ watch(file, async (newValue: File | null) => {
       parsedFlag.value++
       drawnGlyphs.value = service.drawSlectedGlyphs(0, fontWidth)
       // 设置字体
-      fontFaceName.value = setCssFont(newValue)
+      fontFaceName.value = service.setCssFont(newValue)
       // console.log(service.fontParsed)
     }
   } else {

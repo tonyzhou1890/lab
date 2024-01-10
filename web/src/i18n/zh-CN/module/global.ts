@@ -47,6 +47,7 @@ export default {
     'Not Found': '未找到',
     'Resource Not Found': '资源未找到',
     'Action Not Found': '操作未找到',
+    'Input Error': '输入有误',
   },
   // 依赖
   dep: {

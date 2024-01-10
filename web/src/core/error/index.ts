@@ -8,5 +8,6 @@ export enum CoreErrorEnum {
   'Resource Not Found' = 201,
   // worker
   'Action Not Found' = 202,
+  'Input Error' = 203,
   'Custom' = 900,
 }

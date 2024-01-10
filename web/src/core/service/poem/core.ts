@@ -40,19 +40,57 @@ function setData<T>(key: string, value: T): boolean {
 }
 
 /**
- * 搜索诗词--标题、作者、内容包含即可，不分页
- * @param keyword
+ * 搜索诗词--分页
+ * @param params
  */
-function searchPoem(keyword: string) {
-  const res = []
+function searchPoem(params: {
+  keyword: string
+  author: string
+  page: number
+  size: number
+}) {
+  const res: {
+    list: PoemItem[]
+    total: number
+  } = {
+    list: [],
+    total: 0,
+  }
+  const filters: ((p: PoemItem) => boolean)[] = []
+  // 作者完全匹配
+  if (params.author) {
+    filters.push((p: PoemItem) => p.author === params.author)
+  }
+  // 关键字模糊匹配
+  if (params.keyword) {
+    filters.push(
+      (p: PoemItem) =>
+        p.title.includes(params.keyword) ||
+        p.author.includes(params.keyword) ||
+        p.content.includes(params.keyword)
+    )
+  }
+  const page = params.page ?? 0
+  const size = params.size ?? 10
+  const start = (page - 1) * size
+  const end = start + size
+  const filterLen = filters.length
+  // 所有诗词查询
   for (let i = 0, len = local.data.poems.length; i < len; i++) {
     const item = local.data.poems[i]
-    if (
-      item.title.includes(keyword) ||
-      item.author.includes(keyword) ||
-      item.content.includes(keyword)
-    ) {
-      res.push(item)
+    let flag = true
+    // 应用查询函数
+    for (let j = 0; j < filterLen; j++) {
+      if (!filters[j](item)) {
+        flag = false
+        break
+      }
+    }
+    if (flag) {
+      res.total++
+      if (res.total > start && res.total <= end) {
+        res.list.push(item)
+      }
     }
   }
   return res

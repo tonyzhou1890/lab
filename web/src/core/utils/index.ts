@@ -121,27 +121,6 @@ export function formatUnicode(index?: number) {
 }
 
 /**
- * 设置自定义字体
- * @param font
- * @param name
- * @desc 暂不考虑字体重复和内存膨胀问题
- */
-export function setCssFont(font: File, name?: string) {
-  name = name ?? 'font-' + Math.random().toString().substring(2)
-  const url = `url(${URL.createObjectURL(font)})`
-  const style = document.createElement('style')
-  style.id = name
-  style.innerHTML = `
-      @font-face {
-        font-family: ${name};
-        src: ${url}
-      }
-      `
-  document.head.appendChild(style)
-  return name
-}
-
-/**
  * @param cfg
  * @returns
  * @desc 获取本地文件
