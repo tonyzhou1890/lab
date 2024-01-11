@@ -22,7 +22,7 @@ export default {
     image: '图片',
     audio: '音频',
     video: '视频',
-    game: '小游戏',
+    game: '游戏',
   },
   // 表单
   form: {

@@ -120,6 +120,7 @@ export class ServiceSchema {
  */
 export interface GroupedService {
   key: string
+  name?: string
   value: ServiceSchema[]
 }
 export function groupService(list: ServiceSchema[]): GroupedService[] {

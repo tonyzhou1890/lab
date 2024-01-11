@@ -77,9 +77,11 @@
           <p
             class="text-h5 text-bold nav-title inline-block q-pa-md q-ma-none tac block-shadow"
           >
-            {{ $t(`global.category.${group.key}`) }}
+            {{ group.name }}
           </p>
           <q-list class="page-list service-list">
+            <!-- html structured data: https://schema.org/WebApplication -->
+            <!-- https://validator.schema.org/ -->
             <q-item
               v-for="item in group.value"
               :key="item.code"
@@ -89,6 +91,8 @@
               :href="item.link"
               :to="item.route"
               class="page-nav-item bg-white service-list-item column q-ma-md relative-position text-dark block-shadow"
+              itemscope
+              itemtype="https://schema.org/WebApplication"
             >
               <q-item-section class="service-item-inner tac ova">
                 <div class="service-icon text-white flex flex-center text-h5">
@@ -106,12 +110,25 @@
                 <q-item-label
                   :title="item.name"
                   class="service-name text-bold ellipsis"
+                  itemprop="name"
                   >{{ item.name }}</q-item-label
                 >
                 <q-item-label
                   :title="item.desc"
                   class="service-desc ellipsis-2-lines"
                   >{{ item.desc }}</q-item-label
+                >
+                <q-item-label
+                  v-if="item.keywords"
+                  hidden
+                  itemprop="keywords"
+                  >{{ item.keywords }}</q-item-label
+                >
+                <span
+                  v-if="group.key !== 'default'"
+                  itemprop="applicationCategory"
+                  hidden
+                  >{{ group.name }}</span
                 >
               </q-item-section>
             </q-item>
@@ -210,6 +227,7 @@ const groupedServiceList = computed(() => {
   const routes = router.getRoutes()
   return list
     .map((group) => {
+      group.name = t(`global.category.${group.key}`)
       const routeList = group.value
         .map((item) => {
           const htmlTag = item.extra
@@ -230,8 +248,9 @@ const groupedServiceList = computed(() => {
             code: item.code,
             icon: item.icon,
             firstChar: t(item.i18nKey + '.title')[0],
-            desc: t(item.i18nKey + '.desc'),
             name: t(item.i18nKey + '.title'),
+            keywords: t(item.i18nKey + '.keywords'),
+            desc: t(item.i18nKey + '.desc'),
             htmlTag,
             target: htmlTag === 'a' ? '_blank' : '_self',
             link: item.link,
@@ -254,6 +273,7 @@ const groupedServiceList = computed(() => {
         })
       return {
         key: group.key,
+        name: group.name,
         value: routeList,
       }
     })
