@@ -95,6 +95,16 @@
               itemtype="https://schema.org/WebApplication"
             >
               <q-item-section class="service-item-inner tac ova">
+                <!-- external link tag -->
+                <div
+                  v-if="item.link"
+                  class="external-link absolute-top-right"
+                >
+                  <q-icon
+                    name="link"
+                    class="rotate-45"
+                  />
+                </div>
                 <div class="service-icon text-white flex flex-center text-h5">
                   <q-icon
                     v-if="item.icon"
@@ -338,6 +348,11 @@ const groupedServiceList = computed(() => {
 
     .service-item-inner {
       z-index: 3;
+    }
+
+    .external-link {
+      line-height: 1;
+      font-size: 1.4rem;
     }
 
     .service-icon {
