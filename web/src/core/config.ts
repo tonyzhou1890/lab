@@ -59,6 +59,11 @@ const config = {
       cache: false,
     },
   },
+  /**
+   * 线上域名
+   * 部分代码需要用到线上域名，但是 ssr 状态下无法获取，所以只能写死
+   */
+  hostname: 'dowhat.net',
 }
 
 export default config

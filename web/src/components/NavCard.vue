@@ -116,6 +116,7 @@
                 <q-item-label
                   :title="item.desc"
                   class="service-desc ellipsis-2-lines"
+                  itemprop="abstract"
                   >{{ item.desc }}</q-item-label
                 >
                 <q-item-label
@@ -129,6 +130,12 @@
                   itemprop="applicationCategory"
                   hidden
                   >{{ group.name }}</span
+                >
+                <span
+                  v-if="item.appUrl"
+                  itemprop="url"
+                  hidden
+                  >{{ item.appUrl }}</span
                 >
               </q-item-section>
             </q-item>
@@ -146,6 +153,7 @@ import { useRoute, useRouter } from 'vue-router'
 import serviceSchema from '@/core/service/schema'
 import { groupService } from '@/core/service/service-schema'
 import { changePathLangIso } from '@/core/utils'
+import config from '@/core/config'
 
 const props = defineProps<{
   // type 为 page 的时候，dialog 不可关闭
@@ -225,6 +233,7 @@ const groupedServiceList = computed(() => {
     Object.values(serviceSchema).filter((item) => !item.ignore)
   )
   const routes = router.getRoutes()
+  console.log(routes)
   return list
     .map((group) => {
       group.name = t(`global.category.${group.key}`)
@@ -261,6 +270,7 @@ const groupedServiceList = computed(() => {
                     path,
                     query: route.query,
                   },
+            appUrl: item.link || `https://${config.hostname}${path}`,
           }
         })
         .filter((service) => {
