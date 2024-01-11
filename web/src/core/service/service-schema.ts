@@ -85,6 +85,11 @@ export class ServiceSchema {
    */
   link?: string
   /**
+   * @name 是否忽略此功能
+   * @description 如果忽略此功能，页面上将不显示此功能入口。
+   */
+  ignore?: boolean
+  /**
    * @name 功能初始化（可选）
    * @description 功能执行之前需要进行的准备活动。可以是异步函数。
    */

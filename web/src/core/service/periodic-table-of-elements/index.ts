@@ -29,10 +29,9 @@ class PeriodicTableOfElementsService extends Service {
     }
     try {
       // 加载 json 数据
-      const data = await IO.loadDepFile<Blob>({
-        key: 'periodicTableOfElements',
-        ...coreConfig.deps.periodicTableOfElements,
-      })
+      const data = await IO.loadDepFile<Blob>(
+        coreConfig.deps.periodicTableOfElements
+      )
       local.data = (await data?.data.text()) ?? ''
 
       local.inited = true

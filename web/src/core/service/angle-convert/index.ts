@@ -1,4 +1,4 @@
-import CoreError, { CoreErrorEnum } from '@/core/error'
+import { CoreErrorEnum } from '@/core/error'
 import Service from '../service-base'
 import angleConvert from 'allbox/dist/other.angle-convert'
 
@@ -21,7 +21,7 @@ class AngleConvertService extends Service {
     try {
       res = angleConvert(source, sourceType, targetType)
     } catch (e) {
-      throw new CoreError(CoreErrorEnum['Execute Error'])
+      throw new Error(CoreErrorEnum[100])
     }
     return res
   }

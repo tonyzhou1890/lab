@@ -1,4 +1,4 @@
-import CoreError, { CoreErrorEnum } from '@/core/error'
+import { CoreErrorEnum } from '@/core/error'
 import Service from '../service-base'
 import bmi from 'allbox/dist/other.bmi'
 
@@ -49,7 +49,7 @@ class BMIService extends Service {
     try {
       res = bmi(height, weight)
     } catch (e) {
-      throw new CoreError(CoreErrorEnum['Execute Error'])
+      throw new Error(CoreErrorEnum[100])
     }
     return res
   }

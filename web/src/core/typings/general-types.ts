@@ -3,7 +3,7 @@
  */
 export interface DepLoadCallbackParams {
   storeName?: string
-  key: string
+  key?: string
   percent: number
   /**
    * 0--未开始

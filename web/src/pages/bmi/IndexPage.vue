@@ -5,11 +5,12 @@
       <q-form
         ref="formRef"
         @submit="onSubmit"
-        class="form"
+        v-bind="config.form"
       >
         <!-- 体重 -->
         <q-input
           type="number"
+          v-bind="config.field"
           v-model.number="formData.weight"
           :label="$t('bmi.weight') + 'kg *'"
           :rules="[
@@ -20,6 +21,7 @@
         <!-- 身高 -->
         <q-input
           type="number"
+          v-bind="config.field"
           v-model.number="formData.height"
           :label="$t('bmi.height') + 'cm *'"
           :rules="[
@@ -36,8 +38,9 @@
         </div>
       </q-form>
       <section class="result-section">
-        <h2 class="section-title">{{ $t('global.form.result') }}</h2>
-        <div class="result text-body1 text-center ova break-all">
+        <section-title>{{ $t('global.form.result') }}</section-title>
+
+        <div class="result text-h6 text-center ova break-all">
           {{ result }}
         </div>
         <div
@@ -81,8 +84,13 @@ import BMIService from '@/core/service/bmi'
 import ServiceBaseInfo from '@/components/ServiceBaseInfo.vue'
 import { errorNotify } from '@/core/error/utils'
 import { isEmpty } from '@/core/utils/validate'
+import { storeToRefs } from 'pinia'
+import { useAppStore } from '@/stores/app'
 
 const { t } = useI18n()
+
+const appStore = useAppStore()
+const { config } = storeToRefs(appStore)
 
 const service = new BMIService()
 

@@ -30,7 +30,7 @@ class AreaCodeService extends Service {
     try {
       // 加载 json 数据
       const data = await IO.loadDepFile<Blob>({
-        key: 'area-code',
+        key: 'areaCode',
         ...coreConfig.deps.areaCode,
       })
       local.data = (await data?.data?.text()) ?? ''

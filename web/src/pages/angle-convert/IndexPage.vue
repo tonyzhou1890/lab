@@ -5,7 +5,7 @@
       <q-form
         ref="formRef"
         @submit="onSubmit"
-        class="form"
+        v-bind="config.form"
       >
         <!-- 源类型 -->
         <q-select
@@ -15,11 +15,13 @@
           option-label="label"
           emit-value
           map-options
+          v-bind="config.field"
           :label="$t('angleConvert.sourceType')"
         />
         <!-- 源数据 -->
         <q-input
           type="number"
+          v-bind="config.field"
           v-model.number="formData.stringInput"
           :label="$t('angleConvert.sourceInput') + '*'"
           :rules="[(val) => !isEmpty(val) || $t('global.form.required')]"
@@ -33,11 +35,14 @@
         </div>
       </q-form>
       <section class="result-section">
-        <h2 class="section-title">{{ $t('global.form.result') }}</h2>
-        <div class="result text-body1 text-center ova break-all">
+        <section-title>{{ $t('global.form.result') }}</section-title>
+        <div class="result text-h6 text-center ova break-all">
           {{ result }}
           <template v-if="formData.resultType === 'D' && !isEmpty(result)"
             >°</template
+          >
+          <template v-if="formData.resultType === 'R' && !isEmpty(result)"
+            >rad</template
           >
         </div>
       </section>
@@ -53,8 +58,13 @@ import AngleConvertService, { AngleType } from '@/core/service/angle-convert'
 import ServiceBaseInfo from '@/components/ServiceBaseInfo.vue'
 import { errorNotify } from '@/core/error/utils'
 import { isEmpty } from '@/core/utils/validate'
+import { storeToRefs } from 'pinia'
+import { useAppStore } from '@/stores/app'
 
 const { t } = useI18n()
+
+const appStore = useAppStore()
+const { config } = storeToRefs(appStore)
 
 const service = new AngleConvertService()
 

@@ -204,7 +204,9 @@ const pageList = computed<
 
 // 应用列表
 const groupedServiceList = computed(() => {
-  const list = groupService(Object.values(serviceSchema))
+  const list = groupService(
+    Object.values(serviceSchema).filter((item) => !item.ignore)
+  )
   const routes = router.getRoutes()
   return list
     .map((group) => {

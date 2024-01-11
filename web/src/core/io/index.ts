@@ -28,7 +28,7 @@ const forageInstances: {
 
 // 读取参数
 export interface IOReadConfig<T> {
-  key: string
+  key?: string
   storeName?: string
   version?: string
   cache?: boolean
@@ -79,7 +79,7 @@ export interface StoreMetadata {
 
 // 加载依赖参数
 export interface DepLoadConfig {
-  key: string
+  key?: string
   storeName?: string
   url: string
   version?: string
@@ -134,7 +134,7 @@ const IO = {
     const store = getStore(storeName)
     const metaStore = getStore(metaname)
     // 如果没有指定不使用缓存，先从缓存读取
-    if (config.cache !== false) {
+    if (config.key && config.cache !== false) {
       // 元数据
       const metadata = (
         await metaStore.getItem<StoreMetadata[]>(storeMetadataName)
@@ -173,7 +173,7 @@ const IO = {
         return Promise.reject(e)
       }
       // 缓存
-      if (res && config.cache !== false) {
+      if (res && config.key && config.cache !== false) {
         await this.write({
           key: config.key,
           storeName: config.storeName,

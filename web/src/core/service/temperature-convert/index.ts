@@ -1,4 +1,4 @@
-import CoreError, { CoreErrorEnum } from '@/core/error'
+import { CoreErrorEnum } from '@/core/error'
 import Service from '../service-base'
 import temperatureConvert from 'allbox/dist/other.temperature-convert'
 
@@ -17,7 +17,7 @@ class TemperatureConvertService extends Service {
     try {
       res = temperatureConvert(source, sourceType, targetType)
     } catch (e) {
-      throw new CoreError(CoreErrorEnum['Execute Error'])
+      throw new Error(CoreErrorEnum[100])
     }
     return res
   }
