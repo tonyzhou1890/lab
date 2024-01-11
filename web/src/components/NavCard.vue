@@ -243,7 +243,7 @@ const groupedServiceList = computed(() => {
     Object.values(serviceSchema).filter((item) => !item.ignore)
   )
   const routes = router.getRoutes()
-  console.log(routes)
+
   return list
     .map((group) => {
       group.name = t(`global.category.${group.key}`)
