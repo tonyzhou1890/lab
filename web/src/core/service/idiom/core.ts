@@ -74,7 +74,12 @@ function searchIdiom(keyword: string) {
         .filter((v) => v)
         .pop() ?? ''
     local.data.records.forEach((val) => {
-      if (val.phonetic?.startsWith?.(endPhonetic)) {
+      const startPhonetic = (val.phonetic ?? '')
+        .split(/\s/)
+        .filter((v) => v)
+        .shift()
+
+      if (startPhonetic === endPhonetic) {
         res.phoneticChain?.push(val.word)
       }
     })

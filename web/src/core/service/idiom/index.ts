@@ -6,7 +6,7 @@ import type { Core, IdiomDB } from './core'
 import type { ServiceInitConfig } from '@/core/typings/general-types'
 import JSZip from 'jszip'
 import coreConfig from '@/core/config'
-import CoreError, { CoreErrorEnum } from '@/core/error'
+import { CoreErrorEnum } from '@/core/error'
 
 // 所有实例共享的数据
 const local: {
@@ -53,11 +53,11 @@ class IdiomService extends Service {
         local.data = config.data
       } else {
         // 加载数据
-        const blobData = await IO.loadDepFile<Blob>({
+        const data = await IO.loadDepFile<Blob>({
           ...coreConfig.deps.idiom,
           loadCallback: config?.loadCallback,
         })
-        local.data = blobData
+        local.data = data!.data
       }
 
       // 解压数据
@@ -71,18 +71,14 @@ class IdiomService extends Service {
         if (!data.files[key].dir && data.files[key].name === 'idiom.json') {
           const jsonStr = await data.file(data.files[key].name)?.async('string')
           if (!jsonStr) {
-            return Promise.reject(
-              new CoreError(CoreErrorEnum['Resource Not Found'])
-            )
+            return Promise.reject(new Error(CoreErrorEnum[201]))
           } else {
             chengYuData = JSON.parse(jsonStr)
           }
         }
       }
       if (!chengYuData) {
-        return Promise.reject(
-          new CoreError(CoreErrorEnum['Resource Not Found'])
-        )
+        return Promise.reject(new Error(CoreErrorEnum[201]))
       }
 
       // 创建多线程
@@ -114,10 +110,12 @@ class IdiomService extends Service {
    * @returns
    */
   async initLocalDep(): Promise<boolean> {
-    const blobData = await IO.read<Blob>(coreConfig.deps.idiom)
-    if (blobData) {
+    const data = await IO.read<Blob>({
+      ...coreConfig.deps.idiom,
+    })
+    if (data) {
       await this.init({
-        data: blobData,
+        data: data.data,
       })
       return true
     } else {

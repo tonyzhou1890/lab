@@ -4,9 +4,9 @@
     <div class="content">
       <div class="search q-pb-md">
         <q-input
-          filled
           v-model="filter"
-          @keyup.enter="() => handleSearch()"
+          v-bind="config.field"
+          @keyup.enter="() => handleJump()"
           :label="$t('idiom.searchPlaceholder')"
         />
       </div>
@@ -89,7 +89,7 @@
             <q-item-section class="break-all">
               <IdiomList
                 :list="result.synonyms"
-                @search="handleSearch"
+                @search="handleJump"
               />
             </q-item-section>
           </q-item>
@@ -102,7 +102,7 @@
             <q-item-section class="break-all">
               <IdiomList
                 :list="result.antonyms"
-                @search="handleSearch"
+                @search="handleJump"
               />
             </q-item-section>
           </q-item>
@@ -195,7 +195,7 @@
             <q-item-section class="break-all">
               <IdiomList
                 :list="result.chain || []"
-                @search="handleSearch"
+                @search="handleJump"
               />
             </q-item-section>
           </q-item>
@@ -208,7 +208,7 @@
             <q-item-section class="break-all">
               <IdiomList
                 :list="result.phoneticChain || []"
-                @search="handleSearch"
+                @search="handleJump"
               />
             </q-item-section>
           </q-item>
@@ -219,7 +219,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import IdiomService from '@/core/service/idiom'
 import type { IdiomItem } from '@/core/service/idiom/core'
 import ServiceSchame from '@/core/service/idiom/schema'
@@ -227,8 +227,19 @@ import { useI18n } from 'vue-i18n'
 import { errorNotify } from '@/core/error/utils'
 import { loading } from '@/core/io/utils'
 import IdiomList from './components/IdiomList.vue'
+import { useRoute, useRouter, RouteRecordName } from 'vue-router'
+import { CoreErrorEnum } from '@/core/error'
+import { storeToRefs } from 'pinia'
+import { useAppStore } from '@/stores/app'
 
 const { t } = useI18n()
+
+const appStore = useAppStore()
+const { config } = storeToRefs(appStore)
+
+const route = useRoute()
+const router = useRouter()
+
 // 是否初始化完毕
 const initialized = ref<boolean>(false)
 
@@ -236,7 +247,7 @@ const service = new IdiomService()
 
 const result = ref<IdiomItem | null>(null)
 
-const filter = ref<string>('')
+const filter = ref<string>((route.query.keyword as string) ?? '')
 
 // 本地依赖初始化
 async function localInit() {
@@ -244,6 +255,7 @@ async function localInit() {
     loading.show()
     initialized.value = await service.initLocalDep()
     loading.hide()
+    handleSearch()
   } catch (e) {
     errorNotify(e, { t })
     loading.hide()
@@ -260,9 +272,31 @@ async function init() {
     initialized.value = true
 
     loading.hide()
+    handleSearch()
   } catch (e) {
     errorNotify(e, { t })
     loading.hide()
+  }
+}
+
+watch(route, (newValue) => {
+  filter.value = newValue.query.keyword as string
+  if (initialized.value) {
+    handleSearch()
+  }
+})
+
+function handleJump(keyword?: string) {
+  if (!keyword) {
+    keyword = filter.value
+  }
+  if (route.query.keyword !== keyword) {
+    router.push({
+      name: route.name as RouteRecordName,
+      query: {
+        keyword,
+      },
+    })
   }
 }
 
@@ -278,6 +312,10 @@ async function handleSearch(val?: string) {
     loading.show()
     result.value = (await service.worker.searchIdiom(filter.value)) ?? null
     loading.hide()
+
+    if (!result.value) {
+      errorNotify(new Error(CoreErrorEnum[200]), { t })
+    }
   } catch (e) {
     errorNotify(e as Error, { t })
     loading.hide()

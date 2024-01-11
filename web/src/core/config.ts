@@ -41,8 +41,9 @@ const config = {
       storeName: depsStores.resources,
     },
     idiom: {
+      key: 'idiom',
       url: `${ossPrefix}/dict/idiom.json.zip`,
-      version: '1.0.0',
+      version: '2.0.0',
       storeName: depsStores.resources,
     },
     periodicTableOfElements: {

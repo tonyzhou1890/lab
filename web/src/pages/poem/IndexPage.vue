@@ -314,7 +314,7 @@ async function handleDownload() {
       size: 1 << 24,
     })
     const fileName = checked?.pairs?.author ?? checked?.pairs?.default ?? '诗词'
-    console.log(res.list)
+
     const md = service.generateMd(res.list, fileName.toString())
     $q.dialog({
       title: t('global.download.title'),
