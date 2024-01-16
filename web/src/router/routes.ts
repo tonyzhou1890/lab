@@ -5,29 +5,29 @@ import config from '@/core/config'
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
+    component: () => import('@/layouts/MainLayout.vue'),
     children: [
       {
         path: '',
         name: 'Home',
-        component: () => import('pages/home/IndexPage.vue'),
+        component: () => import('@/pages/home/IndexPage.vue'),
       },
     ],
   },
 
   {
     path: `/:lang(${config.langIsoList.join('|')})/`,
-    component: () => import('layouts/MainLayout.vue'),
+    component: () => import('@/layouts/MainLayout.vue'),
     children: [
       {
         path: '',
         name: 'LangHome',
-        component: () => import('pages/home/IndexPage.vue'),
+        component: () => import('@/pages/home/IndexPage.vue'),
       },
       {
         path: 'nav',
         name: 'Nav',
-        component: () => import('pages/nav/IndexPage.vue'),
+        component: () => import('@/pages/nav/IndexPage.vue'),
         meta: {
           title: 'nav.title',
           keywords: 'nav.keywords',
@@ -37,92 +37,102 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'service/font',
         name: 'Font',
-        component: () => import('pages/font/IndexPage.vue'),
+        component: () => import('@/pages/font/IndexPage.vue'),
       },
       {
         path: 'service/word-count',
         name: 'WordCount',
-        component: () => import('pages/word-count/IndexPage.vue'),
+        component: () => import('@/pages/word-count/IndexPage.vue'),
       },
       {
         path: 'service/digest',
         name: 'Digest',
-        component: () => import('pages/digest/IndexPage.vue'),
+        component: () => import('@/pages/digest/IndexPage.vue'),
       },
       {
         path: 'service/counter',
         name: 'Counter',
-        component: () => import('pages/counter/IndexPage.vue'),
+        component: () => import('@/pages/counter/IndexPage.vue'),
       },
       {
         path: 'service/qrcode',
         name: 'QRCode',
-        component: () => import('pages/qrcode/IndexPage.vue'),
+        component: () => import('@/pages/qrcode/IndexPage.vue'),
       },
       {
         path: 'service/favicon',
         name: 'Favicon',
-        component: () => import('pages/favicon/IndexPage.vue'),
+        component: () => import('@/pages/favicon/IndexPage.vue'),
       },
       {
         path: 'service/area-code',
         name: 'AreaCode',
-        component: () => import('pages/area-code/IndexPage.vue'),
+        component: () => import('@/pages/area-code/IndexPage.vue'),
       },
       {
         path: 'service/poem',
         name: 'Poem',
-        component: () => import('pages/poem/IndexPage.vue'),
+        component: () => import('@/pages/poem/IndexPage.vue'),
       },
       {
         path: 'service/m-icons',
         name: 'MIcons',
-        component: () => import('pages/m-icons/IndexPage.vue'),
+        component: () => import('@/pages/m-icons/IndexPage.vue'),
       },
       {
         path: 'service/idiom',
         name: 'Idiom',
-        component: () => import('pages/idiom/IndexPage.vue'),
+        component: () => import('@/pages/idiom/IndexPage.vue'),
       },
       {
         path: 'service/utf8',
         name: 'Utf8',
-        component: () => import('pages/utf8/IndexPage.vue'),
+        component: () => import('@/pages/utf8/IndexPage.vue'),
       },
       {
         path: 'service/time',
         name: 'Time',
-        component: () => import('pages/time/IndexPage.vue'),
+        component: () => import('@/pages/time/IndexPage.vue'),
       },
       {
         path: 'service/base-convert',
         name: 'BaseConvert',
-        component: () => import('pages/base-convert/IndexPage.vue'),
+        component: () => import('@/pages/base-convert/IndexPage.vue'),
       },
       {
         path: 'service/temperature-convert',
         name: 'TemperatureConvert',
-        component: () => import('pages/temperature-convert/IndexPage.vue'),
+        component: () => import('@/pages/temperature-convert/IndexPage.vue'),
       },
       {
         path: 'service/angle-convert',
         name: 'AngleConvert',
-        component: () => import('pages/angle-convert/IndexPage.vue'),
+        component: () => import('@/pages/angle-convert/IndexPage.vue'),
       },
       {
         path: 'service/bmi',
         name: 'BMI',
-        component: () => import('pages/bmi/IndexPage.vue'),
+        component: () => import('@/pages/bmi/IndexPage.vue'),
       },
       {
         path: 'service/periodic-table-of-elements',
         name: 'PeriodicTableOfElements',
         component: () =>
-          import('pages/periodic-table-of-elements/IndexPage.vue'),
+          import('@/pages/periodic-table-of-elements/IndexPage.vue'),
+      },
+      {
+        path: 'service/nes',
+        name: 'Nes',
+        component: () => import('@/pages/nes/IndexPage.vue'),
+      },
+      {
+        path: 'service/nes/run',
+        name: 'NesRun',
+        component: () => import('@/pages/nes/RunGame.vue'),
       },
       {
         path: ':catchAll(.*)*',
-        component: () => import('pages/404/IndexPage.vue'),
+        component: () => import('@/pages/404/IndexPage.vue'),
       },
     ].map((item) => {
       if (item.name) {
@@ -149,7 +159,7 @@ const routes: RouteRecordRaw[] = [
   // but you can also remove it
   {
     path: '/:catchAll(.*)*',
-    component: () => import('pages/404/IndexPage.vue'),
+    component: () => import('@/pages/404/IndexPage.vue'),
   },
 ]
 

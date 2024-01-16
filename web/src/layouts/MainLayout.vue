@@ -76,7 +76,9 @@ const title = computed(() => {
   const meta = route.meta
   let title = t('global.title')
   if (meta && meta.title) {
-    title = `${t('global.title')}-${t(meta.title as string)}`
+    title = `${title}-${t(meta.title as string)}`
+  } else if (route.query['v-header-subtitle']) {
+    title = `${title}-${route.query['v-header-subtitle']}`
   }
 
   return title

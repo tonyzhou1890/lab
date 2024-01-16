@@ -31,3 +31,14 @@ export interface ExportFileOpts {
   byteOrderMark?: string | Uint8Array
   encoding?: string
 }
+
+/**
+ * 远程列表单个资源配置
+ */
+export interface SourceItemCfg {
+  name: string
+  path: string
+  version: string
+  compressedSize: number
+  ignore?: boolean
+}

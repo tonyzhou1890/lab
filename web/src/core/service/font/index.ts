@@ -5,14 +5,10 @@ import IO, { DepLoadConfig } from '@/core/io'
 import config from '@/core/config'
 import { CoreErrorEnum } from '@/core/error'
 import JSZip from 'jszip'
+import { SourceItemCfg } from '@/core/typings/general-types'
 
-export interface FontConfig {
-  name: string
-  path: string
+export interface FontConfig extends SourceItemCfg {
   fontPath: string
-  version: string
-  compressedSize: number
-  ignore?: boolean
 }
 
 class FontService extends Service {

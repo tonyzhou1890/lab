@@ -1,5 +1,9 @@
 // oss 资源路径前缀
 const ossPrefix = 'https://general-resources.oss-cn-shanghai.aliyuncs.com'
+
+// 自建仓库资源前缀
+const storePrefix = 'https://kod.dowhat.top/data/Group/public/home/share'
+
 // 依赖库分组
 const depsStores = {
   libs: 'libs',
@@ -55,6 +59,12 @@ const config = {
     // 字体--这里的地址是字体列表，不缓存
     fonts: {
       url: `${ossPrefix}/fonts/index.json`,
+      version: '0.0.1',
+      cache: false,
+    },
+    // nes-游戏
+    nes: {
+      url: `${storePrefix}/nes/index.json`,
       version: '0.0.1',
       cache: false,
     },

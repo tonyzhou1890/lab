@@ -90,7 +90,7 @@
               :target="item.target"
               :href="item.link"
               :to="item.route"
-              class="page-nav-item bg-white service-list-item column q-ma-md relative-position text-dark block-shadow"
+              class="page-nav-item bg-white service-list-item column q-ma-md relative-position text-dark block-shadow block-hover"
               itemscope
               itemtype="https://schema.org/WebApplication"
             >
@@ -280,6 +280,7 @@ const groupedServiceList = computed(() => {
                     path,
                     query: route.query,
                   },
+            // 这里不用 router.resolve，因为服务端渲染和客户端渲染会不一致
             appUrl: item.link || `https://${config.hostname}${path}`,
           }
         })
@@ -333,13 +334,6 @@ const groupedServiceList = computed(() => {
     background-color: white;
     // border: 1px solid $dark;
     border-radius: 4px;
-    &:hover {
-      background-color: $info !important;
-      .service-desc {
-        color: white !important;
-      }
-      color: white !important;
-    }
   }
 
   .service-list-item {

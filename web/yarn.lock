@@ -3033,6 +3033,11 @@ jsdom@^19.0.0:
     ws "^8.2.3"
     xml-name-validator "^4.0.0"
 
+jsnes@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.npmmirror.com/jsnes/-/jsnes-1.2.1.tgz#ca3718b7b28c00741142a73b88e39e177d14b1ce"
+  integrity sha512-Gn+lnv5B5c/TVwFSc8vzo7amiSogRyfMI9UL7VjYgKDrlTLf7GKuK2WD+t0gEcLbzh/NfMpkIlopzN/3cq760A==
+
 json-schema-traverse@^0.4.1:
   version "0.4.1"
   resolved "https://registry.npmmirror.com/json-schema-traverse/-/json-schema-traverse-0.4.1.tgz#69f6a87d9513ab8bb8fe63bdb0979c448e684660"

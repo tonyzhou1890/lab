@@ -19,6 +19,7 @@ import periodicTableOfElements from './module/periodic-table-of-elements'
 import temperatureConvert from './module/temperature-convert'
 import angleConvert from './module/angle-convert'
 import bmi from './module/bmi'
+import nes from './module/nes'
 
 export default {
   global,
@@ -76,4 +77,5 @@ export default {
   temperatureConvert,
   angleConvert,
   bmi,
+  nes,
 }

@@ -120,6 +120,18 @@ body {
   }
 }
 
+.block-hover {
+  &:hover {
+    background-color: $info !important;
+    p,
+    span,
+    div {
+      color: white !important;
+    }
+    color: white !important;
+  }
+}
+
 // q-markdown
 .q-markdown {
   ul {

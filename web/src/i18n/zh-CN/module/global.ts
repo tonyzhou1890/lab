@@ -54,4 +54,8 @@ export default {
     noData: '暂无依赖或依赖已过期',
     loadDep: '加载依赖',
   },
+  // 内容
+  content: {
+    noData: '暂无内容',
+  },
 }
