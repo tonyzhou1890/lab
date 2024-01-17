@@ -234,7 +234,8 @@ const onTableRequest: QTableProps['onRequest'] = (prop) => {
 }
 
 watch(route, (newValue) => {
-  filter.value = newValue.query.keyword as string
+  filter.value = (newValue.query.keyword as string) ?? ''
+  console.log(filter.value)
   pagination.value.page = 1
   if (initialized.value) {
     handleSearch()
@@ -261,7 +262,7 @@ async function handleSearch(val?: string) {
   if (val) {
     filter.value = val
   }
-  if (!initialized.value || !filter.value) return
+  if (!initialized.value) return
   // 检查搜索条件
   const checked = searchPatternCheck(
     service.searchCfg,
