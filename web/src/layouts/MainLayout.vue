@@ -38,7 +38,10 @@
     </q-page-container>
   </q-layout>
   <vue-meta />
-  <back-top />
+  <back-top
+    :right="10"
+    :bottom="100"
+  />
 </template>
 
 <script setup lang="ts">
