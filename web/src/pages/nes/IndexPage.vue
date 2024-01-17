@@ -187,7 +187,7 @@ function handleToRun(item: SourceItemCfg) {
     padding: 10px;
     .item-size {
       display: inline-block;
-      background-color: rgba($color: #000000, $alpha: 0.3);
+      background-color: rgba($color: #000000, $alpha: 0.5);
       z-index: 1;
     }
     .q-table__grid-item-card {
