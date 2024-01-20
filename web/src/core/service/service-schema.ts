@@ -90,6 +90,11 @@ export class ServiceSchema {
    */
   ignore?: boolean
   /**
+   * @name 服务阶段
+   * @description 表示 Beta 还是 Alpha 阶段，没有表示正常可用
+   */
+  stage?: 'Beta' | 'Alpha'
+  /**
    * @name 功能初始化（可选）
    * @description 功能执行之前需要进行的准备活动。可以是异步函数。
    */

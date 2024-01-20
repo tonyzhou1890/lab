@@ -12,6 +12,12 @@ export default {
   stop: '停止',
   resume: '恢复',
   close: '关闭',
+  // 语言
+  lang: {
+    'zh-CN': '中文',
+    'en-US': '英文',
+    ja: '日文',
+  },
   // 应用类别
   category: {
     default: '未分类',

@@ -5,6 +5,7 @@ const schema = new Schema({
   icon: 'videogame_asset',
   i18nKey: 'nes',
   categories: ['game'],
+  stage: 'Beta',
 })
 
 export default schema

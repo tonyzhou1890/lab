@@ -2,13 +2,28 @@
   <div class="page-main app no-margin">
     <ServiceBaseInfo service-name="nes" />
     <div class="content">
-      <div class="search-input">
+      <div class="search-input flex column">
         <q-input
           v-model.trim="filter"
           v-bind="config.field"
           @keyup.enter="() => handleSearch()"
           :label="$t('nes.searchPlaceholder')"
         />
+        <div
+          v-if="langList?.length > 1"
+          class="row flex justify-center q-mt-md q-gutter-x-md"
+        >
+          <q-btn
+            v-for="item in langList"
+            :key="item"
+            rounded
+            color="primary"
+            dense
+            class="q-px-md"
+            @click="handleLangSearch(item)"
+            >{{ $t(`global.lang.${item}`) }}</q-btn
+          >
+        </div>
       </div>
 
       <q-table
@@ -36,6 +51,13 @@
               <div
                 class="q-table__grid-item-card-inner fit ovh relative-position"
               >
+                <!-- lang -->
+                <span
+                  class="item-lang absolute-top-left q-pa-xs text-caption text-white"
+                  v-if="props.row.lang"
+                  >{{ $t(`global.lang.${props.row.lang}`) }}</span
+                >
+                <!-- 大小 -->
                 <span
                   class="item-size absolute-top-right q-pa-xs text-caption text-white"
                   v-if="props.row.compressedSize"
@@ -49,7 +71,20 @@
                       v-if="props.row.cover"
                       :src="props.row.cover"
                       class="cover-img fit"
-                    ></q-img>
+                    >
+                      <template v-slot:error>
+                        <div
+                          class="fit flex justify-center items-center bg-white"
+                        >
+                          <q-icon
+                            color="grey-4"
+                            class="text-h1 cp img-inner-icon"
+                            name="videogame_asset"
+                          >
+                          </q-icon>
+                        </div>
+                      </template>
+                    </q-img>
                     <q-icon
                       v-else
                       color="grey-4"
@@ -92,6 +127,8 @@ import { errorNotify } from '@/core/error/utils'
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useAppStore } from '@/stores/app'
+import { CoreErrorEnum } from '@/core/error'
+import searchPatternCheck from 'allbox/dist/other.search-pattern-check'
 import { type QTableProps, format } from 'quasar'
 
 const { t } = useI18n()
@@ -104,6 +141,8 @@ const router = useRouter()
 const filter = ref<string>('')
 
 const nesList = ref<SourceItemCfg[]>([])
+
+const langList = ref<string[]>([])
 
 const pagination = ref({
   page: 1,
@@ -135,6 +174,7 @@ const columns = computed<QTableProps['columns']>(() => [
 onMounted(async () => {
   try {
     await service.init()
+    langList.value = service.nesIndex.langList
     handleSearch()
   } catch (e) {
     errorNotify(e, { t })
@@ -143,13 +183,29 @@ onMounted(async () => {
 
 // 搜索
 function handleSearch() {
+  // 检查搜索条件
+  const checked = searchPatternCheck(
+    service.searchCfg,
+    filter.value ?? '',
+    true
+  )
+
+  if (!checked.valid) {
+    return errorNotify(new Error(CoreErrorEnum[203]), { t })
+  }
   const res = service.search({
-    keyword: filter.value,
+    keyword: (checked?.pairs?.default as string) ?? '',
+    lang: (checked?.pairs?.lang as string) ?? '',
     page: pagination.value.page,
     size: pagination.value.rowsPerPage,
   })
   nesList.value = res.list
   pagination.value.rowsNumber = res.total
+}
+
+function handleLangSearch(lang: string) {
+  filter.value = `/lang:${lang}`
+  handleSearch()
 }
 
 // 表格切换页码之类的
@@ -185,6 +241,7 @@ function handleToRun(item: SourceItemCfg) {
   .q-table__grid-item {
     width: 276px;
     padding: 10px;
+    .item-lang,
     .item-size {
       display: inline-block;
       background-color: rgba($color: #000000, $alpha: 0.5);
@@ -197,6 +254,10 @@ function handleToRun(item: SourceItemCfg) {
       width: 100%;
       height: 224px;
       vertical-align: middle;
+      // .img-inner-icon {
+      //   margin-top: 50%;
+      //   transform: translateY(-50%);
+      // }
       .cover-img {
         vertical-align: middle;
       }

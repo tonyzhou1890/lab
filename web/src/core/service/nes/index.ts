@@ -8,6 +8,7 @@ export interface NesItemCfg extends SourceItemCfg {
   _id: symbol
   // 封面图
   cover: string
+  lang: string
 }
 
 class NesService extends Service {
@@ -15,11 +16,20 @@ class NesService extends Service {
     super()
   }
 
+  searchCfg = {
+    patterns: [
+      { field: '' },
+      { field: 'lang', values: ['zh-CN', 'en-US', 'ja'] },
+    ],
+  }
+
   nesIndex: {
     storeName: string
+    langList: string[]
     list: NesItemCfg[]
   } = {
     storeName: 'nes',
+    langList: [],
     list: [],
   }
 
@@ -32,6 +42,7 @@ class NesService extends Service {
       ...config.deps.nes,
     })
     Object.assign(this.nesIndex, JSON.parse((await data?.data.text()) ?? '{}'))
+    const langMap: { [x: string]: boolean } = {}
     this.nesIndex.list = this.nesIndex.list
       .filter((item) => !item.ignore)
       .map((item) => {
@@ -40,8 +51,12 @@ class NesService extends Service {
           item.cover = new URL(item.cover, config.deps.nes.url).toString()
         }
         item._id = Symbol()
+        // lang
+        item.lang = item.lang || 'ja'
+        langMap[item.lang] = true
         return item
       })
+    this.nesIndex.langList = Object.keys(langMap)
   }
 
   /**
@@ -49,16 +64,22 @@ class NesService extends Service {
    * @param cfg
    * @returns
    */
-  search(cfg: { keyword: string; page: number; size: number }) {
-    const keyword = cfg.keyword.trim()
+  search(cfg: { keyword: string; lang: string; page: number; size: number }) {
+    const keyword = cfg.keyword?.trim() ?? ''
+    const lang = cfg.lang?.trim() ?? ''
     const page = cfg.page ?? 1
     const size = cfg.size ?? 10
     const start = (page - 1) * size
     const end = start + size
     const list: NesItemCfg[] = []
     let total = 0
+
+    const filters = [
+      (item: NesItemCfg) => !keyword || item.name.includes(keyword),
+      (item: NesItemCfg) => !lang || item.lang === lang,
+    ]
     this.nesIndex.list.forEach((item) => {
-      if (!keyword || item.name.includes(keyword)) {
+      if (filters.every((f) => f(item))) {
         total++
         if (total > start && total <= end) {
           list.push(item)

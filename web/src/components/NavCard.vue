@@ -95,6 +95,12 @@
               itemtype="https://schema.org/WebApplication"
             >
               <q-item-section class="service-item-inner tac ova">
+                <!-- stage tag -->
+                <span
+                  v-if="item.stage"
+                  class="stage-tag absolute-top-left q-px-xs"
+                  >{{ item.stage }}</span
+                >
                 <!-- external link tag -->
                 <div
                   v-if="item.link"
@@ -273,6 +279,7 @@ const groupedServiceList = computed(() => {
             htmlTag,
             target: htmlTag === 'a' ? '_blank' : '_self',
             link: item.link,
+            stage: item.stage,
             route:
               htmlTag === 'a'
                 ? ''
