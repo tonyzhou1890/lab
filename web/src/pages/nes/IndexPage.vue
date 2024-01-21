@@ -6,26 +6,26 @@
         <q-input
           v-model.trim="filter"
           v-bind="config.field"
-          @keyup.enter="() => handleSearch()"
+          @keyup.enter="handleJump()"
           :label="$t('nes.searchPlaceholder')"
         />
-        <div
-          v-if="langList?.length > 1"
-          class="row flex justify-center q-mt-md q-gutter-x-md"
-        >
-          <q-btn
-            v-for="item in langList"
-            :key="item"
-            rounded
-            color="primary"
-            dense
-            class="q-px-md"
-            @click="handleLangSearch(item)"
-            >{{ $t(`global.lang.${item}`) }}</q-btn
-          >
-        </div>
       </div>
 
+      <div
+        v-if="tags?.length > 1"
+        class="row flex justify-center q-mt-md q-gutter-md"
+      >
+        <q-btn
+          v-for="item in tags"
+          :key="item"
+          rounded
+          color="primary"
+          dense
+          class="q-px-md"
+          @click="handleJump(`/tag:${item}`)"
+          >{{ item }}</q-btn
+        >
+      </div>
       <q-table
         v-if="nesList?.length"
         virtual-scroll
@@ -51,12 +51,45 @@
               <div
                 class="q-table__grid-item-card-inner fit ovh relative-position"
               >
-                <!-- lang -->
-                <span
-                  class="item-lang absolute-top-left q-pa-xs text-caption text-white"
-                  v-if="props.row.lang"
-                  >{{ $t(`global.lang.${props.row.lang}`) }}</span
+                <!-- tags -->
+                <div
+                  class="item-tags absolute-top-left text-caption text-white"
                 >
+                  <!-- 语言 -->
+                  <span
+                    v-for="lang in props.row.lang || []"
+                    :key="lang"
+                    class="item-tag q-pa-xs"
+                    >{{ $t(`global.lang.${lang}`) }}</span
+                  >
+                  <!-- 厂商 -->
+                  <span
+                    v-for="factor in props.row.factor || []"
+                    :key="factor"
+                    class="item-tag q-pa-xs"
+                    >{{ factor }}</span
+                  >
+                  <!-- 版本 -->
+                  <span
+                    v-for="edition in props.row.edition || []"
+                    :key="edition"
+                    class="item-tag q-pa-xs"
+                    >{{ edition }}</span
+                  >
+                  <!-- 类型 -->
+                  <span
+                    v-for="type in props.row.type || []"
+                    :key="type"
+                    class="item-tag q-pa-xs"
+                    >{{ type }}</span
+                  >
+                  <!-- 无敌 -->
+                  <span
+                    v-if="props.row.invincible"
+                    class="item-tag q-pa-xs"
+                    >{{ $t(`nes.invincible`) }}</span
+                  >
+                </div>
                 <!-- 大小 -->
                 <span
                   class="item-size absolute-top-right q-pa-xs text-caption text-white"
@@ -119,12 +152,12 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, computed } from 'vue'
+import { onMounted, ref, computed, watch } from 'vue'
 import NesService from '@/core/service/nes'
 import { SourceItemCfg } from '@/core/typings/general-types'
 import { useI18n } from 'vue-i18n'
 import { errorNotify } from '@/core/error/utils'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter, type RouteRecordName } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useAppStore } from '@/stores/app'
 import { CoreErrorEnum } from '@/core/error'
@@ -136,13 +169,14 @@ const { t } = useI18n()
 const appStore = useAppStore()
 const { config } = storeToRefs(appStore)
 
+const route = useRoute()
 const router = useRouter()
 
 const filter = ref<string>('')
 
 const nesList = ref<SourceItemCfg[]>([])
 
-const langList = ref<string[]>([])
+const tags = ref<string[]>([])
 
 const pagination = ref({
   page: 1,
@@ -174,12 +208,41 @@ const columns = computed<QTableProps['columns']>(() => [
 onMounted(async () => {
   try {
     await service.init()
-    langList.value = service.nesIndex.langList
+    tags.value = [
+      ...service.nesIndex.langList.map((item) => t(`global.lang.${item}`)),
+      // ...service.nesIndex.factorList,
+      ...service.nesIndex.typeList,
+      ...service.nesIndex.editionList,
+    ]
+    if (service.nesIndex.invincible) {
+      tags.value.push(t('nes.invincible'))
+    }
     handleSearch()
   } catch (e) {
     errorNotify(e, { t })
   }
 })
+
+watch(route, (newValue) => {
+  filter.value = (newValue.query.keyword as string) ?? ''
+  console.log(filter.value)
+  pagination.value.page = 1
+  handleSearch()
+})
+
+function handleJump(keyword?: string) {
+  if (!keyword) {
+    keyword = filter.value
+  }
+  if (route.query.keyword !== keyword) {
+    router.push({
+      name: route.name as RouteRecordName,
+      query: {
+        keyword,
+      },
+    })
+  }
+}
 
 // 搜索
 function handleSearch() {
@@ -195,17 +258,12 @@ function handleSearch() {
   }
   const res = service.search({
     keyword: (checked?.pairs?.default as string) ?? '',
-    lang: (checked?.pairs?.lang as string) ?? '',
+    tags: (checked?.pairs?.tag as string[]) ?? [],
     page: pagination.value.page,
     size: pagination.value.rowsPerPage,
   })
   nesList.value = res.list
   pagination.value.rowsNumber = res.total
-}
-
-function handleLangSearch(lang: string) {
-  filter.value = `/lang:${lang}`
-  handleSearch()
 }
 
 // 表格切换页码之类的
@@ -241,11 +299,14 @@ function handleToRun(item: SourceItemCfg) {
   .q-table__grid-item {
     width: 276px;
     padding: 10px;
-    .item-lang,
+    .item-tags,
     .item-size {
       display: inline-block;
       background-color: rgba($color: #000000, $alpha: 0.5);
       z-index: 1;
+    }
+    .item-tag {
+      display: block;
     }
     .q-table__grid-item-card {
       padding: 0;

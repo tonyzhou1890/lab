@@ -6,4 +6,5 @@ export default {
   desc: '在线畅玩 NES/FC 游戏，找回童年记忆',
   doc,
   searchPlaceholder: '请输入名称搜索',
+  invincible: '无敌',
 }
