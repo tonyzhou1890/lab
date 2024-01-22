@@ -5,19 +5,26 @@
   <p class="desc tac">{{ info.desc }}</p>
   <section
     v-if="info.doc"
-    class="doc-section"
+    class="service-base-info doc-section"
   >
-    <SectionTitle :defaultShow="false">{{ $t('global.doc') }}</SectionTitle>
+    <SectionTitle
+      :defaultShow="false"
+      @toggle="handleToggle"
+      >{{ $t('global.doc') }}</SectionTitle
+    >
     <QMarkdown
       :src="info.doc"
       no-heading-anchor-links
+      :class="{
+        'self-control': initialState,
+      }"
     />
     <!-- <pre class="doc">{{ info.doc }}</pre> -->
   </section>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { QMarkdown } from '@quasar/quasar-ui-qmarkdown'
 import '@quasar/quasar-ui-qmarkdown/dist/index.css'
@@ -27,6 +34,9 @@ const props = defineProps<{
 }>()
 
 const { t } = useI18n()
+
+// 初始状态--即第一次打开页面
+const initialState = ref<boolean>(true)
 
 const info = computed(() => {
   const title = t(`${props.serviceName}.title`)
@@ -39,4 +49,23 @@ const info = computed(() => {
     doc: doc === `${props.serviceName}.doc` ? '' : doc,
   }
 })
+
+function handleToggle() {
+  initialState.value = false
+}
 </script>
+
+<style lang="scss">
+.service-base-info {
+  &.doc-section {
+    .self-control {
+      height: 80px;
+      overflow: hidden;
+      color: transparent;
+      background-image: linear-gradient(180deg, black, transparent);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+  }
+}
+</style>

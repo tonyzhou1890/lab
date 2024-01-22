@@ -26,10 +26,15 @@ const props = withDefaults(
   }
 )
 
+const emit = defineEmits<{
+  (e: 'toggle', data: boolean): void
+}>()
+
 const show = ref(props.defaultShow)
 
 function toggle() {
   show.value = !show.value
+  emit('toggle', show.value)
 }
 </script>
 
@@ -40,7 +45,7 @@ function toggle() {
       transform: rotate(-90deg);
     }
   }
-  &.hide ~ * {
+  &.hide ~ *:not(.self-control) {
     display: none;
   }
 }
