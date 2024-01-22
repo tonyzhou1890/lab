@@ -140,3 +140,11 @@ export function getLocalFile(cfg: {
     input.click()
   })
 }
+
+/**
+ * 移除括号内容
+ * @param str
+ */
+export function removeBraceletsContent(str: string) {
+  return str.replace(/(（.*?）|\[.*?\]|\(.*?\))/g, '').trim()
+}

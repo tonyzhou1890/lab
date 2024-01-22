@@ -132,7 +132,7 @@
                     :title="props.row.name"
                   >
                     <span class="text-body1 text-white">{{
-                      props.row.name
+                      removeBraceletsContent(props.row.name || '')
                     }}</span>
                   </div>
                 </div>
@@ -163,6 +163,7 @@ import { useAppStore } from '@/stores/app'
 import { CoreErrorEnum } from '@/core/error'
 import searchPatternCheck from 'allbox/dist/other.search-pattern-check'
 import { type QTableProps, format } from 'quasar'
+import { removeBraceletsContent } from '@/core/utils'
 
 const { t } = useI18n()
 
@@ -280,7 +281,7 @@ function handleToRun(item: SourceItemCfg) {
     query: {
       path: item.path,
       name: item.name,
-      'v-header-subtitle': item.name,
+      'v-header-subtitle': removeBraceletsContent(item.name || ''),
     },
   })
   window.open(href, '_blank')
