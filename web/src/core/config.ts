@@ -68,6 +68,12 @@ const config = {
       version: '0.0.1',
       cache: false,
     },
+    // gba-游戏
+    gba: {
+      url: `${storePrefix}/gba/index.json`,
+      version: '0.0.1',
+      cache: false,
+    },
   },
   /**
    * 线上域名

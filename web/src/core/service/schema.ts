@@ -19,6 +19,7 @@ import TemperatureConvertSchema from './temperature-convert/schema'
 import AngleConvertSchema from './angle-convert/schema'
 import BMISchema from './bmi/schema'
 import NesSchema from './nes/schema'
+import GBASchema from './gba/schema'
 // 外链服务
 import DictSchema from './dict/schema'
 import MinesweeperSchema from './minesweeper/schema'
@@ -47,6 +48,7 @@ export default {
   BMISchema,
   MinesweeperSchema,
   NesSchema,
+  GBASchema,
   DictSchema,
   SvgEditorSchema,
   SnowmanAttackSchema,

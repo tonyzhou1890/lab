@@ -20,6 +20,7 @@ import temperatureConvert from './module/temperature-convert'
 import angleConvert from './module/angle-convert'
 import bmi from './module/bmi'
 import nes from './module/nes'
+import gba from './module/gba'
 
 export default {
   global,
@@ -78,4 +79,5 @@ export default {
   angleConvert,
   bmi,
   nes,
+  gba,
 }

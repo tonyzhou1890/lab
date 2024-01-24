@@ -131,6 +131,16 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/pages/nes/RunGame.vue'),
       },
       {
+        path: 'service/gba',
+        name: 'GBA',
+        component: () => import('@/pages/gba/IndexPage.vue'),
+      },
+      {
+        path: 'service/gba/run',
+        name: 'GBARun',
+        component: () => import('@/pages/gba/RunGame.vue'),
+      },
+      {
         path: ':catchAll(.*)*',
         component: () => import('@/pages/404/IndexPage.vue'),
       },
