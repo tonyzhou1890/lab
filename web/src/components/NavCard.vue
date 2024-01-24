@@ -285,7 +285,7 @@ const groupedServiceList = computed(() => {
                 ? ''
                 : {
                     path,
-                    query: route.query,
+                    // query: route.query,
                   },
             // 这里不用 router.resolve，因为服务端渲染和客户端渲染会不一致
             appUrl: item.link || `https://${config.hostname}${path}`,
