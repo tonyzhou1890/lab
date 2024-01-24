@@ -51,6 +51,30 @@ function setData<T>(key: string, value: T): boolean {
 }
 
 /**
+ * 模糊搜索
+ * @param keyword
+ */
+function fuzzySearch(keyword: string) {
+  if (!keyword) {
+    return []
+  }
+  const startMatchList = []
+  const includeList = []
+  for (let i = 0; i < local.data.records.length; i++) {
+    const item = local.data.records[i]
+    if (item.word.startsWith(keyword)) {
+      startMatchList.push(item.word)
+    } else if (includeList.length < 20 && item.word.includes(keyword)) {
+      includeList.push(item.word)
+    }
+    if (startMatchList.length >= 20) {
+      break
+    }
+  }
+  return [...startMatchList, ...includeList].slice(0, 20)
+}
+
+/**
  * 搜索成语--完全匹配
  * @param keyword
  */
@@ -89,6 +113,7 @@ function searchIdiom(keyword: string) {
 
 const core = {
   setData,
+  fuzzySearch,
   searchIdiom,
 }
 

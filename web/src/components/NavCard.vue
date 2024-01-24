@@ -165,7 +165,7 @@
 <script setup lang="ts">
 import { computed, ref, toRef } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useRoute, useRouter } from 'vue-router'
+import { /* useRoute, */ useRouter } from 'vue-router'
 import serviceSchema from '@/core/service/schema'
 import { groupService } from '@/core/service/service-schema'
 import { changePathLangIso } from '@/core/utils'
@@ -186,7 +186,7 @@ const isPage = computed(() => {
 
 const filter = ref<string>('')
 
-const route = useRoute()
+// const route = useRoute()
 const router = useRouter()
 
 const { locale, t } = useI18n({ useScope: 'global' })

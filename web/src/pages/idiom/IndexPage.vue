@@ -3,12 +3,23 @@
     <ServiceBaseInfo :service-name="ServiceSchame.i18nKey" />
     <div class="content">
       <div class="search q-pb-md">
-        <q-input
+        <!-- <q-input
           v-model="filter"
           v-bind="config.field"
           @keyup.enter="() => handleJump()"
           :label="$t('idiom.searchPlaceholder')"
-        />
+        /> -->
+        <q-select
+          v-model.trim="filter"
+          :options="filteredList"
+          v-bind="config.field"
+          use-input
+          input-debounce="0"
+          :label="$t('idiom.searchPlaceholder')"
+          @select="handleJump"
+          @filter="handleFilter"
+          @keyup.enter="handleJump()"
+        ></q-select>
       </div>
       <div
         v-if="!initialized"
@@ -231,6 +242,7 @@ import { useRoute, useRouter, RouteRecordName } from 'vue-router'
 import { CoreErrorEnum } from '@/core/error'
 import { storeToRefs } from 'pinia'
 import { useAppStore } from '@/stores/app'
+import { QSelectProps } from 'quasar'
 
 const { t } = useI18n()
 
@@ -248,6 +260,7 @@ const service = new IdiomService()
 const result = ref<IdiomItem | null>(null)
 
 const filter = ref<string>((route.query.keyword as string) ?? '')
+const filteredList = ref<string[]>([])
 
 // 本地依赖初始化
 async function localInit() {
@@ -285,6 +298,14 @@ watch(route, (newValue) => {
     handleSearch()
   }
 })
+
+const handleFilter: QSelectProps['onFilter'] = (val, update) => {
+  update(async () => {
+    if (initialized.value) {
+      filteredList.value = await service.worker.fuzzySearch(val)
+    }
+  })
+}
 
 function handleJump(keyword?: string) {
   if (!keyword) {
