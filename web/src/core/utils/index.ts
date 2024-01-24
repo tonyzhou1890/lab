@@ -148,3 +148,20 @@ export function getLocalFile(cfg: {
 export function removeBraceletsContent(str: string) {
   return str.replace(/(（.*?）|\[.*?\]|\(.*?\))/g, '').trim()
 }
+
+/**
+ * 将数组中的部分值根据 map 规则替换
+ * @param arr
+ * @param map
+ */
+export function replaceArrayWithMap(
+  arr: string[],
+  map: { [x: string]: string }
+) {
+  arr.map((item, index) => {
+    if (map[item]) {
+      arr[index] = map[item]
+    }
+  })
+  return arr
+}

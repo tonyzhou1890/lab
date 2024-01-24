@@ -143,7 +143,7 @@ import { useAppStore } from '@/stores/app'
 import { CoreErrorEnum } from '@/core/error'
 import searchPatternCheck from 'allbox/dist/other.search-pattern-check'
 import { type QTableProps, format } from 'quasar'
-import { removeBraceletsContent } from '@/core/utils'
+import { removeBraceletsContent, replaceArrayWithMap } from '@/core/utils'
 
 const { t } = useI18n()
 
@@ -158,6 +158,7 @@ const filter = ref<string>('')
 const gameList = ref<SourceItemCfg[]>([])
 
 const tags = ref<string[]>([])
+const langMap = ref<{ [x: string]: string }>({})
 
 const pagination = ref({
   page: 1,
@@ -190,7 +191,11 @@ onMounted(async () => {
   try {
     await service.init()
     tags.value = [
-      ...service.gameIndex.langList.map((item) => t(`global.lang.${item}`)),
+      ...service.gameIndex.langList.map((item) => {
+        const str = t(`global.lang.${item}`)
+        langMap.value[str] = item
+        return str
+      }),
       ...service.gameIndex.editionList,
     ]
     handleSearch()
@@ -234,7 +239,10 @@ function handleSearch() {
   }
   const res = service.search({
     keyword: (checked?.pairs?.default as string) ?? '',
-    tags: (checked?.pairs?.tag as string[]) ?? [],
+    tags: replaceArrayWithMap(
+      (checked?.pairs?.tag as string[]) ?? [],
+      langMap.value
+    ),
     page: pagination.value.page,
     size: pagination.value.rowsPerPage,
   })
