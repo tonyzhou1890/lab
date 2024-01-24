@@ -19,14 +19,18 @@ const { locale } = useI18n()
 
 const route = useRoute()
 
-const path = new URL((route.query.path as string) ?? '', config.deps.nes.url)
+const path = new URL(
+  (route.query.path as string) ||
+    (route.query.name ? `./${route.query.name}.zip` : ''),
+  config.deps.nes.url
+)
 
 const src = ref<string>()
 
 onMounted(() => {
   src.value = `${window.location.protocol}//${
     window.location.host
-  }/third-party/emulatorjs/nes-embed.html?game-name=${
+  }/third-party/emulatorjs/embed.html?game-name=${
     route.query.name
   }&game-url=${encodeURIComponent(path.toString())}&lang=${locale.value}`
 })

@@ -14,7 +14,8 @@ export default {
   close: '关闭',
   // 语言
   lang: {
-    'zh-CN': '中文',
+    'zh-CN': '简体中文',
+    'zh-TW': '繁体中文',
     'en-US': '英文',
     ja: '日文',
   },

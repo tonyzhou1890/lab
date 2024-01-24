@@ -52,6 +52,7 @@
       const gameUrl = decodeURIComponent(params.get('game-url'))
       const gameName = params.get('game-name')
       const lang = params.get('lang')
+      const core = params.get('core')
 
       const script = document.createElement('script')
 
@@ -59,10 +60,11 @@
       window.EJS_gameName = gameName
       window.EJS_biosUrl = ''
       window.EJS_gameUrl = gameUrl
-      window.EJS_core = 'nes'
+      window.EJS_core = core || 'nes'
       window.EJS_pathtodata = 'data/'
       window.EJS_startOnLoaded = true
       window.EJS_language = lang
+      window.EJS_CacheLimit = 1024 ** 3 * 10
 
       script.src = 'data/loader.js'
       document.body.appendChild(script)

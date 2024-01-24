@@ -67,10 +67,11 @@ class NesService extends Service {
     this.nesIndex.list = this.nesIndex.list
       .filter((item) => !item.ignore)
       .map((item) => {
-        // 如果有封面地址，就生成绝对路径
-        if (item.cover) {
-          item.cover = new URL(item.cover, config.deps.nes.url).toString()
-        }
+        // 生成封面绝对路径
+        item.cover = new URL(
+          item.cover || `./${item.name}.png`,
+          config.deps.nes.url
+        ).toString()
         item._id = Symbol()
         // lang
         if (!item.lang?.length) {
