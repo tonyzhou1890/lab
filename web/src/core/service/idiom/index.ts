@@ -65,18 +65,9 @@ class IdiomService extends Service {
       const data = await zip.loadAsync(local.data, {
         optimizedBinaryString: true,
       })
-      let chengYuData: IdiomDB | null = null
-      for (const key in data.files) {
-        console.log(data.files)
-        if (!data.files[key].dir && data.files[key].name === 'idiom.json') {
-          const jsonStr = await data.file(data.files[key].name)?.async('string')
-          if (!jsonStr) {
-            return Promise.reject(new Error(CoreErrorEnum[201]))
-          } else {
-            chengYuData = JSON.parse(jsonStr)
-          }
-        }
-      }
+      const chengYuData: IdiomDB | null = JSON.parse(
+        await data.file('idiom.json')!.async('string')
+      )
       if (!chengYuData) {
         return Promise.reject(new Error(CoreErrorEnum[201]))
       }
