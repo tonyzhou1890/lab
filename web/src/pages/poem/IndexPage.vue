@@ -360,16 +360,15 @@ function setFont() {
 .page-main {
   max-width: 100%;
   // 为了设置背景
-  height: calc(100vh - 50px);
+  // height: calc(100vh - 50px);
   font-family: v-bind('fontName');
   &::before {
     content: '';
     width: 100%;
     height: 100%;
     display: block;
-    position: absolute;
+    position: fixed;
     left: 0;
-    top: 0;
     background-image: url('@/assets/images/poem/background.png');
     background-size: 100%;
     filter: opacity(5%);
