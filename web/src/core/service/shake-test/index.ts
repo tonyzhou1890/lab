@@ -34,6 +34,7 @@ class ShakeTestService extends Service {
     if (cfg) {
       this.reverse = cfg?.reverse
     }
+    this.deviceMotionEventCb = this.deviceMotionEventCb.bind(this)
   }
 
   // 是否数值反转，比如 ios 与安卓方向相反
