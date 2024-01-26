@@ -93,6 +93,7 @@ async function handleStart() {
         } else if (!res.xScale && res.yScale) {
           res.xScale = 0.01
         }
+        acceleration.value = res
       }, 100)
     )
     running.value = true
