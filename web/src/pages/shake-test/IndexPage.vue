@@ -58,7 +58,7 @@ import ServiceSchame from '@/core/service/shake-test/schema'
 import ShakeTestService from '@/core/service/shake-test'
 import ServiceBaseInfo from '@/components/ServiceBaseInfo.vue'
 import { errorNotify } from '@/core/error/utils'
-import { throttle } from 'quasar'
+// import { throttle } from 'quasar'
 
 const { t } = useI18n()
 
@@ -84,19 +84,17 @@ const running = ref<boolean>(false)
 async function handleStart() {
   try {
     await service.enableSensor()
-    service.startLog(
-      throttle((d, e, logs, calc) => {
-        const res = calc(accuracy.value)
-        // 确保即使只有一个有值，图也有显示
-        if (res.xScale && !res.yScale) {
-          res.yScale = 0.01
-        } else if (!res.xScale && res.yScale) {
-          res.xScale = 0.01
-        }
-        acceleration.value = res
-        console.log(acceleration.value)
-      }, 100)
-    )
+    service.startLog((d, e, logs, calc) => {
+      const res = calc(accuracy.value)
+      // 确保即使只有一个有值，图也有显示
+      if (res.xScale && !res.yScale) {
+        res.yScale = 0.01
+      } else if (!res.xScale && res.yScale) {
+        res.xScale = 0.01
+      }
+      acceleration.value = res
+      console.log(acceleration.value)
+    })
     running.value = true
   } catch (e) {
     errorNotify(e, { t })
