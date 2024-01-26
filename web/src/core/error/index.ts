@@ -4,6 +4,8 @@
 export enum CoreErrorEnum {
   'Execute Error' = 100,
   'Not Initialized' = 101,
+  'Authorization Failed' = 110,
+  'Device Not Supported' = 120,
   'Not Found' = 200,
   'Resource Not Found' = 201,
   // worker

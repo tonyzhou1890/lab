@@ -20,6 +20,7 @@ import AngleConvertSchema from './angle-convert/schema'
 import BMISchema from './bmi/schema'
 import NesSchema from './nes/schema'
 import GBASchema from './gba/schema'
+import ShakeTestSchema from './shake-test/schema'
 // 外链服务
 import DictSchema from './dict/schema'
 import MinesweeperSchema from './minesweeper/schema'
@@ -49,6 +50,7 @@ export default {
   MinesweeperSchema,
   NesSchema,
   GBASchema,
+  ShakeTestSchema,
   DictSchema,
   SvgEditorSchema,
   SnowmanAttackSchema,

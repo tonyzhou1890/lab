@@ -141,6 +141,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/pages/gba/RunGame.vue'),
       },
       {
+        path: 'service/shake-test',
+        name: 'ShakeTest',
+        component: () => import('@/pages/shake-test/IndexPage.vue'),
+      },
+      {
         path: ':catchAll(.*)*',
         component: () => import('@/pages/404/IndexPage.vue'),
       },

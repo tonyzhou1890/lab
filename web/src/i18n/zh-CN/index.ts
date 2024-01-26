@@ -21,6 +21,7 @@ import angleConvert from './module/angle-convert'
 import bmi from './module/bmi'
 import nes from './module/nes'
 import gba from './module/gba'
+import shakeTest from './module/shake-test'
 
 export default {
   global,
@@ -80,4 +81,5 @@ export default {
   bmi,
   nes,
   gba,
+  shakeTest,
 }

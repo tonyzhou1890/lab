@@ -51,6 +51,8 @@ export default {
   error: {
     'Execute Error': '执行错误',
     'Not Initialized': '未初始化',
+    'Authorization Failed': '授权失败',
+    'Device Not Supported': '该设备不支持',
     'Not Found': '未找到',
     'Resource Not Found': '资源未找到',
     'Action Not Found': '操作未找到',
