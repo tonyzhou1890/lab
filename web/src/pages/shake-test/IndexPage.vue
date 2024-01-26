@@ -16,15 +16,15 @@
       <q-list class="acc-data flex column items-center">
         <q-item>
           <q-item-section class="text-bold">x</q-item-section>
-          <q-item-section
-            ><span>{{ acceleration.x }}m/s<sup>2</sup></span></q-item-section
-          >
+          <q-item-section class="unit">
+            <span>{{ acceleration.x }}m/s<sup>2</sup></span>
+          </q-item-section>
         </q-item>
         <q-item>
           <q-item-section class="text-bold">y</q-item-section>
-          <q-item-section
-            ><span>{{ acceleration.y }}m/s<sup>2</sup></span></q-item-section
-          >
+          <q-item-section class="unit">
+            <span>{{ acceleration.y }}m/s<sup>2</sup></span>
+          </q-item-section>
         </q-item>
       </q-list>
       <q-slider
@@ -156,6 +156,9 @@ onUnmounted(() => {
         z-index: 1;
       }
     }
+  }
+  .unit {
+    white-space: nowrap;
   }
 }
 </style>
