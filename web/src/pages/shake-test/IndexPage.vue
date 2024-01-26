@@ -94,6 +94,7 @@ async function handleStart() {
           res.xScale = 0.01
         }
         acceleration.value = res
+        console.log(acceleration.value)
       }, 100)
     )
     running.value = true
