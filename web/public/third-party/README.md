@@ -12,6 +12,4 @@
 
 在线游戏模拟器服务。本来准备基于 jsnes 写一个 nes 在线游戏服务的，但思来想去还是决定直接集成 emulatorjs，因为自己写麻烦，jsnes 也多年不更新了，还不支持 ts。
 
-因为我只需要 nes，所以其他内核基本删除了，emulator.js 文件也删除了无用代码。
-
 因为运行时实际使用的是 emulator.min.js，所以修改完后需要进入 minify 文件夹执行 build 命令。
