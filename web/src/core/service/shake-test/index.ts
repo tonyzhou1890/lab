@@ -85,7 +85,6 @@ class ShakeTestService extends Service {
    * @param event
    */
   deviceMotionEventCb(event: DeviceMotionEvent) {
-    console.log(this.hasEnable, this.isListening, this.update)
     if (this.hasEnable && this.isListening) {
       const x = event.acceleration?.x ?? 0
       const y = event.acceleration?.y ?? 0
@@ -97,7 +96,6 @@ class ShakeTestService extends Service {
         data,
         e: event,
       })
-      console.log(data)
       this.update(data, event, this.log, (accuracy: number) => {
         const xScale = Math.sign(x) * Math.min(Math.abs(x) / accuracy, 1)
         const yScale = Math.sign(x) * Math.max(Math.abs(y) / accuracy, 1)

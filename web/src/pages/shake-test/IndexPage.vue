@@ -17,13 +17,13 @@
         <q-item>
           <q-item-section class="text-bold">x</q-item-section>
           <q-item-section class="unit">
-            <span>{{ acceleration.x }}m/s<sup>2</sup></span>
+            <span>{{ acceleration.x.toFixed(2) }}m/s<sup>2</sup></span>
           </q-item-section>
         </q-item>
         <q-item>
           <q-item-section class="text-bold">y</q-item-section>
           <q-item-section class="unit">
-            <span>{{ acceleration.y }}m/s<sup>2</sup></span>
+            <span>{{ acceleration.y.toFixed(2) }}m/s<sup>2</sup></span>
           </q-item-section>
         </q-item>
       </q-list>
