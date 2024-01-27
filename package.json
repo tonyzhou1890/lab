@@ -1,6 +1,6 @@
 {
   "name": "instant-lab",
-  "version": "1.13.1",
+  "version": "1.14.0",
   "description": "在线工具箱",
   "main": "index.js",
   "scripts": {
