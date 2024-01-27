@@ -153,7 +153,7 @@ const { config } = storeToRefs(appStore)
 const route = useRoute()
 const router = useRouter()
 
-const filter = ref<string>('')
+const filter = ref<string>((route.query.keyword as string) ?? '')
 
 const gameList = ref<SourceItemCfg[]>([])
 

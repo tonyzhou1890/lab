@@ -68,6 +68,12 @@ const config = {
       version: '0.0.1',
       cache: false,
     },
+    // snes-游戏
+    snes: {
+      url: `${storePrefix}/snes/index.json`,
+      version: '0.0.1',
+      cache: false,
+    },
     // gba-游戏
     gba: {
       url: `${storePrefix}/gba/index.json`,

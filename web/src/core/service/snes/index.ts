@@ -5,7 +5,7 @@ import config from '@/core/config'
 import { SourceItemCfg } from '@/core/typings/general-types'
 import type { SearchPatternCfg } from 'allbox/dist/other.search-pattern-check'
 
-export interface GBAItemCfg extends SourceItemCfg {
+export interface SNESItemCfg extends SourceItemCfg {
   _id: symbol
   // 封面图
   cover: string
@@ -17,7 +17,7 @@ export interface GBAItemCfg extends SourceItemCfg {
   edition: string[]
 }
 
-class GBAService extends Service {
+class SNESService extends Service {
   constructor() {
     super()
   }
@@ -28,14 +28,14 @@ class GBAService extends Service {
 
   gameIndex: {
     storeName: string
-    list: GBAItemCfg[]
+    list: SNESItemCfg[]
     langList: string[]
     factorList: string[]
     typeList: string[]
     editionList: string[]
     invincible: boolean
   } = {
-    storeName: 'gba',
+    storeName: 'snes',
     list: [],
     langList: [],
     factorList: [],
@@ -49,8 +49,8 @@ class GBAService extends Service {
    */
   async init(): Promise<void> {
     const data = await IO.loadDepFile<Blob>({
-      key: 'gba',
-      ...config.deps.gba,
+      key: 'snes',
+      ...config.deps.snes,
     })
     Object.assign(this.gameIndex, JSON.parse((await data?.data.text()) ?? '{}'))
     const langMap: { [x: string]: boolean } = {}
@@ -61,7 +61,7 @@ class GBAService extends Service {
         // 生成封面绝对路径
         item.cover = new URL(
           item.cover || `./${item.name}.png`,
-          config.deps.gba.url
+          config.deps.snes.url
         ).toString()
         item._id = Symbol()
         // lang
@@ -98,12 +98,12 @@ class GBAService extends Service {
     const size = cfg.size ?? 10
     const start = (page - 1) * size
     const end = start + size
-    const list: GBAItemCfg[] = []
+    const list: SNESItemCfg[] = []
     let total = 0
 
     const filters = [
-      (item: GBAItemCfg) => !keyword || item.name.includes(keyword),
-      (item: GBAItemCfg) =>
+      (item: SNESItemCfg) => !keyword || item.name.includes(keyword),
+      (item: SNESItemCfg) =>
         !tags.length || tags.every((tag) => item.tags.includes(tag)),
     ]
     this.gameIndex.list.forEach((item) => {
@@ -121,4 +121,4 @@ class GBAService extends Service {
   }
 }
 
-export default GBAService
+export default SNESService

@@ -1,13 +1,13 @@
 <template>
   <div class="page-main app no-margin">
-    <ServiceBaseInfo service-name="nes" />
+    <ServiceBaseInfo service-name="snes" />
     <div class="content">
       <div class="search-input flex column">
         <q-input
           v-model.trim="filter"
           v-bind="config.field"
           @keyup.enter="handleJump()"
-          :label="$t('nes.searchPlaceholder')"
+          :label="$t('snes.searchPlaceholder')"
         />
       </div>
 
@@ -27,14 +27,14 @@
         >
       </div>
       <q-table
-        v-if="nesList?.length"
+        v-if="gameList?.length"
         virtual-scroll
         flat
         grid
         bordered
         :virtual-scroll-sticky-size-start="48"
         row-key="index"
-        :rows="nesList"
+        :rows="gameList"
         v-model:pagination="pagination"
         :columns="columns"
         card-container-class="justify-center"
@@ -62,32 +62,12 @@
                     class="item-tag q-pa-xs"
                     >{{ $t(`global.lang.${lang}`) }}</span
                   >
-                  <!-- 厂商 -->
-                  <span
-                    v-for="factor in props.row.factor || []"
-                    :key="factor"
-                    class="item-tag q-pa-xs"
-                    >{{ factor }}</span
-                  >
                   <!-- 版本 -->
                   <span
                     v-for="edition in props.row.edition || []"
                     :key="edition"
                     class="item-tag q-pa-xs"
                     >{{ edition }}</span
-                  >
-                  <!-- 类型 -->
-                  <span
-                    v-for="type in props.row.type || []"
-                    :key="type"
-                    class="item-tag q-pa-xs"
-                    >{{ type }}</span
-                  >
-                  <!-- 无敌 -->
-                  <span
-                    v-if="props.row.invincible"
-                    class="item-tag q-pa-xs"
-                    >{{ $t(`nes.invincible`) }}</span
                   >
                 </div>
                 <!-- 大小 -->
@@ -96,7 +76,7 @@
                   v-if="props.row.compressedSize"
                   >{{ format.humanStorageSize(props.row.compressedSize) }}</span
                 >
-                <div class="q-table__grid-item-row nes-cover">
+                <div class="q-table__grid-item-row game-cover">
                   <div
                     class="q-table__grid-item-value fit flex items-center justify-center"
                   >
@@ -153,7 +133,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref, computed, watch } from 'vue'
-import NesService from '@/core/service/nes'
+import SNESService from '@/core/service/snes'
 import { SourceItemCfg } from '@/core/typings/general-types'
 import { useI18n } from 'vue-i18n'
 import { errorNotify } from '@/core/error/utils'
@@ -175,7 +155,7 @@ const router = useRouter()
 
 const filter = ref<string>((route.query.keyword as string) ?? '')
 
-const nesList = ref<SourceItemCfg[]>([])
+const gameList = ref<SourceItemCfg[]>([])
 
 const tags = ref<string[]>([])
 const langMap = ref<{ [x: string]: string }>({})
@@ -186,7 +166,7 @@ const pagination = ref({
   rowsNumber: 0,
 })
 
-const service = new NesService()
+const service = new SNESService()
 
 // 表格的表头
 const columns = computed<QTableProps['columns']>(() => [
@@ -211,18 +191,13 @@ onMounted(async () => {
   try {
     await service.init()
     tags.value = [
-      ...service.nesIndex.langList.map((item) => {
+      ...service.gameIndex.langList.map((item) => {
         const str = t(`global.lang.${item}`)
         langMap.value[str] = item
         return str
       }),
-      // ...service.nesIndex.factorList,
-      ...service.nesIndex.typeList,
-      ...service.nesIndex.editionList,
+      ...service.gameIndex.editionList,
     ]
-    if (service.nesIndex.invincible) {
-      tags.value.push(t('nes.invincible'))
-    }
     handleSearch()
   } catch (e) {
     errorNotify(e, { t })
@@ -231,7 +206,7 @@ onMounted(async () => {
 
 watch(route, (newValue) => {
   filter.value = (newValue.query.keyword as string) ?? ''
-  console.log(filter.value)
+
   pagination.value.page = 1
   handleSearch()
 })
@@ -271,7 +246,7 @@ function handleSearch() {
     page: pagination.value.page,
     size: pagination.value.rowsPerPage,
   })
-  nesList.value = res.list
+  gameList.value = res.list
   pagination.value.rowsNumber = res.total
 }
 
@@ -283,9 +258,8 @@ const onTableRequest: QTableProps['onRequest'] = (prop) => {
 }
 
 function handleToRun(item: SourceItemCfg) {
-  console.log(item)
   const { href } = router.resolve({
-    name: 'NesRun',
+    name: 'SNESRun',
     query: {
       path: item.path,
       name: item.name,
@@ -320,7 +294,7 @@ function handleToRun(item: SourceItemCfg) {
     .q-table__grid-item-card {
       padding: 0;
     }
-    .nes-cover {
+    .game-cover {
       width: 100%;
       height: 224px;
       vertical-align: middle;
@@ -340,8 +314,8 @@ function handleToRun(item: SourceItemCfg) {
 
 @media screen and (max-width: 420px) {
   .page-main {
-    .nes-list {
-      .nes-item {
+    .game-list {
+      .game-item {
         width: calc(100% - 32px);
       }
     }

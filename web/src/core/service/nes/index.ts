@@ -80,8 +80,8 @@ class NesService extends Service {
           item.tags = [...(item.tags || []), 'ja', '日文']
         }
         item.lang = item.lang?.length ? item.lang : ['ja']
-        item.tags
-        langMap[item.lang[0]] = true
+
+        item.lang.map((v) => (langMap[v] = true))
         // 厂商
         item.factor?.map((factor) => {
           factorMap[factor] = true

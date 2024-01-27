@@ -131,6 +131,16 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/pages/nes/RunGame.vue'),
       },
       {
+        path: 'service/snes',
+        name: 'SNES',
+        component: () => import('@/pages/snes/IndexPage.vue'),
+      },
+      {
+        path: 'service/snes/run',
+        name: 'SNESRun',
+        component: () => import('@/pages/snes/RunGame.vue'),
+      },
+      {
         path: 'service/gba',
         name: 'GBA',
         component: () => import('@/pages/gba/IndexPage.vue'),

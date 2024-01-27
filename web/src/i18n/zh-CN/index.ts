@@ -20,6 +20,7 @@ import temperatureConvert from './module/temperature-convert'
 import angleConvert from './module/angle-convert'
 import bmi from './module/bmi'
 import nes from './module/nes'
+import snes from './module/snes'
 import gba from './module/gba'
 import shakeTest from './module/shake-test'
 
@@ -80,6 +81,7 @@ export default {
   angleConvert,
   bmi,
   nes,
+  snes,
   gba,
   shakeTest,
 }

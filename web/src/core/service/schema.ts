@@ -19,6 +19,7 @@ import TemperatureConvertSchema from './temperature-convert/schema'
 import AngleConvertSchema from './angle-convert/schema'
 import BMISchema from './bmi/schema'
 import NesSchema from './nes/schema'
+import SNESSchema from './snes/schema'
 import GBASchema from './gba/schema'
 import ShakeTestSchema from './shake-test/schema'
 // 外链服务
@@ -49,6 +50,7 @@ export default {
   BMISchema,
   MinesweeperSchema,
   NesSchema,
+  SNESSchema,
   GBASchema,
   ShakeTestSchema,
   DictSchema,

@@ -18,6 +18,10 @@ export default {
     'zh-TW': '繁体中文',
     'en-US': '英文',
     ja: '日文',
+    de: '德文',
+    fr: '法文',
+    es: '西班牙文',
+    nl: '荷兰文',
   },
   // 应用类别
   category: {
