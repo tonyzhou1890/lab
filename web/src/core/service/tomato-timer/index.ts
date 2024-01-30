@@ -222,9 +222,10 @@ class TomatoTimerService extends Service {
   }
 
   // 结束
-  clear() {
+  async clear() {
     this.countdownData.value.running = false
     this.time.clearCountDown()
+    await this.saveCache('data')
   }
 
   formatTime(time: number) {
