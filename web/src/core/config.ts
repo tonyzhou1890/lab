@@ -80,6 +80,12 @@ const config = {
       version: '0.0.1',
       cache: false,
     },
+    // 番茄钟音频
+    tomatoTimer: {
+      url: `${storePrefix}/audio/didididi.mp3`,
+      version: '0.0.1',
+      cache: false,
+    },
   },
   /**
    * 线上域名

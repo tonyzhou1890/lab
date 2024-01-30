@@ -156,6 +156,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/pages/shake-test/IndexPage.vue'),
       },
       {
+        path: 'service/tomato-timer',
+        name: 'TomatoTimer',
+        component: () => import('@/pages/tomato-timer/IndexPage.vue'),
+      },
+      {
         path: ':catchAll(.*)*',
         component: () => import('@/pages/404/IndexPage.vue'),
       },

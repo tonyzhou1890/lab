@@ -23,6 +23,7 @@ import nes from './module/nes'
 import snes from './module/snes'
 import gba from './module/gba'
 import shakeTest from './module/shake-test'
+import tomatoTimer from './module/tomato-timer'
 
 export default {
   global,
@@ -84,4 +85,5 @@ export default {
   snes,
   gba,
   shakeTest,
+  tomatoTimer,
 }

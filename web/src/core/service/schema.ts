@@ -22,6 +22,7 @@ import NesSchema from './nes/schema'
 import SNESSchema from './snes/schema'
 import GBASchema from './gba/schema'
 import ShakeTestSchema from './shake-test/schema'
+import TomatoTimerSchema from './tomato-timer/schema'
 // 外链服务
 import DictSchema from './dict/schema'
 import MinesweeperSchema from './minesweeper/schema'
@@ -58,6 +59,7 @@ export default {
   SnowmanAttackSchema,
   ReaderSchama,
   GifSchema,
+  TomatoTimerSchema,
 } as {
   [x: string]: ServiceSchema
 }
