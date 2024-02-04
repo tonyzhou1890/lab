@@ -1,6 +1,6 @@
 <template>
   <div class="page-main app">
-    <ServiceBaseInfo :service-name="ServiceSchame.i18nKey" />
+    <ServiceBaseInfo :service-name="ServiceSchema.i18nKey" />
     <div class="content">
       <q-input
         v-bind="config.field"
@@ -32,7 +32,7 @@
 import { onMounted, ref, nextTick } from 'vue'
 import AreaCodeService from '@/core/service/area-code'
 import { AreaCodeTreeNode } from '@/core/service/area-code/core'
-import ServiceSchame from '@/core/service/area-code/schema'
+import ServiceSchema from '@/core/service/area-code/schema'
 import ServiceBaseInfo from '@/components/ServiceBaseInfo.vue'
 import { useI18n } from 'vue-i18n'
 import { errorNotify } from '@/core/error/utils'

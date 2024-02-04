@@ -2,7 +2,7 @@
   <div
     class="page-main position-relative app ova no-margin no-border-radius bg-transparent"
   >
-    <ServiceBaseInfo :service-name="ServiceSchame.i18nKey" />
+    <ServiceBaseInfo :service-name="ServiceSchema.i18nKey" />
     <div class="content">
       <div
         class="search q-pb-md"
@@ -115,7 +115,7 @@ import PoemService from '@/core/service/poem'
 import FontService from '@/core/service/font'
 import { useQuasar, type QTableProps } from 'quasar'
 import type { PoemItem } from '@/core/service/poem/core'
-import ServiceSchame from '@/core/service/poem/schema'
+import ServiceSchema from '@/core/service/poem/schema'
 import ServiceBaseInfo from '@/components/ServiceBaseInfo.vue'
 import { useI18n } from 'vue-i18n'
 import { errorNotify } from '@/core/error/utils'

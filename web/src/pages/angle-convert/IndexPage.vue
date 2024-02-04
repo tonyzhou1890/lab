@@ -1,6 +1,6 @@
 <template>
   <div class="page-main app">
-    <ServiceBaseInfo :service-name="ServiceSchame.i18nKey" />
+    <ServiceBaseInfo :service-name="ServiceSchema.i18nKey" />
     <div class="content">
       <q-form
         ref="formRef"
@@ -53,7 +53,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import ServiceSchame from '@/core/service/angle-convert/schema'
+import ServiceSchema from '@/core/service/angle-convert/schema'
 import AngleConvertService, { AngleType } from '@/core/service/angle-convert'
 import ServiceBaseInfo from '@/components/ServiceBaseInfo.vue'
 import { errorNotify } from '@/core/error/utils'

@@ -1,6 +1,6 @@
 <template>
   <div class="page-main app">
-    <ServiceBaseInfo :service-name="ServiceSchame.i18nKey" />
+    <ServiceBaseInfo :service-name="ServiceSchema.i18nKey" />
     <div class="content">
       <q-input
         class="search-input"
@@ -56,7 +56,7 @@
 import { onMounted, ref, computed } from 'vue'
 import type { IconsData } from '@/core/service/m-icons/core'
 import MdIconsService from '@/core/service/m-icons'
-import ServiceSchame from '@/core/service/m-icons/schema'
+import ServiceSchema from '@/core/service/m-icons/schema'
 import ServiceBaseInfo from '@/components/ServiceBaseInfo.vue'
 import { useI18n } from 'vue-i18n'
 import { errorNotify } from '@/core/error/utils'

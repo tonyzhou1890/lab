@@ -22,6 +22,7 @@ import bmi from './module/bmi'
 import nes from './module/nes'
 import snes from './module/snes'
 import gba from './module/gba'
+import emulator from './module/emulator'
 import shakeTest from './module/shake-test'
 import tomatoTimer from './module/tomato-timer'
 
@@ -84,6 +85,7 @@ export default {
   nes,
   snes,
   gba,
+  emulator,
   shakeTest,
   tomatoTimer,
 }

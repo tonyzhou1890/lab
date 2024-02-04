@@ -1,6 +1,6 @@
 <template>
   <div class="page-main app no-margin">
-    <ServiceBaseInfo service-name="snes" />
+    <ServiceBaseInfo :service-name="ServiceSchema.i18nKey" />
     <div class="content">
       <div class="search-input flex column">
         <q-input
@@ -134,6 +134,7 @@
 <script setup lang="ts">
 import { onMounted, ref, computed, watch } from 'vue'
 import SNESService from '@/core/service/snes'
+import ServiceSchema from '@/core/service/snes/schema'
 import { SourceItemCfg } from '@/core/typings/general-types'
 import { useI18n } from 'vue-i18n'
 import { errorNotify } from '@/core/error/utils'

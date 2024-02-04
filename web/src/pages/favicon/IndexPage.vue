@@ -1,6 +1,6 @@
 <template>
   <div class="page-main app">
-    <ServiceBaseInfo :service-name="ServiceSchame.i18nKey" />
+    <ServiceBaseInfo :service-name="ServiceSchema.i18nKey" />
     <q-form
       ref="formRef"
       @submit="onSubmit"
@@ -30,7 +30,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import FaviconService from '@/core/service/favicon'
-import ServiceSchame from '@/core/service/favicon/schema'
+import ServiceSchema from '@/core/service/favicon/schema'
 import ServiceBaseInfo from '@/components/ServiceBaseInfo.vue'
 import { useI18n } from 'vue-i18n'
 import { useQuasar } from 'quasar'

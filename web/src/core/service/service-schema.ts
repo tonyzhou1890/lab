@@ -75,10 +75,10 @@ export class ServiceSchema {
    */
   categories?: string[]
   /**
-   * @name 外链标识
-   * @description true 表示是外链打开，可以不填，实例化的时候传入 link 会自动判断
+   * @name 页面导航栏信息图标
+   * @description true 表示页头导航栏显示信息图标
    */
-  extra?: boolean
+  infoIcon?: boolean
   /**
    * @name 跳转地址
    * @description 服务对应的页面地址。站内服务可以不填。

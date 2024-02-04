@@ -1,6 +1,6 @@
 <template>
   <div class="page-main app">
-    <ServiceBaseInfo :service-name="ServiceSchame.i18nKey" />
+    <ServiceBaseInfo :service-name="ServiceSchema.i18nKey" />
     <div class="content">
       <q-form
         ref="formRef"
@@ -64,7 +64,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import ServiceSchame from '@/core/service/temperature-convert/schema'
+import ServiceSchema from '@/core/service/temperature-convert/schema'
 import TemperatureConvertService, {
   TempType,
 } from '@/core/service/temperature-convert'

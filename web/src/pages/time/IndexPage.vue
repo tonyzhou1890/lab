@@ -1,6 +1,6 @@
 <template>
   <div class="page-main app">
-    <ServiceBaseInfo :service-name="ServiceSchame.i18nKey" />
+    <ServiceBaseInfo :service-name="ServiceSchema.i18nKey" />
     <div class="content">
       <q-tabs
         v-model="currTab"
@@ -38,7 +38,7 @@
 import { computed, ref } from 'vue'
 import type { Component } from 'vue'
 import { useI18n } from 'vue-i18n'
-import ServiceSchame from '@/core/service/time/schema'
+import ServiceSchema from '@/core/service/time/schema'
 import ServiceBaseInfo from '@/components/ServiceBaseInfo.vue'
 import ClockCom from './components/ClockCom.vue'
 import CountdownCom from './components/CountdownCom.vue'

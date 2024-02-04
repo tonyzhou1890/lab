@@ -1,6 +1,6 @@
 <template>
   <div class="page-main app">
-    <ServiceBaseInfo :service-name="ServiceSchame.i18nKey" />
+    <ServiceBaseInfo :service-name="ServiceSchema.i18nKey" />
     <div class="content">
       <q-form
         ref="formRef"
@@ -87,7 +87,7 @@
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { storeToRefs } from 'pinia'
-import ServiceSchame from '@/core/service/base-convert/schema'
+import ServiceSchema from '@/core/service/base-convert/schema'
 import BaseConvertService from '@/core/service/base-convert'
 import ServiceBaseInfo from '@/components/ServiceBaseInfo.vue'
 import { errorNotify } from '@/core/error/utils'

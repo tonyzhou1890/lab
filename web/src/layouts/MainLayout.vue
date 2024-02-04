@@ -28,6 +28,14 @@
           aria-label="language"
           @click="toggleLanguage"
         />
+        <q-btn
+          v-show="showInfoIcon"
+          flat
+          dense
+          round
+          icon="info"
+          @click="toggleInfo"
+        />
       </q-toolbar>
     </q-header>
 
@@ -45,13 +53,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, inject, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { changePathLangIso } from '../core/utils'
 import VueMeta from '@/components/VueMeta.vue'
 import LeftDrawer from '@/components/LeftDrawer.vue'
 import BackTop from '@/components/BackTop.vue'
+import { EventBus } from 'quasar/dist/types/utils'
 const { locale, t } = useI18n({ useScope: 'global' })
 
 const route = useRoute()
@@ -104,6 +113,18 @@ function toggleLanguage() {
     path,
     query: route.query,
   })
+}
+
+// 展示页面信息操作
+const showInfoIcon = computed(() => {
+  const meta = route.meta
+  return !!meta.infoIcon
+})
+
+const bus = inject<EventBus>('bus')
+
+function toggleInfo() {
+  bus!.emit('toggle-info')
 }
 </script>
 

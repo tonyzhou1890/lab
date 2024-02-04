@@ -1,6 +1,6 @@
 <template>
   <div class="page-main app">
-    <ServiceBaseInfo :service-name="ServiceSchame.i18nKey" />
+    <ServiceBaseInfo :service-name="ServiceSchema.i18nKey" />
     <div class="content">
       <div class="row q-mx-auto relative-position graphic-wrapper">
         <div
@@ -54,7 +54,7 @@
 <script setup lang="ts">
 import { ref, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
-import ServiceSchame from '@/core/service/shake-test/schema'
+import ServiceSchema from '@/core/service/shake-test/schema'
 import ShakeTestService from '@/core/service/shake-test'
 import ServiceBaseInfo from '@/components/ServiceBaseInfo.vue'
 import { errorNotify } from '@/core/error/utils'

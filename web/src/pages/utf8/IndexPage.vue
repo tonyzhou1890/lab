@@ -1,6 +1,6 @@
 <template>
   <div class="page-main app">
-    <ServiceBaseInfo :service-name="ServiceSchame.i18nKey" />
+    <ServiceBaseInfo :service-name="ServiceSchema.i18nKey" />
     <div class="content">
       <q-tabs
         v-model="currTab"
@@ -37,7 +37,7 @@
 import { computed, ref } from 'vue'
 import type { Component } from 'vue'
 import { useI18n } from 'vue-i18n'
-import ServiceSchame from '@/core/service/utf8/schema'
+import ServiceSchema from '@/core/service/utf8/schema'
 import Utf8Service from '@/core/service/utf8'
 import ServiceBaseInfo from '@/components/ServiceBaseInfo.vue'
 import TextToUtf8 from './components/TextToUtf8.vue'

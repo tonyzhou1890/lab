@@ -21,6 +21,7 @@ import BMISchema from './bmi/schema'
 import NesSchema from './nes/schema'
 import SNESSchema from './snes/schema'
 import GBASchema from './gba/schema'
+import EmulatorSchema from './emulator/schema'
 import ShakeTestSchema from './shake-test/schema'
 import TomatoTimerSchema from './tomato-timer/schema'
 // 外链服务
@@ -53,6 +54,7 @@ export default {
   NesSchema,
   SNESSchema,
   GBASchema,
+  EmulatorSchema,
   ShakeTestSchema,
   DictSchema,
   SvgEditorSchema,

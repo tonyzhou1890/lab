@@ -1,6 +1,6 @@
 <template>
   <div class="page-main app">
-    <ServiceBaseInfo :service-name="ServiceSchame.i18nKey" />
+    <ServiceBaseInfo :service-name="ServiceSchema.i18nKey" />
     <div class="content ova">
       <div class="table-wrapper">
         <div class="row table-row">
@@ -37,7 +37,7 @@
 import { onMounted, ref } from 'vue'
 import PeriodicTableOfElementsService from '@/core/service/periodic-table-of-elements'
 import { ElementData } from '@/core/service/periodic-table-of-elements/core'
-import ServiceSchame from '@/core/service/periodic-table-of-elements/schema'
+import ServiceSchema from '@/core/service/periodic-table-of-elements/schema'
 import ServiceBaseInfo from '@/components/ServiceBaseInfo.vue'
 import { useI18n } from 'vue-i18n'
 import { errorNotify } from '@/core/error/utils'

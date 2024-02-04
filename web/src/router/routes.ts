@@ -151,6 +151,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/pages/gba/RunGame.vue'),
       },
       {
+        path: 'service/emulator',
+        name: 'Emulator',
+        component: () => import('@/pages/emulator/IndexPage.vue'),
+      },
+      {
         path: 'service/shake-test',
         name: 'ShakeTest',
         component: () => import('@/pages/shake-test/IndexPage.vue'),
@@ -176,6 +181,7 @@ const routes: RouteRecordRaw[] = [
               title: `${service.i18nKey}.title`,
               keywords: `${service.i18nKey}.keywords`,
               desc: `${service.i18nKey}.desc`,
+              infoIcon: service.infoIcon,
             },
           }
           return newRoute

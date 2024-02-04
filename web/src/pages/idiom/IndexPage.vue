@@ -1,6 +1,6 @@
 <template>
   <div class="page-main app">
-    <ServiceBaseInfo :service-name="ServiceSchame.i18nKey" />
+    <ServiceBaseInfo :service-name="ServiceSchema.i18nKey" />
     <div class="content">
       <div class="search q-pb-md">
         <!-- <q-input
@@ -233,7 +233,7 @@
 import { ref, onMounted, watch } from 'vue'
 import IdiomService from '@/core/service/idiom'
 import type { IdiomItem } from '@/core/service/idiom/core'
-import ServiceSchame from '@/core/service/idiom/schema'
+import ServiceSchema from '@/core/service/idiom/schema'
 import { useI18n } from 'vue-i18n'
 import { errorNotify } from '@/core/error/utils'
 import { loading } from '@/core/io/utils'

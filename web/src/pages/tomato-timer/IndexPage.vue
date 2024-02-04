@@ -1,6 +1,6 @@
 <template>
   <div class="page-main app bg-orange-2 fit no-margin relative-position">
-    <ServiceBaseInfo :service-name="ServiceSchame.i18nKey" />
+    <ServiceBaseInfo :service-name="ServiceSchema.i18nKey" />
     <div class="content">
       <q-form
         @submit="onSubmit"
@@ -94,7 +94,7 @@
 
 <script setup lang="ts">
 import { onMounted, onBeforeUnmount, ref, nextTick } from 'vue'
-import ServiceSchame from '@/core/service/tomato-timer/schema'
+import ServiceSchema from '@/core/service/tomato-timer/schema'
 import ServiceBaseInfo from '@/components/ServiceBaseInfo.vue'
 import TomatoTimerService, {
   TomatoTimerCfg,
