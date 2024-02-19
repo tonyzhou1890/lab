@@ -4,7 +4,7 @@ import worker from './worker?worker'
 import IO, { IOData } from '@/core/io'
 import type { Core, PoemDB, PoemItem } from './core'
 import type { ServiceInitConfig } from '@/core/typings/general-types'
-import JSZip from 'jszip'
+import FileManagerService from '../file-manager'
 import coreConfig from '@/core/config'
 
 // 所有实例共享的数据
@@ -69,14 +69,11 @@ class PoemService extends Service {
       }
 
       // 解压数据
-      const zip = new JSZip()
-      console.log('data: ', local.data)
-      const data = await zip.loadAsync(local.data, {
-        optimizedBinaryString: true,
-      })
-      const poemData: PoemDB | null = JSON.parse(
-        await data.file('poem.json')!.async('string')
+      const file = await FileManagerService.extractSingleFile(
+        new File([local.data], ''),
+        'poem.json'
       )
+      const poemData: PoemDB | null = JSON.parse(await file.text())
 
       // 创建多线程
       const instance = await create<Core>(worker, 1)

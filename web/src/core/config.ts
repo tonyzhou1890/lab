@@ -40,7 +40,8 @@ const config = {
       storeName: depsStores.resources,
     },
     poem: {
-      url: `${ossPrefix}/poem/poem.json.zip`,
+      // url: `${ossPrefix}/poem/poem.json.zip`,
+      url: `${ossPrefix}/poem/poem.json.7z`,
       version: '2.0.0',
       storeName: depsStores.resources,
     },
