@@ -165,6 +165,12 @@ const routes: RouteRecordRaw[] = [
         name: 'TomatoTimer',
         component: () => import('@/pages/tomato-timer/IndexPage.vue'),
       },
+      // AI
+      {
+        path: 'service/image-classifier',
+        name: 'ImageClassifier',
+        component: () => import('@/pages/image-classifier/IndexPage.vue'),
+      },
       {
         path: ':catchAll(.*)*',
         component: () => import('@/pages/404/IndexPage.vue'),

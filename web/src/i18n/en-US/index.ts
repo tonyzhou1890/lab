@@ -20,6 +20,7 @@ export default {
       audio: 'Audio',
       video: 'Video',
       game: 'Mini Game',
+      AI: 'AI',
     },
   },
   layout: {

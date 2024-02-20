@@ -34,6 +34,7 @@ export default {
     audio: '音频',
     video: '视频',
     game: '游戏',
+    AI: '人工智能',
   },
   // 表单
   form: {

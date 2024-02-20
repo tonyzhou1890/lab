@@ -25,6 +25,7 @@ import gba from './module/gba'
 import emulator from './module/emulator'
 import shakeTest from './module/shake-test'
 import tomatoTimer from './module/tomato-timer'
+import imageClassifier from './module/image-classifier'
 
 export default {
   global,
@@ -88,4 +89,5 @@ export default {
   emulator,
   shakeTest,
   tomatoTimer,
+  imageClassifier,
 }

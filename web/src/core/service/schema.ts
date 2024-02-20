@@ -24,6 +24,7 @@ import GBASchema from './gba/schema'
 import EmulatorSchema from './emulator/schema'
 import ShakeTestSchema from './shake-test/schema'
 import TomatoTimerSchema from './tomato-timer/schema'
+import ImageClassifierSchema from './image-classifier/schema'
 // 外链服务
 import DictSchema from './dict/schema'
 import MinesweeperSchema from './minesweeper/schema'
@@ -62,6 +63,7 @@ export default {
   ReaderSchama,
   GifSchema,
   TomatoTimerSchema,
+  ImageClassifierSchema,
 } as {
   [x: string]: ServiceSchema
 }

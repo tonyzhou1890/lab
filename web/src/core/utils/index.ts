@@ -52,6 +52,44 @@ export function getFileName(file: File | string): string {
 }
 
 /**
+ * @param cfg
+ * @returns
+ * @desc 获取本地文件
+ */
+export function getLocalFile(cfg: {
+  accept: string
+  multiple?: boolean
+}): Promise<File[]> {
+  return new Promise((resolve) => {
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.multiple = cfg.multiple || false
+    input.accept = cfg.accept
+    input.onchange = () => {
+      resolve([].slice.call(input.files))
+    }
+    input.click()
+  })
+}
+
+/**
+ * 文件转 base64
+ * @param file
+ */
+export function fileToBase64(file: File | Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader()
+    fileReader.addEventListener('load', () => {
+      resolve(fileReader.result as string)
+    })
+    fileReader.addEventListener('error', (e) => {
+      reject(e)
+    })
+    fileReader.readAsDataURL(file)
+  })
+}
+
+/**
  * 根据序号获取排列中的字符串(长度从 1 开始，结果字符可重复)
  * @param chars
  * @param index
@@ -118,27 +156,6 @@ export function formatUnicode(index?: number) {
     'U+' +
     index!.toString(16).toUpperCase().padStart(strLen, '0').slice(-strLen)
   )
-}
-
-/**
- * @param cfg
- * @returns
- * @desc 获取本地文件
- */
-export function getLocalFile(cfg: {
-  accept: string
-  multiple?: boolean
-}): Promise<File[]> {
-  return new Promise((resolve) => {
-    const input = document.createElement('input')
-    input.type = 'file'
-    input.multiple = cfg.multiple || false
-    input.accept = cfg.accept
-    input.onchange = () => {
-      resolve([].slice.call(input.files))
-    }
-    input.click()
-  })
 }
 
 /**
