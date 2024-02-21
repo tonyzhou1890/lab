@@ -117,8 +117,24 @@ class FaviconService extends Service {
 
     pack.file('favicon.ico', icoFile)
 
+    // 不同作用的图片分配
+    const faviconSizes = [512, 384, 256, 192, 128, 96, 32, 16]
+    // pwa apple 图片
+    const appleIconSizes = [180, 167, 152, 120]
+    // pwa 通用图片
+    const iconSizes = [512, 384, 256, 192, 128]
+    // pwa 微软图片
+    const msIconSizes = [144]
     // 各种尺寸的 png
-    const pngSizes = [512, 384, 256, 192, 128, 96, 32, 16]
+    const pngSizes = [
+      ...new Set([
+        ...faviconSizes,
+        ...appleIconSizes,
+        ...iconSizes,
+        ...msIconSizes,
+      ]),
+    ]
+
     for (let i = 0; i < pngSizes.length; i++) {
       const size = pngSizes[i]
       const pngFile = await workerMethods.transformFormat(
@@ -126,7 +142,18 @@ class FaviconService extends Service {
         MagickFormat.Png,
         size
       )
-      pack.file(`icons/favicon-${size}x${size}.png`, pngFile)
+      if (faviconSizes.includes(size)) {
+        pack.file(`icons/favicon-${size}x${size}.png`, pngFile)
+      }
+      if (appleIconSizes.includes(size)) {
+        pack.file(`icons/apple-icon-${size}x${size}.png`, pngFile)
+      }
+      if (iconSizes.includes(size)) {
+        pack.file(`icons/icon-${size}x${size}.png`, pngFile)
+      }
+      if (msIconSizes.includes(size)) {
+        pack.file(`icons/ms-icon-${size}x${size}.png`, pngFile)
+      }
     }
     this.pack = await pack.generateAsync({ type: 'blob' })
     return this.pack

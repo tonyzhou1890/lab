@@ -53,6 +53,9 @@
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import NavCard from '@/components/NavCard.vue'
+import pkg from '../../../../package.json'
+
+console.log(`%cversion: ${pkg.version}`, 'background:rgba(244,108,217,1)')
 
 const { t } = useI18n()
 

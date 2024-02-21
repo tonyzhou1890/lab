@@ -172,7 +172,7 @@ module.exports = configure(function (/* ctx */) {
       // extendSSRWebserverConf (esbuildConf) {},
       // extendPackageJson (json) {},
 
-      pwa: false,
+      pwa: true,
 
       // manualStoreHydration: true,
       // manualPostHydrationTrigger: true,
@@ -187,14 +187,17 @@ module.exports = configure(function (/* ctx */) {
 
     // https://v2.quasar.dev/quasar-cli-vite/developing-pwa/configuring-pwa
     pwa: {
-      workboxMode: 'generateSW', // or 'injectManifest'
+      workboxMode: 'injectManifest', // 'generateSW' or 'injectManifest'
       injectPwaMetaTags: true,
       swFilename: 'sw.js',
       manifestFilename: 'manifest.json',
       useCredentialsForManifestTag: false,
       // useFilenameHashes: true,
       // extendGenerateSWOptions (cfg) {}
-      // extendInjectManifestOptions (cfg) {},
+      extendInjectManifestOptions(cfg) {
+        cfg.globIgnores.push('libs/**', 'resources/**', 'third-party/**')
+        return cfg
+      },
       // extendManifestJson (json) {}
       // extendPWACustomSWConf (esbuildConf) {}
     },
