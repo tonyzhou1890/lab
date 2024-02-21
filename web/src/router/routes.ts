@@ -172,6 +172,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/pages/image-classifier/IndexPage.vue'),
       },
       {
+        path: 'test',
+        name: 'Test',
+        component: () => import('@/pages/test/IndexPage.vue'),
+      },
+      {
         path: ':catchAll(.*)*',
         component: () => import('@/pages/404/IndexPage.vue'),
       },

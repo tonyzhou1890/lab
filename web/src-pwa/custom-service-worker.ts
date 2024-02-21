@@ -13,6 +13,7 @@ import {
   createHandlerBoundToURL,
 } from 'workbox-precaching'
 import { registerRoute, NavigationRoute } from 'workbox-routing'
+import fetchCache from './fetch-cache'
 
 self.skipWaiting()
 clientsClaim()
@@ -32,3 +33,5 @@ if (process.env.MODE !== 'ssr' || process.env.PROD) {
     )
   )
 }
+
+fetchCache()

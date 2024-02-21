@@ -195,7 +195,12 @@ module.exports = configure(function (/* ctx */) {
       // useFilenameHashes: true,
       // extendGenerateSWOptions (cfg) {}
       extendInjectManifestOptions(cfg) {
-        cfg.globIgnores.push('libs/**', 'resources/**', 'third-party/**')
+        cfg.globIgnores.push(
+          'BingSiteAuth.xml',
+          'libs/**',
+          'resources/**',
+          'third-party/**'
+        )
         return cfg
       },
       // extendManifestJson (json) {}

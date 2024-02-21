@@ -4,6 +4,11 @@ declare module 'ml5' {
     label: string
     confidence: number
   }
+  type ClassifierCfg = {
+    version?: number
+    alpha?: number
+    topk?: number
+  }
   interface Classifier {
     classify(
       input?:
@@ -27,16 +32,16 @@ declare module 'ml5' {
     imageClassifier(
       model: string,
       video?: HTMLVideoElement,
-      options?: Object,
+      options?: ClassifierCfg,
       modelLoaded?: Function
     ): Classifier
     imageClassifier(
       model: string,
       video?: HTMLVideoElement,
-      options?: Object
+      options?: ClassifierCfg
     ): Promise<Classifier>
   }
   var ml5: ML5
   export default ml5
-  export { Classifier }
+  export { Classifier, ClassifierCfg }
 }
