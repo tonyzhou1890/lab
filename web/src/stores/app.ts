@@ -35,9 +35,9 @@ export const useAppStore = defineStore('app', {
   getters: {
     doubleCount: (state) => state.config,
   },
-  actions: {
-    // increment() {
-    //   this.counter++
-    // },
-  },
+  // actions: {
+  //   // increment() {
+  //   //   this.counter++
+  //   // },
+  // },
 })
