@@ -44,6 +44,16 @@
     <q-page-container>
       <router-view />
     </q-page-container>
+    <q-footer v-show="isHome">
+      <p class="beian q-ma-md tac">
+        <a
+          href="https://beian.miit.gov.cn"
+          target="_blank"
+          class="text-white"
+          >苏ICP备20008433号-2</a
+        >
+      </p>
+    </q-footer>
   </q-layout>
   <vue-meta />
   <back-top
@@ -80,9 +90,9 @@ const hideMenuEtc = computed(() => {
   return ['Home', 'LangHome', 'Nav'].includes(route.name as string)
 })
 
-// const noHeader = computed(() => {
-//   return ['Home', 'LangHome'].includes(route.name as string)
-// })
+const isHome = computed(() => {
+  return ['Home', 'LangHome'].includes(route.name as string)
+})
 
 const title = computed(() => {
   const meta = route.meta
