@@ -197,6 +197,7 @@ module.exports = configure(function (/* ctx */) {
       extendInjectManifestOptions(cfg) {
         cfg.globIgnores.push(
           'BingSiteAuth.xml',
+          'baidu_verify_codeva-5rmdhalr96.html',
           'libs/**',
           'resources/**',
           'third-party/**'
