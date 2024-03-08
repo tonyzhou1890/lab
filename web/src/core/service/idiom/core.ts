@@ -91,7 +91,9 @@ function fuzzySearch(keyword: string) {
  * @param keyword
  */
 function searchIdiom(keyword: string) {
-  const res = local.data.records.find((item) => item.word === keyword)
+  const res = local.data.records.find(
+    (item) => item.word.replaceAll('，', '') === keyword.replaceAll('，', '')
+  )
   // 成语接龙
   if (res) {
     res.chain = []
