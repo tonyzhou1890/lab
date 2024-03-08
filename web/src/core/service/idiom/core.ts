@@ -58,14 +58,26 @@ function fuzzySearch(keyword: string) {
   if (!keyword) {
     return []
   }
-  const startMatchList = []
-  const includeList = []
+  const startMatchList: string[] = []
+  const includeList: string[] = []
   for (let i = 0; i < local.data.records.length; i++) {
     const item = local.data.records[i]
+    // 先尝试开头匹配
     if (item.word.startsWith(keyword)) {
       startMatchList.push(item.word)
-    } else if (includeList.length < 20 && item.word.includes(keyword)) {
-      includeList.push(item.word)
+    } else if (includeList.length < 20) {
+      // 再尝试正则
+      try {
+        const reg = new RegExp(keyword)
+        if (reg.test(item.word)) {
+          includeList.push(item.word)
+        }
+      } catch (e) {
+        // 正则报错就尝试包含
+        if (item.word.includes(keyword)) {
+          includeList.push(item.word)
+        }
+      }
     }
     if (startMatchList.length >= 20) {
       break

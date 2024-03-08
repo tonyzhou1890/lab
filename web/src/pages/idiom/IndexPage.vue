@@ -15,10 +15,11 @@
           v-bind="config.field"
           use-input
           input-debounce="0"
+          behavior="menu"
           :label="$t('idiom.searchPlaceholder')"
-          @select="handleJump"
           @filter="handleFilter"
           @keyup.enter="handleJump()"
+          @update:model-value="handleChange"
         ></q-select>
       </div>
       <div
@@ -305,6 +306,12 @@ const handleFilter: QSelectProps['onFilter'] = (val, update) => {
       filteredList.value = await service.worker.fuzzySearch(val)
     }
   })
+}
+
+function handleChange(val: string) {
+  if (val) {
+    handleJump(val)
+  }
 }
 
 function handleJump(keyword?: string) {
