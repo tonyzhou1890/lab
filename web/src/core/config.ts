@@ -47,8 +47,8 @@ const config = {
     },
     idiom: {
       key: 'idiom',
-      url: `${ossPrefix}/dict/idiom.json.zip`,
-      version: '2.0.0',
+      url: `${storePrefix}/dict/中华成语大词典.7z`,
+      version: '3.0.0',
       storeName: depsStores.resources,
     },
     periodicTableOfElements: {

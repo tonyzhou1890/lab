@@ -4,7 +4,7 @@ import worker from './worker?worker'
 import IO from '@/core/io'
 import type { Core, IdiomDB } from './core'
 import type { ServiceInitConfig } from '@/core/typings/general-types'
-import JSZip from 'jszip'
+import FileManagerService from '../file-manager'
 import coreConfig from '@/core/config'
 import { CoreErrorEnum } from '@/core/error'
 
@@ -61,13 +61,11 @@ class IdiomService extends Service {
       }
 
       // 解压数据
-      const zip = new JSZip()
-      const data = await zip.loadAsync(local.data, {
-        optimizedBinaryString: true,
-      })
-      const chengYuData: IdiomDB | null = JSON.parse(
-        await data.file('idiom.json')!.async('string')
+      const file = await FileManagerService.extractSingleFile(
+        new File([local.data], ''),
+        '中华成语大词典.json'
       )
+      const chengYuData: IdiomDB | null = JSON.parse(await file.text())
       if (!chengYuData) {
         return Promise.reject(new Error(CoreErrorEnum[201]))
       }
