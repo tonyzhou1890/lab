@@ -4,7 +4,7 @@ export default {
   title: '飞雪实验室',
   titleAppendix: '在线工具',
   keywords: '在线工具箱',
-  desc: '飞雪实验室，一个在线工具箱，包含字体、文本、开发、图片、音视频等相关工具以及小游戏',
+  desc: '飞雪实验室，一个在线工具箱，包含字体、文本、开发、图片、音视频等相关工具',
   noOption: '无选项',
   doc: '文档',
   start: '开始',
