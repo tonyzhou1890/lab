@@ -7,6 +7,7 @@ const schema = new Schema({
   categories: ['game'],
   stage: 'Beta',
   infoIcon: true,
+  ignore: true,
 })
 
 export default schema

@@ -6,6 +6,7 @@ const schema = new Schema({
   i18nKey: 'gba',
   categories: ['game'],
   stage: 'Beta',
+  ignore: true,
 })
 
 export default schema

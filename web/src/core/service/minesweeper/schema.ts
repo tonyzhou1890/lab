@@ -6,6 +6,7 @@ const schema = new Schema({
   i18nKey: 'minesweeper',
   link: 'https://minesweeper.dowhat.top',
   categories: ['game'],
+  ignore: true,
 })
 
 export default schema

@@ -6,6 +6,7 @@ const schema = new Schema({
   i18nKey: 'snes',
   categories: ['game'],
   stage: 'Beta',
+  ignore: true,
 })
 
 export default schema
