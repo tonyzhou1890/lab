@@ -11,6 +11,7 @@ import AreaCodeSchema from './area-code/schema'
 import PoemSchema from './poem/schema'
 import MIconsSchema from './m-icons/schema'
 import IdiomSchema from './idiom/schema'
+import UsualIdiomSchema from './usual-idiom/schema'
 import Utf8Schema from './utf8/schema'
 import TimeSchema from './time/schema'
 import BaseConvertSchema from './base-convert/schema'
@@ -44,6 +45,7 @@ export default {
   PoemSchema,
   MIconsSchema,
   IdiomSchema,
+  UsualIdiomSchema,
   Utf8Schema,
   TimeSchema,
   BaseConvertSchema,

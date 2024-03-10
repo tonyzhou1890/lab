@@ -31,12 +31,16 @@ export interface IdiomDB {
 // 本地数据
 const local: {
   data: IdiomDB
+  recordsMap: {
+    [x: string]: IdiomItem
+  }
   [x: string]: any
 } = {
   data: {
     indices: [],
     records: [],
   },
+  recordsMap: {},
 }
 
 /**
@@ -47,6 +51,13 @@ const local: {
  */
 function setData<T>(key: string, value: T): boolean {
   local[key] = value
+  // map 缓存，加速搜索
+  if (key === 'data') {
+    for (let i = 0; i < (value as IdiomDB).records.length; i++) {
+      const item = (value as IdiomDB).records[i]
+      local.recordsMap[item.word.replaceAll('，', '')] = item
+    }
+  }
   return true
 }
 
@@ -90,12 +101,15 @@ function fuzzySearch(keyword: string) {
  * 搜索成语--完全匹配
  * @param keyword
  */
-function searchIdiom(keyword: string) {
-  const res = local.data.records.find(
-    (item) => item.word.replaceAll('，', '') === keyword.replaceAll('，', '')
-  )
+function searchIdiom(
+  keyword: string,
+  cfg?: {
+    simple?: boolean // 简洁模式，没有成语接龙
+  }
+) {
+  const res = local.recordsMap[keyword.replaceAll('，', '')]
   // 成语接龙
-  if (res) {
+  if (res && !cfg?.simple) {
     res.chain = []
     res.phoneticChain = []
     // 同字

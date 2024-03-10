@@ -85,6 +85,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/pages/idiom/IndexPage.vue'),
       },
       {
+        path: 'service/usual-idiom',
+        name: 'UsualIdiom',
+        component: () => import('@/pages/usual-idiom/IndexPage.vue'),
+      },
+      {
         path: 'service/utf8',
         name: 'Utf8',
         component: () => import('@/pages/utf8/IndexPage.vue'),

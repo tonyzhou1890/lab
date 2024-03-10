@@ -26,6 +26,7 @@ import emulator from './module/emulator'
 import shakeTest from './module/shake-test'
 import tomatoTimer from './module/tomato-timer'
 import imageClassifier from './module/image-classifier'
+import usualIdiom from './module/usual-idiom'
 
 export default {
   global,
@@ -90,4 +91,5 @@ export default {
   shakeTest,
   tomatoTimer,
   imageClassifier,
+  usualIdiom,
 }

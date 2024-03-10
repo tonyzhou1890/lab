@@ -87,6 +87,12 @@ const config = {
       version: '0.0.1',
       cache: false,
     },
+    // 常用成语
+    usualIdiom: {
+      url: '/resources/idiom/data.txt',
+      version: '0.0.1',
+      cache: false,
+    },
   },
   /**
    * 线上域名
