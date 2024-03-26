@@ -44,13 +44,31 @@
     <q-page-container>
       <router-view />
     </q-page-container>
-    <q-footer v-show="isHome">
-      <p class="beian q-ma-md tac">
+    <q-footer
+      class="footer beian q-pa-md tac text-body2"
+      v-show="isHome"
+    >
+      <p class="q-mx-md q-mb-none inline-block">
         <a
           href="https://beian.miit.gov.cn"
+          rel="noreferrer"
           target="_blank"
           class="text-white"
           >苏ICP备20008433号-2</a
+        >
+      </p>
+      <p class="q-mx-md q-mb-none inline-block">
+        <img
+          class="beian-icon q-mr-xs"
+          src="~@/assets/images/global/gongan-icon.png"
+          alt=""
+        />
+        <a
+          href="https://beian.mps.gov.cn/#/query/webSearch?code=32128102010331"
+          rel="noreferrer"
+          target="_blank"
+          class="text-white"
+          >苏公网安备32128102010331</a
         >
       </p>
     </q-footer>
@@ -153,6 +171,12 @@ function toggleInfo() {
   }
   :deep(.q-toolbar__title) {
     font-size: 16px;
+  }
+}
+.footer {
+  .beian-icon {
+    vertical-align: middle;
+    width: 14px;
   }
 }
 </style>
